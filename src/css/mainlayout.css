@@ -1,0 +1,88 @@
+.left-column {
+  position: absolute;
+  top: 2px;
+  display: inline-block;
+  width: 40%;
+  height: 100%;
+  margin-left: 20px;
+  margin-right: 20px;
+  padding: 20px;
+  border-radius: 7px;
+  border: 0.5px solid;
+  background: #FFFFFF;
+  border: 0.5px solid #D2D2D2;
+  box-sizing: border-box;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+
+}
+
+.right-column {
+  position: absolute;
+  left: calc(40% + 20px);
+  display: inline-block;
+  width: 50%;
+  height: 100%;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.top-right, .bottom-right {
+  display: block;
+  width: 100%;
+  height: calc(50% - 10px);
+  padding: 20px;
+  border-radius: 7px;
+  background: #FFFFFF;
+  border: 0.5px solid #D2D2D2;
+  box-sizing: border-box;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  box-sizing: border-box;
+
+
+}
+.top-right {
+  margin-bottom: 20px;
+  
+}
+.bottom-right {
+  margin-top: 20px;
+}
+
+
+
+.container-header {
+  font-family: 'CircularStd-Bold';
+  font-size: 16px;
+  margin-bottom: 5=6px;
+}
+
+.container-header:after {
+  content: "";
+  height: 4px;
+  margin-top: 4px;
+  width: 50px;
+  background-color: #bad636;
+  display: block;
+}
+
+
+
+
+.footprint-icon {
+  color: white;
+  display: inline-block;
+  font-family: 'Roboto-Bold';
+  font-size: 42px;
+  text-align: center;
+  min-width: 100px;
+  height: 60px;
+  padding-top: 5px;
+  background: #BAD636;
+  border-radius: 8px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  padding-right: 5px;
+  padding-left: 5px;
+  
+
+}
+
