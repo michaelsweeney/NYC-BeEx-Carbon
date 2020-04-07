@@ -5,6 +5,7 @@ import './App.css';
 import './css/sidebar.css';
 import './css/mainlayout.css';
 
+import './css/chart.css';
 
 
 

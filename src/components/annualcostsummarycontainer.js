@@ -1,7 +1,6 @@
 import React from 'react';
 
-// import BarChart from './barchart.js'
-import {formatInt} from './numformat.js'
+import {BarChart} from './barchart.js'
 
 
 class AnnualCostSummaryContainer extends React.Component {
@@ -13,15 +12,20 @@ class AnnualCostSummaryContainer extends React.Component {
       total_cost,
       fine_2024,
       fine_2030,
-      fine_2035 } = this.props.building.summary
+      fine_2035 
+    } = this.props.building.summary
+
+      let barprops = {
+        total_cost: total_cost, 
+        fine_2024: fine_2024, 
+        fine_2030: fine_2030, 
+        fine_2035: fine_2035
+      }
 
     return (
       <React.Fragment>
         <div className='container-header'>Annual Cost Summary</div>
-        <div>{`Total Cost: ${formatInt(+total_cost)}`}</div>
-        <div>{`2024 fine: ${formatInt(+fine_2024)}`}</div>
-        <div>{`2030 fine: ${formatInt(+fine_2030)}`}</div>
-        <div>{`2035 fine: ${formatInt(+fine_2035)}`}</div>
+        <BarChart barprops = {barprops}></BarChart>
       </React.Fragment>
     )
   }

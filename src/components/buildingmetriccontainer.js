@@ -1,4 +1,5 @@
 import React from 'react'
+import {formatInt} from './numformat.js'
 
 
 class BuildingMetricContainer extends React.Component {

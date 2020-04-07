@@ -7,14 +7,17 @@ import {
     axisLeft,
     axisBottom,
     select,
-    selectAll
+    scaleBand,
+    selectAll,
+    sum
 } from 'd3'
-// https://codesandbox.io/embed/j3x61vjz5v -- good example
+import { formatInt } from './numformat.js'
+
+
 
 class BarChart extends React.Component {
     constructor(props) {
         super(props)
-        this.createBarChart = this.createBarChart.bind(this)
     }
     componentDidMount() {
         this.createBarChart()
@@ -22,120 +25,146 @@ class BarChart extends React.Component {
     componentDidUpdate() {
         this.createBarChart()
     }
-    createBarChart() {
-
+    createBarChart = () => {
+        // parse data
         let {
-            elec_cost,
-            gas_cost,
-            steam_cost,
-            fuel_two_cost,
-            fuel_four_cost,
-            carbon_fine_2024,
-            carbon_fine_2030,
-            carbon_fine_2035
-        } = this.props.building
-
-        let [width, height] = this.props.size
-        let node = this.node;
+            total_cost,
+            fine_2024,
+            fine_2030,
+            fine_2035
+        } = this.props.barprops
 
         let datatostack = [
-            { period: '2024', elec: elec_cost, gas: gas_cost, steam: steam_cost, fuel_two: fuel_two_cost, fuel_four: fuel_four_cost, fine: carbon_fine_2024 },
-            { period: '2030', elec: elec_cost, gas: gas_cost, steam: steam_cost, fuel_two: fuel_two_cost, fuel_four: fuel_four_cost, fine: carbon_fine_2030 },
-            { period: '2035', elec: elec_cost, gas: gas_cost, steam: steam_cost, fuel_two: fuel_two_cost, fuel_four: fuel_four_cost, fine: carbon_fine_2035 },
+            { period: '2024', utility: total_cost, fine: fine_2024, util_and_fine: fine_2024 + total_cost },
+            { period: '2030', utility: total_cost, fine: fine_2030, util_and_fine: fine_2030 + total_cost },
+            { period: '2035', utility: total_cost, fine: fine_2035, util_and_fine: fine_2035 + total_cost },
         ]
-        let data = stack().keys(["elec", "gas", "steam", "fuel_two", "fuel_four", "fine"])(datatostack)
-    
-        let ymax = 0
+
+        let colors = { fine: "#333333", utility: "BAD636" };
+        let keys = ['utility', 'fine']
+
+        let data = stack().keys(keys)(datatostack)
+        let xmax = 0
         data.forEach((d) => {
             d.forEach((s) => {
-                ymax = max([ymax, s[0], s[1]])
+                xmax = max([xmax, s[0], s[1]])
             })
         })
+        // d3 logic
+        let duration = 500
+        let width = 300;
+        let height = 400;
+        let margins = {
+            t: 30,
+            b: 200,
+            r: 100,
+            l: 30
+        }
 
+        let plotwidth = width - margins.l - margins.r
+        let plotheight = height - margins.t - margins.b
 
-        let x = scaleOrdinal()
-            .domain(data[0].map((d) => d.data.period))
-            .range([10, width - 10]);
+        let svg = select(this.container).selectAll('svg').data([0]).join('svg')
+            .attr('width', width).attr('height', height)
 
-        let y = scaleLinear()
-            .domain([0, ymax])//, (d) => { return d[0] + d[1]; }); })])
-            .range([height, 0]);
+        svg.selectAll('.x-axis').data([0]).join('g')
+            .attr('class', 'x-axis')
+            .attr('transform', `translate(${margins.l}, ${plotheight + margins.t})`)
 
-        let colors = ["b33040", "#d25c4d", "#f2b447", "#d9d574", "#d25c4d", "#f2b447"];
+        svg.selectAll('.y-axis').data([0]).join('g')
+            .attr('class', 'y-axis')
+            .attr('transform', `translate(${margins.l}, ${margins.t})`)
 
+        let yScale = scaleBand()
+            .domain(['2024', '2030', '2035'])
+            .rangeRound([0, plotheight])
 
-        console.log(x.domain())
-        console.log(x.range())
-
-        console.log(y.domain())
-        console.log(y.range())
-
-        // Define and draw axes
-        let yAxis = axisLeft()
-            .scale(y)
-            .ticks(5)
-        // .tickSize(-width, 0, 0)
-        // .tickFormat((d) => { return d });
+        let xScale = scaleLinear()
+            .domain([xmax, 0])
+            .range([plotwidth, 0])
 
         let xAxis = axisBottom()
-            .scale(x)
+            .scale(xScale)
+            .ticks(5)
 
-        select(node).select('.x-axis')
-            .attr("transform", "translate(0," + height + ")")
-            .call(xAxis)
-        select(node).select('.y-axis').call(yAxis)
+        let yAxis = axisLeft()
+            .scale(yScale)
+            .ticks(3)
+            .tickSize(0)
+            .tickSizeOuter(0)
 
-        
-        var groups = select(node).selectAll("g.cost")
-            .data(data)
-            .style("fill", (d, i) => { return colors[i]; });
+        svg.select('.y-axis')
+            .call(yAxis)
 
-        let rect = groups.selectAll("rect")
-            .data((d) => { return d; })
-            .enter()
-            .append("rect")
-            .attr("x", (d, i) => { return i * 100})
-            .attr("y", (d) => { return y(d[0] + d[1]); })
-            .attr("height", (d) => {
-                return y(d[0]);
+
+        // svg.select('.x-axis')
+        //     .transition().duration(duration)
+        //     .call(xAxis)
+
+        let groups = svg.selectAll(".bar")
+            .data(data, d => d.key)
+            .join('g')
+            .attr("class", "bar")
+            .attr(`transform`, `translate(${margins.l}, ${margins.t})`)
+            .style("fill", function (d, i) { return colors[d.key]; });
+
+        let rects = groups.selectAll("rect").data((d) => { return d })
+            .join('rect')
+            .attr("y", (d, i) => { return yScale(d.data.period) + 15 })
+            .transition().duration(duration)
+            .attr("x", (d) => { return xScale(d[0]); })
+            .attr("width", (d) => { return xScale(d[1]) - xScale(d[0]); })
+            .attr("height", 25)
+
+
+        let labels = svg.selectAll(".label")
+            .data(datatostack, (d) => d.period)
+            .join("text")
+            .attr(`transform`, `translate(${margins.l}, ${margins.t})`)
+            .attr("class", "label")
+            .attr("text-anchor", "start")
+            .transition().duration(duration)
+            .attr("x", (d) => {
+                return xScale(d.util_and_fine) + 5
             })
-            .attr("width", 25)
-        // .on("mouseover", () => { tooltip.style("display", null); })
-        // .on("mouseout", () => { tooltip.style("display", "none"); })
-        // .on("mousemove", (d) => {
-        //     let xPosition = mouse(this)[0] - 15;
-        //     let yPosition = mouse(this)[1] - 25;
-        //     tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
-        //     tooltip.select("text").text(d.y);
-        // });
+            .attr("y", (d) => {
+                return yScale(d.period) + 30
+            })
+            .text((d) => {
+                if (d.util_and_fine == 0) {
+                    return ''
+                }
+                return '$' + formatInt(d.util_and_fine)
+            })
+
 
 
         // Draw legend
-        // let legend = svg.selectAll(".legend")
-        //     .data(colors)
-        //     .enter().append("g")
-        //     .attr("class", "legend")
-        //     .attr("transform", function (d, i) { return "translate(30," + i * 19 + ")"; });
+        let legend = svg.selectAll(".legend").data([0]).join('g').attr('class', 'legend')
+            .join('g')
+            .attr('class', 'legend')
+            .attr('transform', `translate(${margins.l}, ${plotheight + margins.t + 20})`)
 
-        // legend.append("rect")
-        //     .attr("x", width - 18)
-        //     .attr("width", 18)
-        //     .attr("height", 18)
-        //     .style("fill", function (d, i) { return colors.slice().reverse()[i]; });
+        legend.selectAll('rect').data(Object.keys(colors)).join('rect')
+            .attr("x", 15)
+            .attr("y", (d, i) => { return i * 30 })
+            .attr("width", 18)
+            .attr("height", 18)
+            .style("fill", (d, i) => { return colors[d]; });
 
-        // legend.append("text")
-        //     .attr("x", width + 5)
-        //     .attr("y", 9)
-        //     .attr("dy", ".35em")
-        //     .style("text-anchor", "start")
-        //     .text(function (d, i) {
-        //         switch (i) {
-        //             case 0: return "Anjou pears";
-        //             case 1: return "Naval oranges";
-        //             case 2: return "McIntosh apples";
-        //             case 3: return "Red Delicious apples";
-        //         }
-        //     });
+        legend.selectAll('text').data(Object.keys(colors)).join('text')
+            .attr("x", 50)
+            .attr("y", (d, i) => { return (i * 30) + 15 })
+            .attr('class', 'legend-text')
+            .style("text-anchor", "start")
+            .text((d, i) => {
+                switch (d) {
+                    case 'utility': return "Utility Cost ($)";
+                    case 'fine': return "Carbon Fine ($)";
+                }
+            });
+
+
 
 
         // // Prep the tooltip bits, initial display is hidden
@@ -163,23 +192,7 @@ class BarChart extends React.Component {
 
     }
     render() {
-        return <svg
-            ref={node => this.node = node}
-            width={this.props.size[0]}
-            height={this.props.size[1]}
-            building={this.props.building}>
-            <g className='x-axis'></g>
-            <g className='y-axis'></g>
-            <g className='cost elec'></g>
-            <g className='cost gas'></g>
-            <g className='cost steam'></g>
-            <g className='cost fuel_two'></g>
-            <g className='cost fuel_four'></g>
-            <g className='cost fine'></g>
-
-
-
-        </svg>
+        return <div ref={container => this.container = container}></div>
     }
 }
 
