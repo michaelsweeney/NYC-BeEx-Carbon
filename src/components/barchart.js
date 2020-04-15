@@ -112,7 +112,6 @@ class BarChart extends React.Component {
             .attr("width", (d) => { return xScale(d[1]) - xScale(d[0]); })
             .attr("height", 25)
 
-
         let labels = svg.selectAll(".label")
             .data(datatostack, (d) => d.period)
             .join("text")
@@ -132,7 +131,6 @@ class BarChart extends React.Component {
                 }
                 return '$' + formatInt(d.util_and_fine)
             })
-
 
 
         // Draw legend
