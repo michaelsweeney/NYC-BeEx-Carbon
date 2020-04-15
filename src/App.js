@@ -8,6 +8,8 @@ import './css/mainlayout.css';
 import './css/chart.css';
 
 
+// import { TestSpace } from './testspace.js'
+
 
 
 function App() {
@@ -21,6 +23,62 @@ function App() {
 
 
 
+
+
+
+// class testApp extends React.Component {
+//   constructor(props) {
+//     super(props)
+
+//     this.state = {
+//       data: [
+//         {
+//           utility: 'Electricity',
+//           val: 200
+//         },
+//         {
+//           utility: 'Gas',
+//           val: 200
+//         },
+//         {
+//           utility: 'Steam',
+//           val: 200
+//         },
+//         {
+//           utility: 'Fuel_Two',
+//           val: 200
+//         },
+//         {
+//           utility: 'Fuel_Four',
+//           val: 200
+//         },
+//       ]
+//     }
+//     this.setTimer()
+//   }
+
+//   setTimer() {
+//     setInterval(() => {
+//       let newstate = Object.assign({}, this.state)
+//       newstate.data.forEach((obj) => {
+//         obj.val = Math.random() * Math.round(Math.random())
+//       })
+//       this.setState(newstate)
+//     }, 1000)
+
+//   }
+//   render() {
+//     return (
+//       <React.Fragment>
+//         <TestSpace data={this.state.data}></TestSpace>
+//         <TestSpace data={this.state.data}></TestSpace>
+//         <TestSpace data={this.state.data}></TestSpace>
+//       </React.Fragment>
+
+//     )
+//   }
+
+// }
 
 
 

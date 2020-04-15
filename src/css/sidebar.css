@@ -12,6 +12,7 @@
   height: 25px;
   margin-top: 5px;
   margin-bottom: 5px;
+  padding-left: 10px;
 }
 
 .bldg-input-main-container {
@@ -46,10 +47,7 @@ margin: 0px 0px 0px 10px;
 
 
 }
-.consumption-container input {
-  width: 125px;
-  margin: 0px 10px 0px 0px;
-}
+
 
 .cost-container div {
   margin: 0px 0px 0px 10px;
@@ -82,7 +80,7 @@ margin: 0px 0px 0px 10px;
 
 .consumption-container input {
   width: 125px;
-  margin: 0px 10px 0px 0px;
+  margin: 5px 10px 10px 0px;
 }
 
 .cost-container div {
@@ -90,7 +88,7 @@ margin: 0px 0px 0px 10px;
   }
 .cost-container input {
   width: 50px;
-  margin: 0px 0px 0px 10px;
+  margin: 5px 0px 10px 10px;
   }
 
 
@@ -107,7 +105,7 @@ margin: 0px 0px 0px 10px;
 
   /* typography */
 .sidebar-text-1 {
-  text-align: center;
+  text-align: left;
   font-family: 'CircularStd-Bold';
   font-size: 20px;
   border-top: 4px solid #BAD636; 
@@ -208,16 +206,17 @@ margin: 0px 0px 0px 10px;
 
 
 .sidebar-btn  {
-    background-color: rgb(89,90,84);
+    background-color: #000000;
     border: none;
     color: white;
     padding: 8px 8px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    border-radius: 5px;
+    border-radius: 0px;
     margin: 2px;
-    height: 35px; 
+    height: 40px;
+    padding: 10px; 
     /* margin-left: 20%; */
     /* margin-right: 20%; */
 }
@@ -226,9 +225,41 @@ margin: 0px 0px 0px 10px;
   background-color: rgb(74, 75, 70);
   border: black;
   color: white;
-  padding: 8px 8px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   cursor: pointer;
+  transition: background-color 500ms;
 }
+
+
+.add-building-type button {
+  cursor: pointer;
+  margin-top: 10px;
+  width: 24px;
+  height: 24px;
+  border-radius: 0px;
+  font-style: bold;
+  font-size: 18px;
+  padding: 0px;
+  padding-bottom: 5px;
+  vertical-align: middle;
+  background-color: #BAD636
+}
+.add-building-type button:hover {
+  background-color: rgb(156, 182, 42);
+  transition: background-color 500ms;
+}
+.add-building-type div {
+  display: inline-block;
+  margin-left: 5px;
+  padding-top: 10px;
+  font-size: 14px;
+  vertical-align: middle;
+  /* font-family: 'Circular-Std-Medium'; */
+  color: #333333;
+
+  line-height: 20px;
+
+}
+

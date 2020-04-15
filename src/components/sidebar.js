@@ -3,6 +3,7 @@ import React from 'react';
 import { HelpOutline } from '@material-ui/icons';
 import { UtilityInput } from './utilityinput.js'
 import { BuildingType } from './buildingtype.js'
+import { Add } from '@material-ui/icons';
 
 class Sidebar extends React.Component {
   constructor(props) {
@@ -83,7 +84,7 @@ class Sidebar extends React.Component {
       <div className='sidebar'>
 
         <div className='sidebar-text-1'>
-          <div className='sidebar-header'>NYC LL97</div>
+          <div className=''>NYC LL97</div>
           <div className='sidebar-header'>Carbon Emissions</div>
           <div className='sidebar-header'>Calculator</div>
         </div>
@@ -105,7 +106,12 @@ class Sidebar extends React.Component {
             )
           })}
 
-          <button className='add-building-type-btn sidebar-btn' onClick={this.addBuildingType}>ADD BUILDING TYPE</button>
+          <div className='add-building-type'>
+            <button onClick={this.addBuildingType}>
+              +
+            </button>
+            <div>Add Building Type</div>
+            </div>
         </div>
         <div className='sidebar-text-2'>Utility Inputs
           <HelpOutline style={{ color: 'rgb(184,215,52)', width: '20px', height: '20px', marginLeft: '10px' }}></HelpOutline>

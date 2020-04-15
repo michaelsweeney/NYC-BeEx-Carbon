@@ -14,7 +14,6 @@ import {
 import { formatInt } from './numformat.js'
 
 
-
 class BarChart extends React.Component {
     constructor(props) {
         super(props)
@@ -52,13 +51,13 @@ class BarChart extends React.Component {
         })
         // d3 logic
         let duration = 500
-        let width = 300;
-        let height = 400;
+        let width = 600;
+        let height = 225;
         let margins = {
             t: 30,
-            b: 200,
-            r: 100,
-            l: 30
+            b: 30,
+            r: 200,
+            l: 20
         }
 
         let plotwidth = width - margins.l - margins.r
@@ -97,12 +96,9 @@ class BarChart extends React.Component {
             .call(yAxis)
 
 
-        // svg.select('.x-axis')
-        //     .transition().duration(duration)
-        //     .call(xAxis)
-
         let groups = svg.selectAll(".bar")
             .data(data, d => d.key)
+        // groups
             .join('g')
             .attr("class", "bar")
             .attr(`transform`, `translate(${margins.l}, ${margins.t})`)
@@ -143,7 +139,7 @@ class BarChart extends React.Component {
         let legend = svg.selectAll(".legend").data([0]).join('g').attr('class', 'legend')
             .join('g')
             .attr('class', 'legend')
-            .attr('transform', `translate(${margins.l}, ${plotheight + margins.t + 20})`)
+            .attr('transform', `translate(${plotwidth + margins.l + 40}, ${margins.t + 40})`)
 
         legend.selectAll('rect').data(Object.keys(colors)).join('rect')
             .attr("x", 15)
@@ -155,6 +151,7 @@ class BarChart extends React.Component {
         legend.selectAll('text').data(Object.keys(colors)).join('text')
             .attr("x", 50)
             .attr("y", (d, i) => { return (i * 30) + 15 })
+            .attr('font-size', 14)
             .attr('class', 'legend-text')
             .style("text-anchor", "start")
             .text((d, i) => {
@@ -192,7 +189,7 @@ class BarChart extends React.Component {
 
     }
     render() {
-        return <div ref={container => this.container = container}></div>
+        return <div className = 'bar-container' ref={container => this.container = container}></div>
     }
 }
 

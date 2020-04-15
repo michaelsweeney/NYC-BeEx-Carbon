@@ -23,5 +23,17 @@
 
 .cost-container .y-axis path{
   color: #B8D734;
-  stroke-width: 4px;
+  stroke-width: 3px;
 } 
+
+
+
+.donut-container {
+  display: inline-block;
+  /* width: 150px; */
+}
+
+.donut-legend-container {
+  display: inline-block;
+  width: 150px;
+}

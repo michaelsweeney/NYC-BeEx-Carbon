@@ -2,7 +2,8 @@
   position: absolute;
   top: 2px;
   display: inline-block;
-  width: 40%;
+  min-width: 258px;
+  width: 30%;
   height: 100%;
   margin-left: 20px;
   margin-right: 20px;
@@ -13,18 +14,19 @@
   border: 0.5px solid #D2D2D2;
   box-sizing: border-box;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-
 }
 
 .right-column {
   position: absolute;
-  left: calc(40% + 20px);
+  left: calc(30% + 20px);
   display: inline-block;
-  width: 50%;
+  min-width: 300px;
+  width: calc(70% - 20px);
   height: 100%;
   margin-left: 20px;
   margin-right: 20px;
 }
+
 .top-right, .bottom-right {
   display: block;
   width: 100%;
@@ -35,10 +37,8 @@
   border: 0.5px solid #D2D2D2;
   box-sizing: border-box;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-  box-sizing: border-box;
-
-
 }
+
 .top-right {
   margin-bottom: 20px;
   
@@ -52,7 +52,7 @@
 .container-header {
   font-family: 'CircularStd-Bold';
   font-size: 16px;
-  margin-bottom: 5=6px;
+  margin-bottom: 15px;
 }
 
 .container-header:after {
