@@ -4,6 +4,7 @@ import { DataControl } from './components/datacontrol.js'
 import './App.css';
 import './css/sidebar.css';
 import './css/mainlayout.css';
+import './css/footer.css';
 
 import './css/chart.css';
 

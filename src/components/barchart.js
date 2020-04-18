@@ -9,7 +9,8 @@ import {
     select,
     scaleBand,
     selectAll,
-    sum
+    sum,
+    event
 } from 'd3'
 import { formatInt } from './numformat.js'
 
@@ -51,7 +52,7 @@ class BarChart extends React.Component {
         })
         // d3 logic
         let duration = 500
-        let width = 600;
+        let width = 400;
         let height = 225;
         let margins = {
             t: 30,
@@ -59,6 +60,8 @@ class BarChart extends React.Component {
             r: 200,
             l: 20
         }
+
+
 
         let plotwidth = width - margins.l - margins.r
         let plotheight = height - margins.t - margins.b
@@ -95,10 +98,13 @@ class BarChart extends React.Component {
         svg.select('.y-axis')
             .call(yAxis)
 
+        let tooltipdiv = select(this.container).selectAll('.tooltip.tooltip-cost').data([0]).join('div')
+            .attr("class", "tooltip tooltip-cost")
+            .style("opacity", 0);
 
         let groups = svg.selectAll(".bar")
             .data(data, d => d.key)
-        // groups
+            // groups
             .join('g')
             .attr("class", "bar")
             .attr(`transform`, `translate(${margins.l}, ${margins.t})`)
@@ -107,10 +113,41 @@ class BarChart extends React.Component {
         let rects = groups.selectAll("rect").data((d) => { return d })
             .join('rect')
             .attr("y", (d, i) => { return yScale(d.data.period) + 15 })
+            .on("mouseover", function (d) {
+                tooltipdiv.transition()
+                    .duration(200)
+                    .style("opacity", .9);
+                tooltipdiv.html(
+                    `
+                    ${d.data.period}
+                    <br/>
+                    Utility Cost ($): ${formatInt(d.data.utility)}
+                    <br/>
+                    Carbon Fine ($): ${formatInt(d.data.fine)}
+                    <br/>
+                    Total Cost ($): ${formatInt(d.data.util_and_fine)} 
+                    `
+                )
+                    .style("left", () => { return event.pageX - 50 })
+                    .style("top", (event.pageY - 50) + "px");
+
+                select(this).transition().duration(200).style('fill', 'black')
+            })
+            .on("mouseout", function (d) {
+                tooltipdiv.transition()
+                    .duration(500)
+                    .style("opacity", 0);
+                
+                select(this).transition().duration(200).style("fill", function (d, i) { return colors[d.key]; });
+
+            })
             .transition().duration(duration)
             .attr("x", (d) => { return xScale(d[0]); })
             .attr("width", (d) => { return xScale(d[1]) - xScale(d[0]); })
             .attr("height", 25)
+
+
+
 
         let labels = svg.selectAll(".label")
             .data(datatostack, (d) => d.period)
@@ -187,7 +224,7 @@ class BarChart extends React.Component {
 
     }
     render() {
-        return <div className = 'bar-container' ref={container => this.container = container}></div>
+        return <div className='bar-container' ref={container => this.container = container}></div>
     }
 }
 

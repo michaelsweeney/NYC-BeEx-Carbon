@@ -37,3 +37,38 @@
   display: inline-block;
   width: 150px;
 }
+
+
+
+.footprint-icon {
+  color: white;
+  display: inline-block;
+  font-family: 'Roboto-Bold';
+  font-size: 42px;
+  text-align: center;
+  min-width: 100px;
+  height: 60px;
+  padding-top: 5px;
+  background: #BAD636;
+  border-radius: 8px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+
+
+
+div.tooltip {	
+  position: absolute;			
+  text-align: center;			
+  width: 60px;				
+  height: 28px;					
+  padding: 2px;				
+  font: 12px;		
+  background: lightsteelblue;	
+  border: 0px;		
+  border-radius: 8px;			
+  pointer-events: none;			
+}

@@ -68,7 +68,7 @@ class Sidebar extends React.Component {
     while (nextid in state.types) {
       nextid++
     }
-    console.log(nextid)
+    
     state.types[nextid] = {
       type: 'A',
       area: 0,
@@ -93,6 +93,9 @@ class Sidebar extends React.Component {
         <HelpOutline style={{ color: 'rgb(184,215,52)', width: '20px', height: '20px', marginLeft: '10px' }}></HelpOutline>
         </div>
         <div className='bldg-input-main-container'>
+
+        <div className='input-header-type'>Building Type</div>
+        <div className='input-header-area'>Area</div>
 
           {Object.keys(this.state.types).map((id) => {
             return (

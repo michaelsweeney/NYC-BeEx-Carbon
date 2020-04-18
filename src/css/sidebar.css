@@ -16,6 +16,16 @@
   margin-right: 20px;
 }
 
+.input-header-type {
+  margin-left: 16px;
+  display: inline-block;
+}
+
+.input-header-area {
+  margin-left: 50px;
+  display: inline-block;
+}
+
 .area-container, .type-container {
   display: inline-block;
 }
@@ -225,4 +235,10 @@
   /* font-family: 'Circular-Std-Medium'; */
   color: #333333;
   line-height: 20px;
+}
+
+
+.type-label {
+  display: inline-block;
+  margin-right: 10px;
 }

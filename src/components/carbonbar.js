@@ -38,7 +38,7 @@ class CarbonBar extends React.Component {
         } = this.props.carbondata
 
         let config = {
-            barwidth: 50,
+            barthickness: 25,
             barmarginleft: 25,
             threshtextx: 20,
             threshtexty: -30,
@@ -46,11 +46,11 @@ class CarbonBar extends React.Component {
             finetextx: 150,
             finelinex: 20,
             duration: 500,
-            width: 220,
-            height: 350,
+            width: 700,
+            height: 125,
             barlabelpad: 10,
             margins: {
-                t: 80,
+                t: 10,
                 b: 10,
                 r: 10,
                 l: 10
@@ -72,9 +72,9 @@ class CarbonBar extends React.Component {
             .attr('height', config.height)
             .attr('transform', `translate(${config.margins.l}, ${config.margins.t})`)
 
-        let yScale = scaleLinear()
+        let xScale = scaleLinear()
             .domain([0, max([co2limit_2024, total_carbon])])
-            .range([plotheight, 0])
+            .range([0, plotwidth])
 
         // guidance / debugging only
         // let yaxis = g.selectAll('.y-axis').data([0]).join("g")
@@ -104,10 +104,10 @@ class CarbonBar extends React.Component {
         let finelines = g.selectAll('line').data(linedata, (d) => d.key).join('line')
         finelines
             .transition().duration(config.duration)
-            .attr('x1', (d) => { return config.finelinex })
-            .attr('y1', (d) => { return yScale(d.thresh) })
-            .attr('x2', (d) => { return config.width - config.finelinex })
-            .attr('y2', (d) => { return yScale(d.thresh) })
+            .attr('y1', (d) => { return config.finelinex })
+            .attr('x1', (d) => { return xScale(d.thresh) })
+            .attr('y2', (d) => { return config.width - config.finelinex })
+            .attr('x2', (d) => { return xScale(d.thresh) })
             .style('stroke', colors['utility'])
             .attr("stroke-width", () => '4px')
 
@@ -115,8 +115,8 @@ class CarbonBar extends React.Component {
         let finetext = g.selectAll('.finetext').data(linedata, (d) => d.key).join('text')
             .transition().duration(config.duration)
             .text((d) => d.key + "Fine: " + formatInt(d.fine) + " $")
-            .attr('x', (d) => { return config.finetextx })
-            .attr('y', (d) => { return yScale(d.thresh) + config.finetexty })
+            .attr('y', (d) => { return config.finetextx })
+            .attr('x', (d) => { return xScale(d.thresh) + config.finetexty })
             .attr('class', 'finetext')
             .attr('text-anchor', 'left')
 
@@ -125,8 +125,8 @@ class CarbonBar extends React.Component {
         threshtext
             .transition().duration(config.duration)
             .text((d) => d.key + "Threshold: " + formatInt(d.thresh) + " tCO2")
-            .attr('x', (d) => { return config.threshtextx })
-            .attr('y', (d) => { return yScale(d.thresh) + config.threshtexty })
+            .attr('y', (d) => { return config.threshtextx })
+            .attr('x', (d) => { return xScale(d.thresh) + config.threshtexty })
             .attr('class', 'threshtext')
             .attr('text-anchor', 'right')
 
@@ -134,17 +134,17 @@ class CarbonBar extends React.Component {
 
         let bar = g.selectAll('rect').data([total_carbon]).join('rect')
             .transition().duration(config.duration)
-            .attr("x", () => (config.width / 2) - config.barmarginleft)
-            .attr("width", config.barwidth)
+            .attr("y", 0)
+            .attr("height", config.barthickness)
             .attr('fill', (d) => colors.fine)
-            .attr("y", (d) => { return yScale(total_carbon); })
-            .attr("height", (d) => { return plotheight - yScale(total_carbon); })
+            .attr("x", 0)
+            .attr("width", (d) => { return xScale(total_carbon) })
 
         let axisline = g.selectAll('.axisline').data([0]).join('line')
-            .attr('x1', (d) => { return config.finelinex })
-            .attr('y1', (d) => { return yScale(0) })
-            .attr('x2', (d) => { return config.width - config.finelinex })
-            .attr('y2', (d) => { return yScale(0) })
+            .attr('y1', (d) => { return config.finelinex })
+            .attr('x1', (d) => { return xScale(0) })
+            .attr('y2', (d) => { return config.width - config.finelinex })
+            .attr('x2', (d) => { return xScale(0) })
             .style('stroke', colors['fine'])
             .attr("stroke-width", () => '4px')
 
@@ -152,8 +152,8 @@ class CarbonBar extends React.Component {
         barlabel
             .transition().duration(config.duration)
             .text((d) => { return formatInt(d) })
-            .attr('x', (d) => { return config.margins.l + (plotwidth / 2) })
-            .attr('y', (d) => { return yScale(d) - config.barlabelpad })
+            .attr('y', (d) => { return config.margins.l + (plotwidth / 2) })
+            .attr('x', (d) => { return xScale(d) - config.barlabelpad })
             .attr('text-anchor', 'middle')
 
 

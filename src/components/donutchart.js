@@ -16,13 +16,14 @@ import {
   pie,
   arc,
   interpolateObject,
-  interpolate
+  interpolate,
+  event
 } from 'd3'
 
 
 
 
-
+// https://benclinkinbeard.com/d3tips/make-any-chart-responsive-with-one-function/?utm_content=buffer976d6&utm_medium=social&utm_source=twitter.com&utm_campaign=buffer
 
 
 class DonutChart extends React.Component {
@@ -46,18 +47,18 @@ class DonutChart extends React.Component {
     let myDuration = 600;
     let firstTime = true;
 
-    let width = 140,
-      height = 200,
-      margin = 15,
+    let width = 120,
+      height = 120,
+      margin = 10,
       radius = Math.min(width, height) / 2;
 
-    
+
     let colorlookups = {
-        'Electricity': "#358FB4",
-        'Gas': "#6EB12C",
-        'Steam': "#B23232",
-        'Fuel Two': "#A644E2",
-        'Fuel Four': "#62009E"
+      'Electricity': "#358FB4",
+      'Gas': "#6EB12C",
+      'Steam': "#B23232",
+      'Fuel Two': "#A644E2",
+      'Fuel Four': "#62009E"
     }
 
     let color = scaleOrdinal(Object.values(colorlookups));
@@ -67,33 +68,51 @@ class DonutChart extends React.Component {
       .sort(null);
 
     let arcfunc = arc()
-      .innerRadius((radius - margin) * 0.6)
+      .innerRadius((radius - margin) * 0.7)
       .outerRadius(radius - margin);
 
+    let arcfuncselect = arc()
+      .innerRadius((radius - margin) * 0.7)
+      .outerRadius(radius * 2 - margin);
 
+
+    let container = this.container
+    console.log(container)
+    // debugger;
 
 
     //  build container
     let svg = select(this.container).selectAll('svg').data([0]).join('svg')
       .attr("width", width)
       .attr("height", height)
+    // .attr('viewBox', `0 0 ${width} ${height}`)
+    // .attr('preserveAspectRatio', 'xMinYMid')
+    // .call(resize);
 
     let g = svg.selectAll('g').data([0]).join('g')
       .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+    let aspect = width / height
 
-
+    function resize() {
+      const w = parseInt(container.style('width'));
+      svg.attr('width', w);
+      svg.attr('height', Math.round(w / aspect));
+    }
 
 
     // add title
     let text = svg.selectAll('text').data([0]).join('text')
-    .text(title)
-    .attr('x', width / 2)
-    .attr('y', margin + 2)
-    .attr('font-size', 14)
-    .attr('fill', 'black')
-    .attr('text-anchor', 'middle')
+      .text(title)
+      .attr('x', width / 2)
+      .attr('y', margin + 2)
+      .attr('font-size', 14)
+      .attr('fill', 'black')
+      .attr('text-anchor', 'middle')
 
 
+    let tooltipdiv = select(this.container).selectAll('.tooltip.tooltip-donut').data([0]).join('div')
+      .attr("class", "tooltip tooltip-donut")
+      .style("opacity", 0);
 
     // format data -- can easily refactor this because nesting is not particularly valuable.
     let path = g.selectAll("path");
@@ -127,6 +146,35 @@ class DonutChart extends React.Component {
       .attr("fill", function (d, i) {
         return colorlookups[d.data.utility]
       })
+      .on("mouseover", function (d) {
+        tooltipdiv.transition()
+          .duration(200)
+          .style("opacity", .9);
+        tooltipdiv.html(
+          `Utility: ${d.data.utility}
+          <br/>
+          Value: ${d.data.val}
+          <br/>
+          Normalized: ${d.data.val_norm} / SF
+            `
+        )
+          .style("left", () => { return event.pageX - 50 })
+          .style("top", (event.pageY) + "px");
+
+        select(this).transition().duration(200).style('fill', 'black')
+
+      })
+      .on("mouseout", function (d) {
+        tooltipdiv.transition()
+          .duration(500)
+          .style("opacity", 0);
+
+        select(this).transition().duration(200).style("fill", function (d, i) {
+          return colorlookups[d.data.utility]
+        })
+
+        
+      })
       .transition()
       .duration(myDuration)
       .attrTween("d", arcTween)
@@ -146,7 +194,7 @@ class DonutChart extends React.Component {
       .remove()
     firstTime = false;
 
-    
+
 
 
 
@@ -213,7 +261,6 @@ class DonutChart extends React.Component {
       return function (t) {
         return arcfunc(i(t))
       }
-
     }
 
 

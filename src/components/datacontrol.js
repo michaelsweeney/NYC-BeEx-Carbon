@@ -2,6 +2,7 @@ import React from 'react';
 import { Sidebar } from './sidebar.js'
 import { Header } from './header.js'
 import { MainLayout } from './mainlayout.js'
+import { Footer } from './footer.js'
 
 import {defaultbuilding} from './defaultbuilding.js'
 import {compileBuilding} from './compilebuilding.js'
@@ -31,6 +32,7 @@ class DataControl extends React.Component {
         <Sidebar defaultbuilding={defaultbuilding} callback={this.inputCallback}></Sidebar>
         <Header></Header>
         <MainLayout building={this.state.building}></MainLayout>
+        <Footer></Footer>
       </div>
     )
   }
