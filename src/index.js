@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 // import './fonts/CircularStd-Black.otf'
-
+if (!Object.values) Object.values = o=>Object.keys(o).map(k=>o[k]);
 
 // import '@fortawesome/fontawesome-free/css/all.min.css'; 
 // import'bootstrap-css-only/css/bootstrap.min.css'; 
