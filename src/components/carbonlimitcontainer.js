@@ -28,7 +28,7 @@ class CarbonLimitContainer extends React.Component {
         let config = {} // optional for overriding defaults in render
 
         return <div>
-            <div className='container-header'>Carbon Limits</div>
+            <div className='container-header'>Carbon Summary</div>
             <CarbonBar carbondata={carbondata} config={config}></CarbonBar>
         </div>
     }

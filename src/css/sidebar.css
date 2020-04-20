@@ -218,7 +218,8 @@
   padding: 0px;
   padding-bottom: 5px;
   vertical-align: middle;
-  background-color: #BAD636
+  background-color: #BAD636;
+  border: none;
 }
 
 .add-building-type button:hover {

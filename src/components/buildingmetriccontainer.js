@@ -109,9 +109,9 @@ class BuildingMetricContainer extends React.Component {
         return (
             <React.Fragment>
                 <div className='container-header'>Building Metrics</div>
-                <DonutChart title={'Cost'} donutprops={costdata}></DonutChart>
-                <DonutChart title={'Energy'} donutprops={energydata}></DonutChart>
-                <DonutChart title={'Carbon'} donutprops={carbondata}></DonutChart>
+                <DonutChart title={'Cost'} donutprops={costdata} tag={'cost'}></DonutChart>
+                <DonutChart title={'Energy'} donutprops={energydata} tag={'energy'}></DonutChart>
+                <DonutChart title={'Carbon'} donutprops={carbondata} tag={'carbon'}></DonutChart>
                 <DonutLegend></DonutLegend>
             </React.Fragment>
         )

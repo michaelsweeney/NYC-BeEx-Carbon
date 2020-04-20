@@ -42,7 +42,7 @@
 
 .footprint-icon {
   color: white;
-  display: inline-block;
+  position: absolute;			
   font-family: 'Roboto-Bold';
   font-size: 42px;
   text-align: center;
@@ -62,13 +62,25 @@
 
 div.tooltip {	
   position: absolute;			
-  text-align: center;			
-  width: 60px;				
-  height: 28px;					
-  padding: 2px;				
+  text-align: center;		
+  font-family: 'CircularStd-Book'	;
+  /* width: 60px;				 */
+  /* height: 28px;					 */
+  padding: 10px;				
   font: 12px;		
-  background: lightsteelblue;	
+  background: #595954;
+  color: white;
   border: 0px;		
   border-radius: 8px;			
   pointer-events: none;			
+}
+div.tooltip .tip-header {
+  font-family: 'CircularStd-Bold'
+}
+
+
+
+
+.carbon-summary-text {
+  fill: white;
 }

@@ -37,9 +37,9 @@
 .content-layout {
   position: fixed;
   left: 350px;
-  top: 100px;
-  width: calc(100% - 350px);
-  height: calc(100% - 200px);
+  top: 0px;
+  width: calc(100% - 350px - 10px);
+  height: calc(100% - 100px);
   vertical-align: top;
   white-space: nowrap;
   box-sizing: border-box;
@@ -85,7 +85,7 @@
 
 .top-row {
   display: block;
-  height: 40%;
+  height: 50%;
   box-sizing: border-box;
   margin-left: 20px;
   margin-right: 20px;
@@ -112,7 +112,7 @@
   margin-bottom: 20px;
   margin-left: 20px;
   margin-right: 20px;
-  height: 60%;
+  height: 50%;
 
 }
 

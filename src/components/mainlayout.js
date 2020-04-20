@@ -1,44 +1,43 @@
-
 import React from 'react';
-import { AnnualCostSummaryContainer } from './annualcostsummarycontainer.js'
-import { CarbonLimitContainer } from './carbonlimitcontainer.js'
-import { BuildingMetricContainer } from './buildingmetriccontainer.js'
+import { Sidebar } from './sidebar.js'
+import { Header } from './header.js'
+import { CardLayout } from './cardlayout'
 import { Footer } from './footer.js'
 
+import {defaultbuilding} from './defaultbuilding.js'
+import {compileBuilding} from './compilebuilding.js'
 
 
 
 class MainLayout extends React.Component {
   constructor(props) {
     super(props)
-
+    this.state = {
+      building: compileBuilding(defaultbuilding)
+    }
   }
 
+  inputCallback = (building) => {
+    let compiled = compileBuilding(building)
+    this.setState({building: compiled})
+  }
+
+  componentDidUpdate() {
+  }
+ 
   render() {
-    let { building } = this.props;
     return (
-      <div className='content-layout'>
-        <div className='top-row'>
-          <div className='carbon-bar-card'>
-            <CarbonLimitContainer building={building}></CarbonLimitContainer>
-          </div>
-        </div>
-        <div className='bottom-row'>
-          <div className='left-bottom cost-card'>
-            <AnnualCostSummaryContainer building={building}></AnnualCostSummaryContainer>
-          </div>
-          <div className='right-bottom donut-card'>
-            <BuildingMetricContainer building={building}></BuildingMetricContainer>
-          </div>
-        </div>
+      <div className='main-container'>
+        <Sidebar defaultbuilding={defaultbuilding} callback={this.inputCallback}></Sidebar>
+        {/* <Header></Header> */}
+        <CardLayout building={this.state.building}></CardLayout>
+        <Footer></Footer>
       </div>
     )
   }
 }
 
 
-
-// // original layout - 1 left / 2 right cards
 // class MainLayout extends React.Component {
 //   constructor(props) {
 //     super(props)
@@ -46,22 +45,8 @@ class MainLayout extends React.Component {
 //   }
 
 //   render() {
-
-//     let {building} = this.props;
 //     return (
-//       <div className='content-layout'>
-//         <div className='left-column carbon-bar-container'>
-//           <CarbonLimitContainer building={building}></CarbonLimitContainer>
-//         </div>
-//         <div className='right-column'>
-//           <div className='top-right pie-container'>
-//             <BuildingMetricContainer building={building}></BuildingMetricContainer>
-//           </div>
-//           <div className='bottom-right cost-container'>
-//             <AnnualCostSummaryContainer building={building}></AnnualCostSummaryContainer>
-//           </div>
-//         </div>
-//       </div>
+//       <div>test2</div>
 //     )
 //   }
 // }

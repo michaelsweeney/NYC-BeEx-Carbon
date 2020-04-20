@@ -1,13 +1,5 @@
 import React from 'react';
 
-// import './App.css';
-// import './sidebar.css';
-// import './mainlayout.css';
-
-// import './chart.css';
-
-
-
 import {
   nest,
   select,
@@ -17,13 +9,19 @@ import {
   arc,
   interpolateObject,
   interpolate,
-  event
+  event,
+  color,
+  rgb
 } from 'd3'
 
+import { formatInt } from './numformat.js'
 
 
 
 // https://benclinkinbeard.com/d3tips/make-any-chart-responsive-with-one-function/?utm_content=buffer976d6&utm_medium=social&utm_source=twitter.com&utm_campaign=buffer
+
+
+
 
 
 class DonutChart extends React.Component {
@@ -32,27 +30,38 @@ class DonutChart extends React.Component {
   }
 
   componentDidMount() {
-    this.createBarChart()
+    this.createDonutChart()
+    this.addResize()
   }
   componentDidUpdate() {
-    this.createBarChart()
+    this.createDonutChart()
   }
-
-  createBarChart() {
-
+  addResize() {
+    // window.addEventListener('resize', this.createDonutChart)
+  }
+  createDonutChart() {
     let data = this.props.donutprops
     let title = this.props.title
+    let tag = this.props.tag
+
+    // get totals - why doesn't reduce work for this?
+
+    let divdims = this.container.parentElement.getBoundingClientRect()
 
     // definitions and setup
     let myDuration = 600;
     let firstTime = true;
 
-    let width = 120,
-      height = 120,
-      margin = 10,
-      radius = Math.min(width, height) / 2;
+    // let width = 120
+    //  let height = 120
 
-
+    let width = divdims.width / 3
+    let height = divdims.height
+    let marginbottom = 75
+    let margin = 10
+    let radius = width / 2;
+    console.log(width)
+    console.log(radius)
     let colorlookups = {
       'Electricity': "#358FB4",
       'Gas': "#6EB12C",
@@ -61,7 +70,21 @@ class DonutChart extends React.Component {
       'Fuel Four': "#62009E"
     }
 
-    let color = scaleOrdinal(Object.values(colorlookups));
+    let unitlookup = {
+      'cost': {
+        'val': '$',
+        'val_norm': '$/yr'
+      },
+      'energy': {
+        'val': 'kBtu/yr',
+        'val_norm': 'kBtu/sf/yr'
+      },
+      'carbon': {
+        'val': 'tCO2',
+        'val_norm': 'tCO2/yr'
+      }
+    }
+
 
     let piefunc = pie()
       .value(function (d) { return d.val; })
@@ -71,45 +94,73 @@ class DonutChart extends React.Component {
       .innerRadius((radius - margin) * 0.7)
       .outerRadius(radius - margin);
 
-    let arcfuncselect = arc()
-      .innerRadius((radius - margin) * 0.7)
-      .outerRadius(radius * 2 - margin);
-
-
-    let container = this.container
-    console.log(container)
-    // debugger;
-
 
     //  build container
     let svg = select(this.container).selectAll('svg').data([0]).join('svg')
       .attr("width", width)
-      .attr("height", height)
-    // .attr('viewBox', `0 0 ${width} ${height}`)
-    // .attr('preserveAspectRatio', 'xMinYMid')
-    // .call(resize);
+      .attr("height", height + marginbottom)
 
     let g = svg.selectAll('g').data([0]).join('g')
       .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
     let aspect = width / height
 
-    function resize() {
-      const w = parseInt(container.style('width'));
-      svg.attr('width', w);
-      svg.attr('height', Math.round(w / aspect));
-    }
-
 
     // add title
-    let text = svg.selectAll('text').data([0]).join('text')
+    let titletext = svg.selectAll('.titletext').data([0]).join('text')
       .text(title)
+      .attr('class', 'titletext')
       .attr('x', width / 2)
       .attr('y', margin + 2)
       .attr('font-size', 14)
       .attr('fill', 'black')
       .attr('text-anchor', 'middle')
 
+    // add summary text
 
+    let total_abs = 0;
+    let total_norm = 0;
+    data.forEach((d) => {
+      total_abs += d.val
+      total_norm += d.val_norm
+    })
+
+
+    let summarytext = svg.selectAll('.summarytext').data([total_abs, total_norm]).join('text')
+      .text((d, i) => {
+        if (tag == 'cost') {
+          if (i == 0) {
+            return `$${formatInt(d)}`
+          }
+          if (i == 1) {
+            let val = d || 0
+            return `$${Math.round(val * 100) / 100}/sf/yr`
+          }
+        }
+
+        else {
+          if (i == 0) {
+            return `${formatInt(d)} ${unitlookup[tag].val} `
+          }
+          if (i == 1) {
+            let val = d || 0
+            return `${Math.round(val * 100) / 100} ${unitlookup[tag].val_norm}`
+          }
+        }
+
+
+
+      })
+      .attr('class', 'summarytext')
+      .attr('x', width / 2)
+      .attr('y', (d, i) => height + 2 + i * 12)
+      .attr('font-size', 12)
+      .attr('fill', 'black')
+      .attr('text-anchor', 'middle')
+
+
+
+
+    // add tip
     let tooltipdiv = select(this.container).selectAll('.tooltip.tooltip-donut').data([0]).join('div')
       .attr("class", "tooltip tooltip-donut")
       .style("opacity", 0);
@@ -130,7 +181,6 @@ class DonutChart extends React.Component {
       .transition()
       .duration(myDuration)
       .attrTween("d", arcTween)
-
     path
       .enter()
       .append("path")
@@ -150,19 +200,22 @@ class DonutChart extends React.Component {
         tooltipdiv.transition()
           .duration(200)
           .style("opacity", .9);
+
         tooltipdiv.html(
-          `Utility: ${d.data.utility}
+          `
+          <span class = 'tip-header'>${d.data.utility}</span>
           <br/>
-          Value: ${d.data.val}
+          ${tag == 'cost' ? `$${formatInt(d.data.val)}` : `${formatInt(d.data.val)} ${unitlookup[tag].val}`}
           <br/>
-          Normalized: ${d.data.val_norm} / SF
+          ${tag == 'cost' ? `$${formatInt(d.data.val_norm)}/sf/yr` : `${formatInt(d.data.val)} ${unitlookup[tag].val_norm}`}
             `
         )
-          .style("left", () => { return event.pageX - 50 })
-          .style("top", (event.pageY) + "px");
+          .style("left", () => { return event.pageX - 100 })
+          .style("top", (event.pageY - 100) + "px");
 
-        select(this).transition().duration(200).style('fill', 'black')
-
+        select(this).transition().duration(200).style("fill", function (d, i) {
+          return rgb(colorlookups[d.data.utility]).darker()
+        })
       })
       .on("mouseout", function (d) {
         tooltipdiv.transition()
@@ -173,7 +226,7 @@ class DonutChart extends React.Component {
           return colorlookups[d.data.utility]
         })
 
-        
+
       })
       .transition()
       .duration(myDuration)
@@ -199,17 +252,7 @@ class DonutChart extends React.Component {
 
 
 
-
-
-
-
-
-
-
-
-
-    // helpers
-
+    // internal functions
     function key(d) {
       return d.data.utility;
     }

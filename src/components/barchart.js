@@ -10,7 +10,8 @@ import {
     scaleBand,
     selectAll,
     sum,
-    event
+    event,
+    rgb
 } from 'd3'
 import { formatInt } from './numformat.js'
 
@@ -21,6 +22,10 @@ class BarChart extends React.Component {
     }
     componentDidMount() {
         this.createBarChart()
+        this.addResize()
+    }
+    addResize() {
+        window.addEventListener('resize', this.createBarChart)
     }
     componentDidUpdate() {
         this.createBarChart()
@@ -51,14 +56,16 @@ class BarChart extends React.Component {
             })
         })
         // d3 logic
+
+        let divdims = this.container.parentElement.getBoundingClientRect()
         let duration = 500
-        let width = 400;
-        let height = 225;
+        let width = divdims.width;
+        let height = divdims.height;
         let margins = {
-            t: 30,
-            b: 30,
-            r: 200,
-            l: 20
+            t: 20,
+            b: 125,
+            r: 80,
+            l: 40
         }
 
 
@@ -108,7 +115,7 @@ class BarChart extends React.Component {
             .join('g')
             .attr("class", "bar")
             .attr(`transform`, `translate(${margins.l}, ${margins.t})`)
-            .style("fill", function (d, i) { return colors[d.key]; });
+            .style("fill", (d, i) => { return colors[d.key]; });
 
         let rects = groups.selectAll("rect").data((d) => { return d })
             .join('rect')
@@ -119,19 +126,18 @@ class BarChart extends React.Component {
                     .style("opacity", .9);
                 tooltipdiv.html(
                     `
-                    ${d.data.period}
+                    <span class = 'tip-header'>${d.data.period}</span>
                     <br/>
-                    Utility Cost ($): ${formatInt(d.data.utility)}
+                    Utility Cost: $${formatInt(d.data.utility)}
                     <br/>
-                    Carbon Fine ($): ${formatInt(d.data.fine)}
+                    Carbon Fine: $${formatInt(d.data.fine)}
                     <br/>
-                    Total Cost ($): ${formatInt(d.data.util_and_fine)} 
+                    Total Cost: $${formatInt(d.data.util_and_fine)} 
                     `
                 )
-                    .style("left", () => { return event.pageX - 50 })
-                    .style("top", (event.pageY - 50) + "px");
-
-                select(this).transition().duration(200).style('fill', 'black')
+                    .style("left", () => { return event.pageX - 100 })
+                    .style("top", (event.pageY - 100) + "px");
+                select(this).transition().duration(200).style("fill", (d, i) => { return rgb(select(this).style('fill')).darker(); });
             })
             .on("mouseout", function (d) {
                 tooltipdiv.transition()
@@ -174,7 +180,7 @@ class BarChart extends React.Component {
         let legend = svg.selectAll(".legend").data([0]).join('g').attr('class', 'legend')
             .join('g')
             .attr('class', 'legend')
-            .attr('transform', `translate(${plotwidth + margins.l + 40}, ${margins.t + 40})`)
+            .attr('transform', `translate(${margins.l}, ${margins.t + plotheight})`)
 
         legend.selectAll('rect').data(Object.keys(colors)).join('rect')
             .attr("x", 15)

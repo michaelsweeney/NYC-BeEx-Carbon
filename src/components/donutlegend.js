@@ -56,7 +56,7 @@ class DonutLegend extends React.Component {
     rects
       .attr('fill', (d, i) => colorlookups[d])
       .attr('x', 50)
-      .attr('y', (d, i) => { console.log(d); return i * 30 })
+      .attr('y', (d, i) => { return i * 30 })
       .attr('width', 18)
       .attr('height', 18)
 

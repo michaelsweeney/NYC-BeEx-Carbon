@@ -1,12 +1,12 @@
 import React from 'react';
-import { DataControl } from './components/datacontrol.js'
+import { MainLayout } from './components/mainlayout.js'
 
 import './App.css';
 import './css/sidebar.css';
 import './css/mainlayout.css';
 import './css/footer.css';
 
-import './css/chart.css';
+import './css/chart.css'; 
 
 
 // import { TestSpace } from './testspace.js'
@@ -16,12 +16,10 @@ import './css/chart.css';
 function App() {
   return (
     <React.Fragment>
-      <DataControl></DataControl>
+      <MainLayout></MainLayout>
     </React.Fragment>
   )
 }
-
-
 
 
 
