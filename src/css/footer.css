@@ -3,11 +3,33 @@
 
 
 .footer {
-  display: inline-block;
+  /* display: inline-block; */
   overflow-x: hidden;
   overflow-y: hidden;
   white-space: nowrap;
+  vertical-align: middle;
+  width: 100vw;
+}
+.footer-copy {
+  float: left;
+  padding-top: 10px;
+  vertical-align: middle;
 }
 
+.footer-copy .head {
+  font-family: 'CircularStd-Bold';
+}
+.footer-copy .mid {
+  font-family: 'CircularStd-Book';
+}
+.footer .logos {
+  float: right;
+
+}
+
+.footer img {
+  margin-left: 20px;
+  margin-right: 20px;
+}
 
 

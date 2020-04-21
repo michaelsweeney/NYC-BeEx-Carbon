@@ -1,3 +1,16 @@
+
+.sidebar .print-btn {
+  position: absolute;
+  left: 220px;
+  top: 5px;
+
+}
+.sidebar .help-btn {
+  position: absolute;
+  left: 250px;
+  top: 10px;
+}
+
 .sidebar input {
   background: #FFFFFF;
   border: 1px solid #979797;
@@ -62,6 +75,8 @@
 .utility-input-main-container {
   margin-left: 20px;
   margin-right: 20px;
+  /* overflow-y: scroll;
+  height: 25%; */
 }
 
 .utility-input-container {

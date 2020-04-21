@@ -36,9 +36,7 @@ class CarbonBar extends React.Component {
         let divheightoffset = 50;
         let divwidthoffset = 28;
         let divdims = this.container.parentElement.getBoundingClientRect()
-        console.log(this.container)
-        console.log(this.container.parentElement)   
-        console.log(divdims)     
+
         let duration = 500
         let width = divdims.width - divwidthoffset;
         let height = divdims.height - divheightoffset;
@@ -152,7 +150,6 @@ class CarbonBar extends React.Component {
             .style('font-size', '18px')
 
         iconrect
-            // .transition().duration(500)
             .attr('width', () => icontext.node().getBBox().width + 40)
 
         let bottomtext = carbonheader.selectAll('.bottomtext')

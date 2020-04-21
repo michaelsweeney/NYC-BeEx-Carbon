@@ -4,6 +4,8 @@ import { HelpOutline } from '@material-ui/icons';
 import { UtilityInput } from './utilityinput.js'
 import { BuildingType } from './buildingtype.js'
 import { Add } from '@material-ui/icons';
+import { Print } from '@material-ui/icons';
+
 
 class Sidebar extends React.Component {
   constructor(props) {
@@ -68,7 +70,7 @@ class Sidebar extends React.Component {
     while (nextid in state.types) {
       nextid++
     }
-    
+
     state.types[nextid] = {
       type: 'A',
       area: 0,
@@ -83,19 +85,33 @@ class Sidebar extends React.Component {
     return (
       <div className='sidebar'>
 
+
+
+        {/* ----- HEADER ------ */}
         <div className='sidebar-text-1'>
+          <Print className = 'print-btn' style={{ color: 'rgb(184,215,52)', paddingTop: '5px' }}></Print>
+          <HelpOutline className = 'help-btn' style={{ color: 'rgb(184,215,52)', width: '25px', height: '25px', marginLeft: '10px' }}></HelpOutline>
           <div className=''>NYC LL97</div>
           <div className='sidebar-header'>Carbon Emissions</div>
           <div className='sidebar-header'>Calculator</div>
+
         </div>
 
+
+
+
+
+
+
+        {/* ----- BUILDING TYPE INPUTS ------ */}
+
         <div className='sidebar-text-2'>Building Inputs
-        <HelpOutline style={{ color: 'rgb(184,215,52)', width: '20px', height: '20px', marginLeft: '10px' }}></HelpOutline>
+        {/* <HelpOutline style={{ color: 'rgb(184,215,52)', width: '20px', height: '20px', marginLeft: '10px' }}></HelpOutline> */}
         </div>
         <div className='bldg-input-main-container'>
 
-        <div className='input-header-type'>Building Type</div>
-        <div className='input-header-area'>Area</div>
+          <div className='input-header-type sidebar-text-4'>Building Type</div>
+          <div className='input-header-area sidebar-text-4'>Area</div>
 
           {Object.keys(this.state.types).map((id) => {
             return (
@@ -114,11 +130,22 @@ class Sidebar extends React.Component {
               +
             </button>
             <div>Add Building Type</div>
-            </div>
+          </div>
         </div>
+
+
+
+
+        {/* ----- UTILITY INPUTS ------ */}
+
         <div className='sidebar-text-2'>Utility Inputs
-          <HelpOutline style={{ color: 'rgb(184,215,52)', width: '20px', height: '20px', marginLeft: '10px' }}></HelpOutline>
+          {/* <HelpOutline style={{ color: 'rgb(184,215,52)', width: '20px', height: '20px', marginLeft: '10px' }}></HelpOutline> */}
         </div>
+
+
+
+
+
 
         <div className='utility-input-main-container'>
 
@@ -168,9 +195,7 @@ class Sidebar extends React.Component {
             vals={this.state.utilities.fuel_four}
             callback={this.handleUtilityChange}
           ></UtilityInput>
-
           <button className='default-rate-btn sidebar-btn' onClick={this.useDefaultRates}>USE DEFAULT RATES</button>
-
         </div>
       </div>
     )
