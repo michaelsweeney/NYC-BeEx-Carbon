@@ -9,12 +9,16 @@ import { formatInt } from './numformat.js'
 class CarbonBar extends React.Component {
     constructor(props) {
         super(props)
+        this.addResize()
     }
     componentDidMount() {
         this.createBarChart()
     }
     componentDidUpdate() {
         this.createBarChart()
+    }
+    addResize() {
+        window.addEventListener('resize', this.createBarChart)
     }
     createBarChart = () => {
         // parse data
@@ -28,25 +32,33 @@ class CarbonBar extends React.Component {
             fine_2035,
         } = this.props.carbondata
 
-        let config = {
-            barthickness: 20,
-            barmarginleft: 25,
-            threshtextx: 20,
-            threshtexty: -30,
-            finetexty: -10,
-            finetextx: 150,
-            finelinex: 10,
-            duration: 500,
-            width: 700,
-            height: 200,
-            barlabelpad: 10,
-            margins: {
-                t: 50,
-                b: 10,
-                r: 200,
-                l: 10
-            }
+
+        let divheightoffset = 50;
+        let divwidthoffset = 28;
+        let divdims = this.container.parentElement.getBoundingClientRect()
+        console.log(this.container)
+        console.log(this.container.parentElement)   
+        console.log(divdims)     
+        let duration = 500
+        let width = divdims.width - divwidthoffset;
+        let height = divdims.height - divheightoffset;
+
+
+        let barthickness = 20
+        let barmarginleft = 25
+        let threshtextx = 20
+        let threshtexty = -30
+        let finetexty = -10
+        let finetextx = 150
+        let finelinex = 10
+        let barlabelpad = 10
+        let margins = {
+            t: 50,
+            b: 10,
+            r: 200,
+            l: 10
         }
+
 
         let linedata = [
             {
@@ -68,23 +80,20 @@ class CarbonBar extends React.Component {
 
         ]
 
-        config = Object.assign(config, this.props.config)
-
         let colors = { fine: "#333333", utility: "BAD636" };
-        let divdims = this.container.parentElement.getBoundingClientRect()
-        let plotwidth = config.width - config.margins.l - config.margins.r
-        let plotheight = config.height - config.margins.t - config.margins.b
+        let plotwidth = width - margins.l - margins.r
+        let plotheight = height - margins.t - margins.b
         let xScale = scaleLinear()
             .domain([0, max([co2limit_2024, total_carbon])])
             .range([0, plotwidth])
 
         let svg = select(this.container).selectAll('svg').data([0]).join('svg')
-            .attr('width', config.width).attr('height', config.height)
+            .attr('width', width).attr('height', height)
 
         let barg = svg.selectAll('g').data([0]).join('g')
             .attr('class', 'bar-g')
-            .attr('width', config.width)
-            .attr('height', config.height)
+            .attr('width', width)
+            .attr('height', height)
             .attr('transform', `translate(${100}, ${125})`)
 
 
@@ -169,7 +178,7 @@ class CarbonBar extends React.Component {
 
 
         function fineContainer(d, i) {
-            let g = select(this).selectAll('group').data([0]).join('g').attr('transform', `translate(${i * 150},0)`)
+            let g = select(this).selectAll('group').data([0]).join('g').attr('transform', `translate(${i * 175},0)`)
 
             g.selectAll('.rect-container').data([0]).join('rect')
                 .attr('class', 'rect-container')
@@ -198,7 +207,6 @@ class CarbonBar extends React.Component {
 
             let textwidths = []
             g.selectAll('text').nodes().forEach((node) => {
-                // console.log(node.getBBox().width)
                 textwidths.push(node.getBBox().width)
             })
             let maxwidth = max(textwidths)
@@ -207,60 +215,39 @@ class CarbonBar extends React.Component {
         }
 
 
-
-
-        // construct bar
-        // let finelines = barg.selectAll('line').data(linedata, (d) => d.key).join('line')
-        // finelines
-        //     .transition().duration(config.duration)
-        //     .attr('y1', (d) => { return config.finelinex })
-        //     .attr('x1', (d) => { return xScale(d.thresh) })
-        //     .attr('y2', (d) => { return config.width - config.finelinex })
-        //     .attr('x2', (d) => { return xScale(d.thresh) })
-        //     .style('stroke', 'black')//colors['utility'])
-        //     .attr("stroke-width", () => '2px')
-
-
-
-        //
-        //  <polyline fill="none" stroke="blue" stroke-width="2"
-        //    points="05,30
-        //            15,30
-        //            15,20
-        //            25,20
-        //            25,10
-        //            35,10"
-
-
-
-
-
         let bar = barg.selectAll('rect').data([total_carbon]).join('rect')
-            .transition().duration(config.duration)
+            .transition().duration(duration)
             .attr("y", 40)
-            .attr("height", config.barthickness)
+            .attr("height", barthickness)
             .attr('fill', '#999999')
             .attr("x", 0)
             .attr("width", (d) => { return xScale(total_carbon) })
 
 
-
-
         let axisline = barg.selectAll('.axisline').data([0]).join('line')
             .attr('y1', (d) => { return 30 })
-            .attr('x1', (d) => { return 0 })//xScale(0) })
+            .attr('x1', (d) => { return 0 })
             .attr('y2', (d) => { return 70 })
-            .attr('x2', (d) => { return 0 })//xScale(0) })
+            .attr('x2', (d) => { return 0 })
             .style('stroke', colors['fine'])
             .attr("stroke-width", () => '2px')
 
+        let bartext = barg.selectAll('.bartext').data([0]).join('text')
+        bartext
+            .text((d) => { return formatInt(total_carbon) })
+            .attr('class', 'bartext')
+            .transition().duration(duration)
+            .attr('x', (d) => xScale(total_carbon) + 2)
+            .attr('y', 40 + (barthickness / 1.5))
 
+
+
+
+        // polylines linked to rects
         let imap = {
             0: 3,
             1: 2,
             2: 1
-
-
         }
         let polylines = barg.selectAll('polyline').data(linedata, (d) => d.key).join('polyline')
         polylines
@@ -269,15 +256,14 @@ class CarbonBar extends React.Component {
             .attr('fill', 'none')
             .transition().duration(500)
             .attr('points', (d, i) => {
-                console.log(d)
                 if (d.fine == 0) {
                     return ''
                 }
                 return `
                         ${xScale(d.thresh)}, 80
                         ${xScale(d.thresh)}, ${40 - 15 * imap[i]}
-                        ${(i + 1) * 150}, ${40 - 15 * imap[i]}
-                        ${(i + 1) * 150}, -50
+                        ${(i + 1) * 175}, ${40 - 15 * imap[i]}
+                        ${(i + 1) * 175}, -50
                         `
             }
             )

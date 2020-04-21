@@ -26,10 +26,9 @@
   stroke-width: 3px;
 } 
 
-
-
 .donut-container {
   display: inline-block;
+  vertical-align: top;
   /* width: 150px; */
 }
 
@@ -62,7 +61,7 @@
 
 div.tooltip {	
   position: absolute;			
-  text-align: center;		
+  text-align: left;		
   font-family: 'CircularStd-Book'	;
   /* width: 60px;				 */
   /* height: 28px;					 */
@@ -78,9 +77,11 @@ div.tooltip .tip-header {
   font-family: 'CircularStd-Bold'
 }
 
-
-
-
 .carbon-summary-text {
   fill: white;
+}
+
+svg text {
+  font-family: 'CircularStd-Bold'
+
 }

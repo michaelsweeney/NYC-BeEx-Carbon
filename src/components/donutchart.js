@@ -37,9 +37,11 @@ class DonutChart extends React.Component {
     this.createDonutChart()
   }
   addResize() {
-    // window.addEventListener('resize', this.createDonutChart)
+
+    window.addEventListener('resize', this.createDonutChart)
   }
-  createDonutChart() {
+
+  createDonutChart = () => {
     let data = this.props.donutprops
     let title = this.props.title
     let tag = this.props.tag
@@ -47,21 +49,28 @@ class DonutChart extends React.Component {
     // get totals - why doesn't reduce work for this?
 
     let divdims = this.container.parentElement.getBoundingClientRect()
+    let divheightoffset = 65;
+    let divwidthoffset = 28;
 
     // definitions and setup
     let myDuration = 600;
     let firstTime = true;
 
-    // let width = 120
-    //  let height = 120
 
-    let width = divdims.width / 3
-    let height = divdims.height
-    let marginbottom = 75
-    let margin = 10
-    let radius = width / 2;
-    console.log(width)
-    console.log(radius)
+    let width = (divdims.width - divwidthoffset) / 3
+    let height = divdims.height - divheightoffset
+
+    let margintop = Math.max(height * 0.05, 10)
+    let marginbottom = Math.max(height * 0.05, 30)
+    
+    let piewidth = width
+    let pieheight = height - margintop - marginbottom
+
+    let margin = Math.max(height * 0.05, 10)
+    let piemargin = Math.max(height * 0.05, 10)
+    
+    let radius = Math.min(piewidth, pieheight) / 2;
+
     let colorlookups = {
       'Electricity': "#358FB4",
       'Gas': "#6EB12C",
@@ -73,15 +82,15 @@ class DonutChart extends React.Component {
     let unitlookup = {
       'cost': {
         'val': '$',
-        'val_norm': '$/yr'
+        'val_norm': '$/sf'
       },
       'energy': {
-        'val': 'kBtu/yr',
-        'val_norm': 'kBtu/sf/yr'
+        'val': 'kBtu',
+        'val_norm': 'kBtu/sf'
       },
       'carbon': {
         'val': 'tCO2',
-        'val_norm': 'tCO2/yr'
+        'val_norm': 'tCO2/sf'
       }
     }
 
@@ -98,19 +107,19 @@ class DonutChart extends React.Component {
     //  build container
     let svg = select(this.container).selectAll('svg').data([0]).join('svg')
       .attr("width", width)
-      .attr("height", height + marginbottom)
+      .attr("height", height)
 
     let g = svg.selectAll('g').data([0]).join('g')
-      .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-    let aspect = width / height
+      .attr("transform", `translate(${width/2}, ${(pieheight / 2) + margintop})`);
 
+    let aspect = piewidth / pieheight
 
     // add title
     let titletext = svg.selectAll('.titletext').data([0]).join('text')
       .text(title)
       .attr('class', 'titletext')
       .attr('x', width / 2)
-      .attr('y', margin + 2)
+      .attr('y', margin)
       .attr('font-size', 14)
       .attr('fill', 'black')
       .attr('text-anchor', 'middle')
@@ -133,7 +142,7 @@ class DonutChart extends React.Component {
           }
           if (i == 1) {
             let val = d || 0
-            return `$${Math.round(val * 100) / 100}/sf/yr`
+            return `$${Math.round(val * 100) / 100}/sf`
           }
         }
 
@@ -146,13 +155,10 @@ class DonutChart extends React.Component {
             return `${Math.round(val * 100) / 100} ${unitlookup[tag].val_norm}`
           }
         }
-
-
-
       })
       .attr('class', 'summarytext')
       .attr('x', width / 2)
-      .attr('y', (d, i) => height + 2 + i * 12)
+      .attr('y', (d, i) => pieheight + margintop + (i+1) * 12)
       .attr('font-size', 12)
       .attr('fill', 'black')
       .attr('text-anchor', 'middle')
@@ -207,7 +213,7 @@ class DonutChart extends React.Component {
           <br/>
           ${tag == 'cost' ? `$${formatInt(d.data.val)}` : `${formatInt(d.data.val)} ${unitlookup[tag].val}`}
           <br/>
-          ${tag == 'cost' ? `$${formatInt(d.data.val_norm)}/sf/yr` : `${formatInt(d.data.val)} ${unitlookup[tag].val_norm}`}
+          ${tag == 'cost' ? `$${formatInt(d.data.val_norm)}/sf` : `${formatInt(d.data.val_norm)} ${unitlookup[tag].val_norm}`}
             `
         )
           .style("left", () => { return event.pageX - 100 })

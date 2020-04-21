@@ -55,20 +55,22 @@ class BarChart extends React.Component {
                 xmax = max([xmax, s[0], s[1]])
             })
         })
-        // d3 logic
 
+        // parent container sizing
+        let divheightoffset = 50;
+        let divwidthoffset = 28;
         let divdims = this.container.parentElement.getBoundingClientRect()
+
         let duration = 500
-        let width = divdims.width;
-        let height = divdims.height;
+        let width = divdims.width - divwidthoffset;
+        let height = divdims.height - divheightoffset;
+        let legendtoppad = 20
         let margins = {
             t: 20,
-            b: 125,
+            b: 100,
             r: 80,
             l: 40
         }
-
-
 
         let plotwidth = width - margins.l - margins.r
         let plotheight = height - margins.t - margins.b
@@ -180,7 +182,7 @@ class BarChart extends React.Component {
         let legend = svg.selectAll(".legend").data([0]).join('g').attr('class', 'legend')
             .join('g')
             .attr('class', 'legend')
-            .attr('transform', `translate(${margins.l}, ${margins.t + plotheight})`)
+            .attr('transform', `translate(${margins.l}, ${margins.t + plotheight + legendtoppad})`)
 
         legend.selectAll('rect').data(Object.keys(colors)).join('rect')
             .attr("x", 15)

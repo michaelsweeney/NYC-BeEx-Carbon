@@ -1,4 +1,13 @@
 function formatInt(nStr) {
+
+    if (+nStr < 5) {
+        return Math.round(+nStr * 1000) / 1000
+    }
+
+    if (!isFinite(nStr)) {
+        return 0
+    }
+
     nStr += '';
     var x = nStr.split('.');
     var x1 = x[0];
