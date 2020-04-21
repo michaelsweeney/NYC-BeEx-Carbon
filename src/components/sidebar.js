@@ -32,7 +32,6 @@ class Sidebar extends React.Component {
     state.utilities[fuel][type] = value
     this.setState(state)
     this.props.callback(state)
-
   }
 
 
@@ -85,12 +84,12 @@ class Sidebar extends React.Component {
     return (
       <div className='sidebar'>
 
-
-
         {/* ----- HEADER ------ */}
         <div className='sidebar-text-1'>
+        <a href="javascript:window.print()">
           <Print className = 'print-btn' style={{ color: 'rgb(184,215,52)', paddingTop: '5px' }}></Print>
-          <HelpOutline className = 'help-btn' style={{ color: 'rgb(184,215,52)', width: '25px', height: '25px', marginLeft: '10px' }}></HelpOutline>
+          </a>
+          <HelpOutline onClick={this.props.modalcallback} className = 'help-btn' style={{ color: 'rgb(184,215,52)', width: '25px', height: '25px', marginLeft: '10px' }}></HelpOutline>
           <div className=''>NYC LL97</div>
           <div className='sidebar-header'>Carbon Emissions</div>
           <div className='sidebar-header'>Calculator</div>

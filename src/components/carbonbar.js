@@ -253,7 +253,10 @@ class CarbonBar extends React.Component {
             .attr('fill', 'none')
             .transition().duration(500)
             .attr('points', (d, i) => {
-                if (d.fine == 0) {
+                if (d.thresh > (total_carbon * 2)) {
+                    return ''
+                }
+                if ((d.thresh == 0) && total_carbon == 0) {
                     return ''
                 }
                 return `

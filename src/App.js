@@ -5,9 +5,8 @@ import './App.css';
 import './css/sidebar.css';
 import './css/mainlayout.css';
 import './css/footer.css';
-
 import './css/chart.css'; 
-
+import './css/printlayout.css';
 
 // import { TestSpace } from './testspace.js'
 

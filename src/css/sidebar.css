@@ -11,6 +11,18 @@
   top: 10px;
 }
 
+.sidebar .print-btn:hover {
+  cursor: pointer;
+  fill: rgb(156, 182, 42);
+  transition: background-color 500ms;
+}
+.sidebar .help-btn:hover {
+  cursor: pointer;
+  fill: rgb(156, 182, 42);
+  transition: background-color 500ms;
+}
+
+
 .sidebar input {
   background: #FFFFFF;
   border: 1px solid #979797;

@@ -1,0 +1,12 @@
+@media print {
+  .print-layout {
+    display: inline-block !important;
+    width: 850px;
+    height: 850px;
+  }
+  .main-container {
+    display: none !important; 
+  }
+}
+
+
