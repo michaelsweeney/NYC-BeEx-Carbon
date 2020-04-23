@@ -11,7 +11,7 @@ const BeExLogo = () => {
             <rect x="74" y="45.05" width="212.22" height="265.27" style={{fill: 'none'}}></rect>
           </clipPath>
         </defs>
-        <g class="logo-words">
+        <g className="logo-words">
           <text transform="translate(220.47 98.75)" style={{
             isolation: 'isolate',
             fontSize: 56.509544372558594,

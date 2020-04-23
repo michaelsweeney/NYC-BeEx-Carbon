@@ -40,8 +40,8 @@ class BarChart extends React.Component {
         } = this.props.barprops
 
         let datatostack = [
-            { period: '2024', utility: total_cost, fine: fine_2024, util_and_fine: fine_2024 + total_cost },
-            { period: '2030', utility: total_cost, fine: fine_2030, util_and_fine: fine_2030 + total_cost },
+            { period: '2024-2029', utility: total_cost, fine: fine_2024, util_and_fine: fine_2024 + total_cost },
+            { period: '2030-2034', utility: total_cost, fine: fine_2030, util_and_fine: fine_2030 + total_cost },
             { period: '2035', utility: total_cost, fine: fine_2035, util_and_fine: fine_2035 + total_cost },
         ]
 
@@ -69,7 +69,7 @@ class BarChart extends React.Component {
             t: 20,
             b: 100,
             r: 80,
-            l: 40
+            l: 75
         }
 
         let plotwidth = width - margins.l - margins.r
@@ -87,7 +87,7 @@ class BarChart extends React.Component {
             .attr('transform', `translate(${margins.l}, ${margins.t})`)
 
         let yScale = scaleBand()
-            .domain(['2024', '2030', '2035'])
+            .domain(['2024-2029', '2030-2034', '2035'])
             .rangeRound([0, plotheight])
 
         let xScale = scaleLinear()

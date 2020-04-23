@@ -105,6 +105,10 @@ class Sidebar extends React.Component {
     this.props.callback(state)
   }
 
+  printReport = () => {
+    window.print()
+  }
+
   render() {
 
     return (
@@ -112,9 +116,9 @@ class Sidebar extends React.Component {
 
         {/* ----- HEADER ------ */}
         <div className='head-text-1'>
-          <a href="javascript:window.print()">
-            <Print className='print-btn' style={{ color: 'rgb(184,215,52)', paddingTop: '5px' }}></Print>
-          </a>
+
+            <Print className='print-btn' onClick={this.printReport} style={{ color: 'rgb(184,215,52)', paddingTop: '5px' }}></Print>
+
           <HelpOutline onClick={this.props.modalcallback} className='help-btn' style={{ color: 'rgb(184,215,52)', width: '25px', height: '25px', marginLeft: '10px' }}></HelpOutline>
           <div className=''>NYC LL97</div>
           <div className='sidebar-header'>Carbon Emissions</div>

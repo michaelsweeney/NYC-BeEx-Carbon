@@ -51,26 +51,13 @@ class MainLayout extends React.Component {
           <CardLayout building={this.state.building}></CardLayout>
           <Footer></Footer>
         </div>
-        <PrintLayout></PrintLayout>
+        <PrintLayout building={this.state.building}></PrintLayout>
       </React.Fragment>
 
     )
   }
 }
 
-
-// class MainLayout extends React.Component {
-//   constructor(props) {
-//     super(props)
-
-//   }
-
-//   render() {
-//     return (
-//       <div>test2</div>
-//     )
-//   }
-// }
 
 
 export { MainLayout }

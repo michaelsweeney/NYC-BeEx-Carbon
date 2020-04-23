@@ -1,12 +1,39 @@
-/* @media print {
+@media print {
   .print-layout {
     display: inline-block !important;
-    width: 850px;
-    height: 850px;
+    margin: 0px;
+    padding: 0px;
+    width: 670px;
+    /* width: 7in; */
+    height: 900px;
+    /* or height: 9.5in; */
+    clear: both;
+    background-color: gray;
+    page-break-after: always;
   }
   .main-container {
-    display: none !important; 
+    display: none !important;
   }
-}
- */
 
+
+
+
+
+  .print-logos {
+    position: absolute;
+    bottom: 50px;
+    margin-left: 50px;
+    margin-right: 50px;
+    /* text-align: center; */
+    /* align-content: center; */
+    /* align-items: center; */
+  }
+  .print-logos a {
+    display: inline-block;
+    margin-left: 40px;
+    margin-right: 40px;
+  }
+
+
+
+}

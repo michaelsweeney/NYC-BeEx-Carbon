@@ -22,6 +22,7 @@
   animation-duration: 1s;
   box-sizing: border-box;
   overflow-y: scroll;
+  overflow-x: scoll;
 }
 
 .modal.inactive {
@@ -73,7 +74,7 @@
   margin-left: 10px;
 }
 .modal-logos a {
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
 
 }

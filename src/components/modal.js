@@ -40,7 +40,7 @@ class Modal extends React.Component {
                     <div className='head-text-1'> NYC LL97 Carbon Calculator
                     <button className='modal-exit-btn' onClick={this.setInactive}>x</button>
                     </div>
-                    <div className='head-text-2'> This tool is currently in BETA. Please email carboncalc@beex.org with comments or bug reports.</div>
+                    <div className='head-text-2'> This tool is currently in BETA testing. Please email carboncalc@beex.org with comments or bug reports.</div>
 
                     <div className='instructions-container'>
                         <div className='head-text-3'> Instructions</div>
