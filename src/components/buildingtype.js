@@ -49,7 +49,7 @@ class BuildingType extends React.Component {
             </select>
           </div>
           <div className='area-container'>
-            <input datatag={typenum} onInput={this.props.updateCallback}
+            <input datatag={typenum} onInput={this.props.updateCallback} onBlur={this.props.blurCallback}
               type='number'>
             </input>
             <button

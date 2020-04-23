@@ -12,27 +12,30 @@ class UtilityInput extends React.Component {
         cons_title,
         cost_title,
         utiltag,
-        callback,
+        changeCallback,
+        blurCallback,
         vals
       } = this.props
   
       return (
         <div className={`${utiltag}-container utility-input-container`}>
           <div className='consumption-container'>
-            <div className='sidebar-text-4'>{`${title} - ${cons_title}`}</div>
+            <div className='head-text-4'>{`${title} - ${cons_title}`}</div>
             <input
               type='number'
               datatag={utiltag + '-cons'}
-              onChange={callback}
+              onChange={changeCallback}
+              onBlur={blurCallback}
               value={vals.cons}>
             </input>
           </div>
           <div className='cost-container'>
-            <div className='sidebar-text-4'>{cost_title}</div>
+            <div className='head-text-4'>{cost_title}</div>
             <input
               type='number'
               datatag={utiltag + '-rate'}
-              onChange={callback}
+              onChange={changeCallback}
+              onBlur={blurCallback}
               value={vals.rate}></input>
           </div>
         </div>

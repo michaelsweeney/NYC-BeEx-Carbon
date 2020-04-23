@@ -7,6 +7,8 @@ import './css/mainlayout.css';
 import './css/footer.css';
 import './css/chart.css'; 
 import './css/printlayout.css';
+import './css/modal.css';
+import './css/typography.css';
 
 // import { TestSpace } from './testspace.js'
 

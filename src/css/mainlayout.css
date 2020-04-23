@@ -3,40 +3,6 @@
 .print-layout {
   display: none;
 }
-.modal {
-  z-index: 999;
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
-  box-sizing: border-box;
-  background-color: rgba(0, 0, 0, 0.25);
-}
-
-.modal .modal-content {
-  height: 80%;
-  width: 80%;
-  padding: 10%;
-  border-radius: 5px;
-  background-color: white;
-  animation-name: animatetop;
-  animation-duration: 0.4s;
-  box-sizing: border-box;
-}
-  
-
-.modal.inactive {
-  left: -999px;
-  display: none;
-}
-.modal {
-  transition: left 1000ms;
-}
-
-@keyframes animatetop {
-  from {top: -300px; opacity: 0}
-  to {top: 0; opacity: 1}
-}
-
 
 .main-container {
   width: 100vw;
