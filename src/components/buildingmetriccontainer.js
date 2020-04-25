@@ -1,7 +1,7 @@
 import React from 'react'
 import { formatInt } from './numformat.js'
-import { DonutChart } from './donutchart.js'
-import {DonutLegend} from './donutlegend.js'
+import { DonutChart } from './charts/donutchart.js'
+import {DonutLegend} from './charts/donutlegend.js'
 
 class BuildingMetricContainer extends React.Component {
     constructor(props) {
@@ -18,9 +18,6 @@ class BuildingMetricContainer extends React.Component {
             cost_sf,
             carbon_sf,
         } = this.props.building.utilities
-
-        
-
 
         let costdata = [
             {
@@ -112,12 +109,10 @@ class BuildingMetricContainer extends React.Component {
                 <DonutChart title={'Cost'} donutprops={costdata} tag={'cost'}></DonutChart>
                 <DonutChart title={'Energy'} donutprops={energydata} tag={'energy'}></DonutChart>
                 <DonutChart title={'Carbon'} donutprops={carbondata} tag={'carbon'}></DonutChart>
-                <DonutLegend></DonutLegend>
+                <DonutLegend legendprops={energydata}></DonutLegend>
             </React.Fragment>
         )
-
     }
-
 }
 
 

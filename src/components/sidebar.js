@@ -143,6 +143,7 @@ class Sidebar extends React.Component {
           <a
               href='https://up.codes/viewer/new_york_city/nyc-building-code-2014/chapter/3/use-and-occupancy-classification#3'
               target="_blank"
+              rel="noopener noreferrer"
               >
               <sup style={{marginLeft: '5px', paddingTop: '5px'}}>?</sup>
           </a>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {BarChart} from './barchart.js'
+import {BarChart} from './charts/barchart.js'
 
 
 class AnnualCostSummaryContainer extends React.Component {

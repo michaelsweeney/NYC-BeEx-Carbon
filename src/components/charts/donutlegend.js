@@ -1,20 +1,8 @@
 import React from 'react';
 
 import {
-  nest,
   select,
-  selectAll,
-  scaleOrdinal,
-  pie,
-  arc,
-  interpolateObject,
-  interpolate
 } from 'd3'
-
-
-
-
-
 
 
 class DonutLegend extends React.Component {
@@ -68,22 +56,7 @@ class DonutLegend extends React.Component {
       .attr('x', 75)
       .attr('y', (d, i) => { return (i * 30) + 9 })
       .attr('font-size', 14)
-
-
-
-
   }
-
-
-
-
-
-
-
-
-
-
-
 
   render() {
     return (
@@ -91,14 +64,5 @@ class DonutLegend extends React.Component {
     )
   }
 }
-
-
-
-
-
-
-
-
-
 
 export { DonutLegend }

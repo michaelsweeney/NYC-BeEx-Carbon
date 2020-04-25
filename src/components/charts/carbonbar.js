@@ -4,7 +4,7 @@ import {
     scaleLinear,
     select,
 } from 'd3'
-import { formatInt } from './numformat.js'
+import { formatInt } from '../numformat.js'
 
 class CarbonBar extends React.Component {
     constructor(props) {
@@ -12,15 +12,17 @@ class CarbonBar extends React.Component {
         this.addResize()
     }
     componentDidMount() {
-        this.createBarChart()
+        this.createBarChart({})
     }
     componentDidUpdate() {
-        this.createBarChart()
+        this.createBarChart({})
     }
     addResize() {
-        window.addEventListener('resize', this.createBarChart)
+        window.addEventListener('resize', () => {
+            this.createBarChart({ ignoretransition: true })
+        })
     }
-    createBarChart = () => {
+    createBarChart = (params) => {
         // parse data
         let {
             total_carbon,
@@ -32,28 +34,26 @@ class CarbonBar extends React.Component {
             fine_2035,
         } = this.props.carbondata
 
-
         let divheightoffset = 50;
         let divwidthoffset = 28;
-        let divdims = this.container.parentElement.getBoundingClientRect()
+        let divdims = this.container.getBoundingClientRect()
 
         let duration = 500
+        if (params.ignoretransition) {
+            duration = 0;
+        }
+
+        console.log(duration)
+
         let width = divdims.width - divwidthoffset;
         let height = divdims.height - divheightoffset;
 
+        let barthickness = height / 15
 
-        let barthickness = 20
-        let barmarginleft = 25
-        let threshtextx = 20
-        let threshtexty = -30
-        let finetexty = -10
-        let finetextx = 150
-        let finelinex = 10
-        let barlabelpad = 10
         let margins = {
-            t: 50,
+            t: 10,
             b: 10,
-            r: 200,
+            r: 10,
             l: 10
         }
 
@@ -90,75 +90,9 @@ class CarbonBar extends React.Component {
 
         let barg = svg.selectAll('g').data([0]).join('g')
             .attr('class', 'bar-g')
-            .attr('width', width)
-            .attr('height', height)
-            .attr('transform', `translate(${100}, ${125})`)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /* --- MAIN ICON CONTAINER --- */
-        let carbonheader = svg.selectAll('.carbonheader')
-            .data([0]).join('g')
-            .attr('class', 'carbonheader')
-            .attr('transform', `translate(0, 20)`)
-
-
-        let toptext = carbonheader.selectAll('.toptext')
-            .data([0]).join('text')
-            .attr('class', 'toptext')
-            .text('Your Building\'s Footprint')
-            .attr('y', 0)
-
-        let iconcontainer = carbonheader.selectAll('.iconcontainer')
-            .data([0]).join('g')
-            .attr('class', 'iconcontainer')
-
-
-        let iconrect = iconcontainer.selectAll('rect')
-            .data([0]).join('rect')
-            .attr('y', 18)
-            .attr('width', 40)
-            .attr('height', 50)
-            .attr('rx', '8px')
-            .attr('ry', '8px')
-            .attr('fill', '#BAD636')
-
-        let icontext = iconcontainer.selectAll('text')
-            .data([0]).join('text')
-            .attr('y', 45)
-            .attr('x', 20)
-            .text(formatInt(total_carbon))
-            .style('fill', 'white')
-            .style('font-family', 'CircularStd-Bold')
-            .style('font-size', '18px')
-
-        iconrect
-            .attr('width', () => icontext.node().getBBox().width + 40)
-
-        let bottomtext = carbonheader.selectAll('.bottomtext')
-            .data([0]).join('text')
-            .attr('class', 'bottomtext')
-            .text('tCO2/year')
-            .attr('y', 100)
-
-
+            .attr('width', plotwidth - margins.r)
+            .attr('height', plotheight - margins.b)
+            .attr('transform', `translate(${margins.l}, ${margins.t})`)
 
         // create threshold containers
         let threshcontainermain = svg.selectAll('.thresh-main-container')
@@ -211,12 +145,11 @@ class CarbonBar extends React.Component {
                 .attr('width', () => maxwidth + 30)
         }
 
-
         let bar = barg.selectAll('rect').data([total_carbon]).join('rect')
             .transition().duration(duration)
             .attr("y", 40)
             .attr("height", barthickness)
-            .attr('fill', '#999999')
+            .attr('fill', '#C4C4C4')
             .attr("x", 0)
             .attr("width", (d) => { return xScale(total_carbon) })
 
@@ -227,7 +160,7 @@ class CarbonBar extends React.Component {
             .attr('y2', (d) => { return 70 })
             .attr('x2', (d) => { return 0 })
             .style('stroke', colors['fine'])
-            .attr("stroke-width", () => '2px')
+            .attr("stroke-width", () => '1px')
 
         let bartext = barg.selectAll('.bartext').data([0]).join('text')
         bartext
@@ -236,9 +169,6 @@ class CarbonBar extends React.Component {
             .transition().duration(duration)
             .attr('x', (d) => xScale(total_carbon) + 2)
             .attr('y', 40 + (barthickness / 1.5))
-
-
-
 
         // polylines linked to rects
         let imap = {
@@ -251,7 +181,7 @@ class CarbonBar extends React.Component {
             .attr('stroke', 'black')
             .attr('stroke-width', '1px')
             .attr('fill', 'none')
-            .transition().duration(500)
+            .transition().duration(duration)
             .attr('points', (d, i) => {
                 if (d.thresh > (total_carbon * 2)) {
                     return ''
@@ -265,12 +195,12 @@ class CarbonBar extends React.Component {
                         ${(i + 1) * 175}, ${40 - 15 * imap[i]}
                         ${(i + 1) * 175}, -50
                         `
-            }
-            )
+            })
 
     }
+
     render() {
-        return <div className='carbon-bar-container' ref={container => this.container = container}></div>
+        return <div className='carbon-bar-card' ref={container => this.container = container}></div>
     }
 }
 

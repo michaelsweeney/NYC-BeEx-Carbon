@@ -5,7 +5,7 @@ import { CarbonLimitContainer } from './carbonlimitcontainer.js'
 import { BuildingMetricContainer } from './buildingmetriccontainer.js'
 
 
-class CardLayout extends React.Component {
+class PrintCardLayout extends React.Component {
   constructor(props) {
     super(props)
 
@@ -14,15 +14,17 @@ class CardLayout extends React.Component {
   render() {
     let { building } = this.props;
     return (
-      <div className='content-layout'>
-        <div className='top-row'>
+      <div className='print-content-layout'>
+        <div className='print-top-row'>
+          <div className='carbon-bar-card-container'>
             <CarbonLimitContainer building={building}></CarbonLimitContainer>
+          </div>
         </div>
-        <div className='bottom-row'>
-          <div className='left-bottom cost-card'>
+        <div className='print-bottom-row'>
+          <div className='print-left-bottom cost-card'>
             <AnnualCostSummaryContainer building={building}></AnnualCostSummaryContainer>
           </div>
-          <div className='right-bottom donut-card'>
+          <div className='print-right-bottom donut-card'>
             <BuildingMetricContainer building={building}></BuildingMetricContainer>
           </div>
         </div>
@@ -32,4 +34,4 @@ class CardLayout extends React.Component {
 }
 
 
-export { CardLayout }
+export { PrintCardLayout }

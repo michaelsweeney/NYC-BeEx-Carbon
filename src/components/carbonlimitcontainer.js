@@ -1,10 +1,10 @@
 
 import React from 'react';
 
+import { formatInt } from './numformat.js'
 
-import {formatInt} from './numformat.js'
-import {CarbonBar} from './carbonbar.js'
-
+import { CarbonSummary } from './charts/carbonsummary.js'
+import { CarbonBar } from './charts/carbonbar.js'
 
 
 class CarbonLimitContainer extends React.Component {
@@ -23,12 +23,13 @@ class CarbonLimitContainer extends React.Component {
             fine_2030: summary.fine_2030,
             fine_2035: summary.fine_2035
         }
-        
 
-        return (<React.Fragment>
-            <div className='container-header'>Carbon Summary</div>
-            <CarbonBar carbondata={carbondata}></CarbonBar>
-        </React.Fragment>
+        return (
+            <div className='carbon-main-container'>
+                <div className='container-header'>Carbon Summary</div>
+                <CarbonSummary carbondata={carbondata}></CarbonSummary>
+                <CarbonBar carbondata={carbondata}></CarbonBar>
+            </div>
         )
     }
 }

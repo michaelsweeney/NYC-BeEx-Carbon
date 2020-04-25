@@ -1,21 +1,3 @@
-/* svg text {
-  font-family: 'Roboto';
-}
-
-
-.legend-text {
-  font-size: 14px;
-  font-family: 'Roboto';
-}
-.cost-container .x-axis {
-  display: none;
-}
-
-
-/* .cost-container .y-axis .tick line{
-  display: none;
-} */
-
 
 .label {
   fill: rgb(51,51,51);
@@ -77,11 +59,17 @@ div.tooltip .tip-header {
   font-family: 'CircularStd-Bold'
 }
 
+
+
 .carbon-summary-text {
   fill: white;
 }
 
 svg text {
-  font-family: 'CircularStd-Bold'
+  font-family: 'CircularStd-Book';
+  font-size: 14px;
+}
 
+.legend-text {
+  font-size: 14px;
 }

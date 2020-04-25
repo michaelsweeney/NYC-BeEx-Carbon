@@ -1,5 +1,11 @@
 import React from 'react';
-import { MainLayout } from './components/mainlayout.js'
+import { Sidebar } from './components/sidebar.js'
+import { CardLayout } from './components/cardlayout'
+import { Footer } from './components/footer.js'
+import { Modal } from './components/modal.js'
+import { defaultbuilding } from './components/defaultbuilding.js'
+import { compileBuilding } from './components/compilebuilding.js'
+import { PrintLayout } from './components/printlayout.js'
 
 import './App.css';
 import './css/sidebar.css';
@@ -9,81 +15,56 @@ import './css/chart.css';
 import './css/printlayout.css';
 import './css/modal.css';
 import './css/typography.css';
-
-// import { TestSpace } from './testspace.js'
-
+import './css/logos.css';
 
 
-function App() {
-  return (
-    <React.Fragment>
-      <MainLayout></MainLayout>
-    </React.Fragment>
-  )
+
+class App extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      building: compileBuilding(defaultbuilding),
+      modalactive: true,
+    }
+  }
+
+  inputCallback = (building) => {
+    let state = Object.assign({}, this.state)
+    let compiled = compileBuilding(building)
+    state.building = compiled;
+    this.setState(state)
+  }
+
+  componentDidUpdate() {
+  }
+
+  hideModal = () => {
+    let state = Object.assign({}, this.state)
+    state.modalactive = false
+    this.setState(state)
+  }
+
+  showModal = () => {
+    let state = Object.assign({}, this.state)
+    state.modalactive = true
+    this.setState(state)
+  }
+
+  render() {
+    console.log(this.state.building)
+    return (
+      <React.Fragment>
+        {/* <Modal isactive={this.state.modalactive} callback={this.hideModal}></Modal> */}
+        <div className="main-container">
+          <Sidebar defaultbuilding={defaultbuilding} callback={this.inputCallback} modalcallback = {this.showModal}></Sidebar>
+          <CardLayout building={this.state.building}></CardLayout>
+          <Footer></Footer>
+        </div>
+        <PrintLayout building={this.state.building}></PrintLayout>
+      </React.Fragment>
+
+    )
+  }
 }
-
-
-
-
-
-// class testApp extends React.Component {
-//   constructor(props) {
-//     super(props)
-
-//     this.state = {
-//       data: [
-//         {
-//           utility: 'Electricity',
-//           val: 200
-//         },
-//         {
-//           utility: 'Gas',
-//           val: 200
-//         },
-//         {
-//           utility: 'Steam',
-//           val: 200
-//         },
-//         {
-//           utility: 'Fuel_Two',
-//           val: 200
-//         },
-//         {
-//           utility: 'Fuel_Four',
-//           val: 200
-//         },
-//       ]
-//     }
-//     this.setTimer()
-//   }
-
-//   setTimer() {
-//     setInterval(() => {
-//       let newstate = Object.assign({}, this.state)
-//       newstate.data.forEach((obj) => {
-//         obj.val = Math.random() * Math.round(Math.random())
-//       })
-//       this.setState(newstate)
-//     }, 1000)
-
-//   }
-//   render() {
-//     return (
-//       <React.Fragment>
-//         <TestSpace data={this.state.data}></TestSpace>
-//         <TestSpace data={this.state.data}></TestSpace>
-//         <TestSpace data={this.state.data}></TestSpace>
-//       </React.Fragment>
-
-//     )
-//   }
-
-// }
-
-
-
-
-
-
 
 export default App;

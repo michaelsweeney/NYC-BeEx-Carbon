@@ -4,24 +4,15 @@ import {
   nest,
   select,
   selectAll,
-  scaleOrdinal,
   pie,
   arc,
   interpolateObject,
   interpolate,
   event,
-  color,
   rgb
 } from 'd3'
 
-import { formatInt } from './numformat.js'
-
-
-
-// https://benclinkinbeard.com/d3tips/make-any-chart-responsive-with-one-function/?utm_content=buffer976d6&utm_medium=social&utm_source=twitter.com&utm_campaign=buffer
-
-
-
+import { formatInt } from '../numformat.js'
 
 
 class DonutChart extends React.Component {
@@ -30,46 +21,46 @@ class DonutChart extends React.Component {
   }
 
   componentDidMount() {
-    this.createDonutChart()
+    this.createDonutChart({})
     this.addResize()
   }
   componentDidUpdate() {
-    this.createDonutChart()
+    this.createDonutChart({})
   }
   addResize() {
 
-    window.addEventListener('resize', this.createDonutChart)
+    window.addEventListener('resize', () => {
+      this.createDonutChart({})
+    })
   }
 
-  createDonutChart = () => {
+  createDonutChart = (params) => {
     let data = this.props.donutprops
     let title = this.props.title
     let tag = this.props.tag
 
-    // get totals - why doesn't reduce work for this?
-
     let divdims = this.container.parentElement.getBoundingClientRect()
     let divheightoffset = 65;
-    let divwidthoffset = 28;
+    let divwidthoffset = 40;
 
     // definitions and setup
     let myDuration = 600;
     let firstTime = true;
 
-
     let width = (divdims.width - divwidthoffset) / 3
     let height = divdims.height - divheightoffset
 
     let margintop = Math.max(height * 0.05, 10)
-    let marginbottom = Math.max(height * 0.05, 30)
-    
+    let marginbottom = Math.max(height * 0.05, 40)
+
+    margintop = 0;
+
     let piewidth = width
     let pieheight = height - margintop - marginbottom
 
     let margin = Math.max(height * 0.05, 10)
-    let piemargin = Math.max(height * 0.05, 10)
-    
     let radius = Math.min(piewidth, pieheight) / 2;
+
 
     let colorlookups = {
       'Electricity': "#358FB4",
@@ -94,7 +85,6 @@ class DonutChart extends React.Component {
       }
     }
 
-
     let piefunc = pie()
       .value(function (d) { return d.val; })
       .sort(null);
@@ -103,29 +93,16 @@ class DonutChart extends React.Component {
       .innerRadius((radius - margin) * 0.7)
       .outerRadius(radius - margin);
 
-
     //  build container
     let svg = select(this.container).selectAll('svg').data([0]).join('svg')
       .attr("width", width)
       .attr("height", height)
 
     let g = svg.selectAll('g').data([0]).join('g')
-      .attr("transform", `translate(${width/2}, ${(pieheight / 2) + margintop})`);
+      .attr("transform", `translate(${width / 2}, ${(pieheight / 2) + margintop})`);
 
-    let aspect = piewidth / pieheight
 
-    // add title
-    let titletext = svg.selectAll('.titletext').data([0]).join('text')
-      .text(title)
-      .attr('class', 'titletext')
-      .attr('x', width / 2)
-      .attr('y', margin)
-      .attr('font-size', 14)
-      .attr('fill', 'black')
-      .attr('text-anchor', 'middle')
-
-    // add summary text
-
+    // get totals
     let total_abs = 0;
     let total_norm = 0;
     data.forEach((d) => {
@@ -133,9 +110,29 @@ class DonutChart extends React.Component {
       total_norm += d.val_norm
     })
 
+    // add title
+    let titletext = svg.selectAll('.titletext').data([0]).join('text')
+      .text(title)
+      .attr('class', 'titletext')
+      .attr('x', width / 2)
+      .attr('y', (pieheight / 2) + margintop)
+      .attr('font-size', 14)
+      .attr('fill', () => {
+        if (formatInt(total_abs) != 0) {
+          return 'black'
+        }
+        return 'gray'
+      })
+      .attr('text-anchor', 'middle')
+      .style('font-family', 'CircularStd-Bold')
+
+    // add summary text
 
     let summarytext = svg.selectAll('.summarytext').data([total_abs, total_norm]).join('text')
       .text((d, i) => {
+        if (formatInt(total_abs) == 0) {
+          return ''
+        }
         if (tag == 'cost') {
           if (i == 0) {
             return `$${formatInt(d)}`
@@ -145,7 +142,6 @@ class DonutChart extends React.Component {
             return `$${Math.round(val * 100) / 100}/sf`
           }
         }
-
         else {
           if (i == 0) {
             return `${formatInt(d)} ${unitlookup[tag].val} `
@@ -158,13 +154,9 @@ class DonutChart extends React.Component {
       })
       .attr('class', 'summarytext')
       .attr('x', width / 2)
-      .attr('y', (d, i) => pieheight + margintop + (i+1) * 12)
-      .attr('font-size', 12)
+      .attr('y', (d, i) => (pieheight + margintop + (i * 16) + 5))
       .attr('fill', 'black')
       .attr('text-anchor', 'middle')
-
-
-
 
     // add tip
     let tooltipdiv = select(this.container).selectAll('.tooltip.tooltip-donut').data([0]).join('div')
@@ -231,8 +223,6 @@ class DonutChart extends React.Component {
         select(this).transition().duration(200).style("fill", function (d, i) {
           return colorlookups[d.data.utility]
         })
-
-
       })
       .transition()
       .duration(myDuration)
@@ -253,16 +243,10 @@ class DonutChart extends React.Component {
       .remove()
     firstTime = false;
 
-
-
-
-
-
     // internal functions
     function key(d) {
       return d.data.utility;
     }
-
 
     function findNeighborArc(i, data0, data1, key) {
       let d;
@@ -277,9 +261,7 @@ class DonutChart extends React.Component {
         obj.endAngle = d.startAngle;
         return obj;
       }
-
       return null
-
     }
 
     // Find the element in data0 that joins the highest preceding element in data1.
@@ -311,10 +293,6 @@ class DonutChart extends React.Component {
         return arcfunc(i(t))
       }
     }
-
-
-
-
   }
 
 

@@ -1,12 +1,11 @@
 import React from 'react';
-import { Sidebar } from './sidebar.js'
-import { Header } from './header.js'
-import { CardLayout } from './cardlayout'
-import { Footer } from './footer.js'
-import { Modal } from './modal.js'
-import { defaultbuilding } from './defaultbuilding.js'
-import { compileBuilding } from './compilebuilding.js'
-import { PrintLayout } from './printlayout.js'
+import { Sidebar } from '../sidebar.js'
+import { CardLayout } from '../cardlayout'
+import { Footer } from '../footer.js'
+import { Modal } from '../modal.js'
+import { defaultbuilding } from '../defaultbuilding.js'
+import { compileBuilding } from '../compilebuilding.js'
+import { PrintLayout } from '../printlayout.js'
 
 
 class MainLayout extends React.Component {
@@ -44,7 +43,7 @@ class MainLayout extends React.Component {
     console.log(this.state.building)
     return (
       <React.Fragment>
-        <Modal isactive={this.state.modalactive} callback={this.hideModal}></Modal>
+        {/* <Modal isactive={this.state.modalactive} callback={this.hideModal}></Modal> */}
         <div className="main-container">
           <Sidebar defaultbuilding={defaultbuilding} callback={this.inputCallback} modalcallback = {this.showModal}></Sidebar>
           {/* <Header></Header> */}

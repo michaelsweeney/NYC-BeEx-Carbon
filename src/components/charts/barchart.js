@@ -2,18 +2,16 @@ import React from 'react';
 import {
     stack,
     max,
-    scaleOrdinal,
     scaleLinear,
     axisLeft,
     axisBottom,
     select,
     scaleBand,
     selectAll,
-    sum,
     event,
     rgb
 } from 'd3'
-import { formatInt } from './numformat.js'
+import { formatInt } from '../numformat.js'
 
 
 class BarChart extends React.Component {
@@ -21,16 +19,19 @@ class BarChart extends React.Component {
         super(props)
     }
     componentDidMount() {
-        this.createBarChart()
+        this.createBarChart({})
         this.addResize()
     }
     addResize() {
-        window.addEventListener('resize', this.createBarChart)
+        window.addEventListener('resize', () => {
+            this.createBarChart({ ignoretransition: true })
+        })
     }
     componentDidUpdate() {
-        this.createBarChart()
+        this.createBarChart({})
     }
-    createBarChart = () => {
+    createBarChart = (params) => {
+
         // parse data
         let {
             total_cost,
@@ -42,7 +43,7 @@ class BarChart extends React.Component {
         let datatostack = [
             { period: '2024-2029', utility: total_cost, fine: fine_2024, util_and_fine: fine_2024 + total_cost },
             { period: '2030-2034', utility: total_cost, fine: fine_2030, util_and_fine: fine_2030 + total_cost },
-            { period: '2035', utility: total_cost, fine: fine_2035, util_and_fine: fine_2035 + total_cost },
+            { period: '2035+', utility: total_cost, fine: fine_2035, util_and_fine: fine_2035 + total_cost },
         ]
 
         let colors = { fine: "#333333", utility: "BAD636" };
@@ -61,10 +62,16 @@ class BarChart extends React.Component {
         let divwidthoffset = 28;
         let divdims = this.container.parentElement.getBoundingClientRect()
 
-        let duration = 500
+        let duration = 500;
+
+        if (params.ignoretransition) {
+            duration = 0;
+        }
+        console.log(duration)
         let width = divdims.width - divwidthoffset;
         let height = divdims.height - divheightoffset;
-        let legendtoppad = 20
+
+        let legendtoppad = 30
         let margins = {
             t: 20,
             b: 100,
@@ -75,19 +82,13 @@ class BarChart extends React.Component {
         let plotwidth = width - margins.l - margins.r
         let plotheight = height - margins.t - margins.b
 
+        let barwidth = plotheight / 6;
+
         let svg = select(this.container).selectAll('svg').data([0]).join('svg')
             .attr('width', width).attr('height', height)
 
-        svg.selectAll('.x-axis').data([0]).join('g')
-            .attr('class', 'x-axis')
-            .attr('transform', `translate(${margins.l}, ${plotheight + margins.t})`)
-
-        svg.selectAll('.y-axis').data([0]).join('g')
-            .attr('class', 'y-axis')
-            .attr('transform', `translate(${margins.l}, ${margins.t})`)
-
         let yScale = scaleBand()
-            .domain(['2024-2029', '2030-2034', '2035'])
+            .domain(['2024-2029', '2030-2034', '2035+'])
             .rangeRound([0, plotheight])
 
         let xScale = scaleLinear()
@@ -104,8 +105,6 @@ class BarChart extends React.Component {
             .tickSize(0)
             .tickSizeOuter(0)
 
-        svg.select('.y-axis')
-            .call(yAxis)
 
         let tooltipdiv = select(this.container).selectAll('.tooltip.tooltip-cost').data([0]).join('div')
             .attr("class", "tooltip tooltip-cost")
@@ -113,19 +112,19 @@ class BarChart extends React.Component {
 
         let groups = svg.selectAll(".bar")
             .data(data, d => d.key)
-            // groups
             .join('g')
             .attr("class", "bar")
             .attr(`transform`, `translate(${margins.l}, ${margins.t})`)
-            .style("fill", (d, i) => { return colors[d.key]; });
+            .style("fill", (d, i) => { 
+                return colors[d.key]});
 
         let rects = groups.selectAll("rect").data((d) => { return d })
             .join('rect')
-            .attr("y", (d, i) => { return yScale(d.data.period) + 15 })
+            .attr("y", (d, i) => { return yScale(d.data.period) + (barwidth / 2) })
             .on("mouseover", function (d) {
                 tooltipdiv.transition()
                     .duration(200)
-                    .style("opacity", .9);
+                    .style("opacity", 0.9);
                 tooltipdiv.html(
                     `
                     <span class = 'tip-header'>${d.data.period}</span>
@@ -145,17 +144,25 @@ class BarChart extends React.Component {
                 tooltipdiv.transition()
                     .duration(500)
                     .style("opacity", 0);
-                
                 select(this).transition().duration(200).style("fill", function (d, i) { return colors[d.key]; });
-
             })
             .transition().duration(duration)
             .attr("x", (d) => { return xScale(d[0]); })
             .attr("width", (d) => { return xScale(d[1]) - xScale(d[0]); })
-            .attr("height", 25)
+            .attr("height", barwidth)
 
 
 
+        svg.selectAll('.x-axis').data([0]).join('g')
+            .attr('class', 'x-axis')
+            .attr('transform', `translate(${margins.l}, ${plotheight + margins.t})`)
+
+        svg.selectAll('.y-axis').data([0]).join('g')
+            .attr('class', 'y-axis')
+            .attr('transform', `translate(${margins.l}, ${margins.t + (barwidth / 7)})`)
+
+        svg.select('.y-axis')
+            .call(yAxis)
 
         let labels = svg.selectAll(".label")
             .data(datatostack, (d) => d.period)
@@ -168,7 +175,7 @@ class BarChart extends React.Component {
                 return xScale(d.util_and_fine) + 5
             })
             .attr("y", (d) => {
-                return yScale(d.period) + 30
+                return yScale(d.period) + barwidth + 4
             })
             .text((d) => {
                 if (d.util_and_fine == 0) {
@@ -177,23 +184,21 @@ class BarChart extends React.Component {
                 return '$' + formatInt(d.util_and_fine)
             })
 
-
         // Draw legend
         let legend = svg.selectAll(".legend").data([0]).join('g').attr('class', 'legend')
             .join('g')
             .attr('class', 'legend')
             .attr('transform', `translate(${margins.l}, ${margins.t + plotheight + legendtoppad})`)
-
         legend.selectAll('rect').data(Object.keys(colors)).join('rect')
-            .attr("x", 15)
-            .attr("y", (d, i) => { return i * 30 })
-            .attr("width", 18)
-            .attr("height", 18)
+            .attr("x", (plotwidth / 2) - 50)
+            .attr("y", (d, i) => { return (i * 20) + 5 })
+            .attr("width", 15)
+            .attr("height", 15)
             .style("fill", (d, i) => { return colors[d]; });
 
         legend.selectAll('text').data(Object.keys(colors)).join('text')
-            .attr("x", 50)
-            .attr("y", (d, i) => { return (i * 30) + 15 })
+            .attr("x", (plotwidth / 2) - 30)
+            .attr("y", (d, i) => { return (i * 20) + 17 })
             .attr('font-size', 14)
             .attr('class', 'legend-text')
             .style("text-anchor", "start")
@@ -202,33 +207,7 @@ class BarChart extends React.Component {
                     case 'utility': return "Utility Cost ($)";
                     case 'fine': return "Carbon Fine ($)";
                 }
-            });
-
-
-
-
-        // // Prep the tooltip bits, initial display is hidden
-        // var tooltip = svg.append("g")
-        //     .attr("class", "tooltip")
-        //     .style("display", "none");
-
-        // tooltip.append("rect")
-        //     .attr("width", 30)
-        //     .attr("height", 20)
-        //     .attr("fill", "white")
-        //     .style("opacity", 0.5);
-
-        // tooltip.append("text")
-        //     .attr("x", 15)
-        //     .attr("dy", "1.2em")
-        //     .style("text-anchor", "middle")
-        //     .attr("font-size", "12px")
-        //     .attr("font-weight", "bold");
-
-
-
-
-
+            })
 
     }
     render() {
