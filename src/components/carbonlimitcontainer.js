@@ -8,6 +8,31 @@ import { CarbonBar } from './charts/carbonbar.js'
 class CarbonLimitContainer extends React.Component {
     constructor(props) {
         super(props)
+
+    }
+
+    componentDidMount() {
+        this.normalizeRects()
+    }
+
+    componentDidUpdate() {
+        this.normalizeRects()
+    }
+
+    normalizeRects() {
+        let rectswidth = 0;
+        this.container.querySelectorAll('.carbon-summary-text').forEach((node) => {
+            rectswidth = Math.max(rectswidth, node.getBoundingClientRect().width)
+        })
+
+        if (rectswidth != 0) {
+            this.container.querySelectorAll('.carbon-summary-text').forEach((node) => {
+                node.setAttribute('width', rectswidth)
+            })
+        }
+
+
+
     }
     render() {
 
@@ -28,7 +53,7 @@ class CarbonLimitContainer extends React.Component {
         return (
             <div className='carbon-main-container'>
                 <div className='container-header'>Carbon Threshold Summary</div>
-                <div className='carbon-summary-card'>
+                <div ref = {container => this.container = container} className='carbon-summary-card'>
                     {/* <div className='carbon-summary-head'>Carbon Footprint</div> */}
                     <div className='carbon-summary-val'>{formatInt(carbondata.total_carbon)}</div>
                     <div className='carbon-summary-text'>tCO2/yr</div>

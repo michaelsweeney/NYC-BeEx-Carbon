@@ -37,17 +37,19 @@
 
 .bldg-input-main-container {
   /* display: inline-block; */
-  margin-left: 20px;
+  margin-left: 12px;
   margin-right: 20px;
 }
 
+
+
 .input-header-type {
-  margin-left: 16px;
+  margin-left: 10px;
   display: inline-block;
 }
 
 .input-header-area {
-  margin-left: 50px;
+  margin-left: 47px;
   display: inline-block;
 }
 
@@ -220,6 +222,14 @@
 
 
 .type-label {
+  position: relative;
+  left: -15px;
+  top: 10px;
   display: inline-block;
-  margin-right: 10px;
+  align-content: right;
+  align-self: right;
+  text-align: right;
+  /* ali */
+  float: left;
+  /* margin-right: 10px; */
 }
