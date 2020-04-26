@@ -21,7 +21,7 @@
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
   text-align: left;
   height: calc(100% - 100px);
-  width: 350px; 
+  width: 325px; 
   overflow-x: hidden; 
   /* padding-top: 20px; */
   padding-left: 10px;
@@ -31,7 +31,7 @@
 .header {
   position: fixed;
   top: 0;
-  left: 350px;
+  left: 325px;
   width: 100%;
   height: 100px;
   /* background-color: rgb(219, 219, 219); */
@@ -43,9 +43,9 @@
 
 .content-layout {
   position: fixed;
-  left: 350px;
+  left: 325px;
   top: 0px;
-  width: calc(100% - 350px - 10px);
+  width: calc(100% - 325px - 10px);
   height: calc(100% - 100px);
   vertical-align: top;
   white-space: nowrap;
@@ -62,7 +62,7 @@
   position: fixed;
   bottom: 0px;
   height: 100px;
-  width: calc(100vw - 350px);
+  width: calc(100vw - 325px);
   border-top-width: 1px;
   border-top-style: solidpx;
   border-top-color: black;

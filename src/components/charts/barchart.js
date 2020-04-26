@@ -131,7 +131,7 @@ class BarChart extends React.Component {
                     tooltipdiv.html(`
                     <div class = 'tip-header'><u>${d.data.period}</u></div>
                     <div>Utility Cost: $${formatInt(d.data.utility)}</div>
-                    <div>Carbon Fine: $${formatInt(d.data.fine)}*</div>
+                    <div>Carbon Fine: $${formatInt(d.data.fine)}</div>
                     <div>Total Cost: $${formatInt(d.data.util_and_fine)}</div> 
                     <p class='fine-print'>
                         <i>

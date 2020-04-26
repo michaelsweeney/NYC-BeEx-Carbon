@@ -53,7 +53,7 @@ class App extends React.Component {
   render() {
     return (
       <React.Fragment>
-        {/* <Modal isactive={this.state.modalactive} callback={this.hideModal}></Modal> */}
+        <Modal isactive={this.state.modalactive} callback={this.hideModal}></Modal>
         <div className="main-container">
           <Sidebar defaultbuilding={defaultbuilding} callback={this.inputCallback} modalcallback = {this.showModal}></Sidebar>
           <CardLayout building={this.state.building}></CardLayout>
