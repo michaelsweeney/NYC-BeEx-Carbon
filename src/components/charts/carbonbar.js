@@ -3,6 +3,10 @@ import {
     max,
     scaleLinear,
     select,
+    selectAll,
+    event,
+    rgb,
+    axisBottom
 } from 'd3'
 import { formatInt } from '../numformat.js'
 
@@ -34,7 +38,7 @@ class CarbonBar extends React.Component {
             fine_2035,
         } = this.props.carbondata
 
-        let divheightoffset = 50;
+        let divheightoffset = 25;
         let divwidthoffset = 28;
         let divdims = this.container.getBoundingClientRect()
 
@@ -43,44 +47,58 @@ class CarbonBar extends React.Component {
             duration = 0;
         }
 
-        console.log(duration)
-
         let width = divdims.width - divwidthoffset;
         let height = divdims.height - divheightoffset;
 
         let barthickness = height / 15
 
-        let margins = {
-            t: 10,
-            b: 10,
-            r: 10,
-            l: 10
+        let barmargins = {
+            t: (height / 2) + 10,
+            b: 30,
+            r: 100,
+            l: 20
         }
 
+        let threshmargins = {
+            t: 10,
+            b: (height / 2) + 10,
+            l: 20,
+            r: 20
+        }
+
+        let plotwidth = width - barmargins.l - barmargins.r
+        let plotheight = height - barmargins.t - barmargins.b
+
+        let threshwidth = width - threshmargins.l - threshmargins.r
+        let threshheight = height - threshmargins.t - threshmargins.b
+
+        let threshspacing = threshwidth / 3
 
         let linedata = [
             {
                 thresh: co2limit_2035,
                 fine: fine_2035,
-                key: '2035'
+                key: '2035+'
             },
             {
                 thresh: co2limit_2030,
                 fine: fine_2030,
-                key: '2030'
+                key: '2030-2034'
             },
             {
                 thresh: co2limit_2024,
                 fine: fine_2024,
-                key: '2024'
+                key: '2024-2029'
             },
-
-
         ]
 
-        let colors = { fine: "#333333", utility: "BAD636" };
-        let plotwidth = width - margins.l - margins.r
-        let plotheight = height - margins.t - margins.b
+        let containercolor = '#595954'
+        let barcolor = '#C4C4C4'
+
+        let tooltipdiv = select(this.container).selectAll('.tooltip.tooltip-carbon-bar').data([0]).join('div')
+            .attr("class", "tooltip tooltip-carbon-bar")
+            .style("opacity", 0);
+
         let xScale = scaleLinear()
             .domain([0, max([co2limit_2024, total_carbon])])
             .range([0, plotwidth])
@@ -88,35 +106,51 @@ class CarbonBar extends React.Component {
         let svg = select(this.container).selectAll('svg').data([0]).join('svg')
             .attr('width', width).attr('height', height)
 
+
         let barg = svg.selectAll('g').data([0]).join('g')
             .attr('class', 'bar-g')
-            .attr('width', plotwidth - margins.r)
-            .attr('height', plotheight - margins.b)
-            .attr('transform', `translate(${margins.l}, ${margins.t})`)
+            .attr('width', plotwidth)
+            .attr('height', plotheight)
+            .attr('transform', `translate(${barmargins.l}, ${barmargins.t})`)
+            
+
+
+        let xAxis = axisBottom(xScale).ticks(5)
+
+        let xaxisg = svg.selectAll('.x-axis')
+            .data([0]).join('g')
+            .attr('class', 'x-axis')
+            .attr('transform', `translate(${barmargins.l},${plotheight + barmargins.t - 20})`)
+        xaxisg
+            .call(xAxis)
+
+        svg.selectAll('.axis-title')
+            .data([0]).join('text')
+            .attr('class', 'axis-title')
+            .text(() => total_carbon != 0 ? "Tons CO2 per year" : '')
+            .attr('x', barmargins.l + (plotwidth / 2))
+            .attr('y', plotheight + barmargins.t + 20)
 
         // create threshold containers
-        let threshcontainermain = svg.selectAll('.thresh-main-container')
+        let threshcontainer = svg.selectAll('.thresh-main-container')
             .data([0]).join('g')
             .attr('class', 'thresh-container')
-            .attr('transform', `translate(200, 20)`)
+            .attr('transform', `translate(${threshmargins.l}, ${threshmargins.t})`)
 
-        let subcontainers = threshcontainermain.selectAll('.sub-container')
+        let subcontainers = threshcontainer.selectAll('.sub-container')
             .data(linedata).join('g')
             .attr('class', 'sub-container')
-
-        subcontainers
             .each(fineContainer)
 
-
         function fineContainer(d, i) {
-            let g = select(this).selectAll('group').data([0]).join('g').attr('transform', `translate(${i * 175},0)`)
+            let g = select(this).selectAll('group').data([0]).join('g').attr('transform', `translate(${i * (threshspacing)},0)`)
 
             g.selectAll('.rect-container').data([0]).join('rect')
                 .attr('class', 'rect-container')
                 .attr('width', 100)
                 .attr('height', 70)
                 .attr('rx', 8)
-                .attr('fill', '#595954')
+                .attr('fill', containercolor)
 
             g.selectAll('.year-text').data([0]).join('text')
                 .attr('class', 'carbon-summary-text top-text')
@@ -128,13 +162,13 @@ class CarbonBar extends React.Component {
                 .attr('class', 'carbon-summary-text fine-text')
                 .attr('x', 10)
                 .attr('y', 35)
-                .text(`Threshold: ${formatInt(d.thresh)}`)
+                .text(`Threshold: ${formatInt(d.thresh)} tCO2`)
 
             g.selectAll('.thresh-text').data([0]).join('text')
                 .attr('class', 'carbon-summary-text thresh-text')
                 .attr('x', 10)
                 .attr('y', 50)
-                .text(`Fine: ${formatInt(d.fine)}`)
+                .text(`Fine: $${formatInt(d.fine)}`)
 
             let textwidths = []
             g.selectAll('text').nodes().forEach((node) => {
@@ -146,29 +180,80 @@ class CarbonBar extends React.Component {
         }
 
         let bar = barg.selectAll('rect').data([total_carbon]).join('rect')
+        .on("mouseover", function (d) {
+            tooltipdiv.transition()
+                .duration(200)
+                .style("opacity", .9);
+
+
+            tooltipdiv.html(
+                `
+                <div>${formatInt(total_carbon)} tCO2/yr</div>
+                `
+            )
+            // tooltipdiv.html(
+            //     `
+            //   <div class = 'tip-header'><u>Carbon Thresholds</u></div>
+            //   <div>2024-2029: ${formatInt(co2limit_2024)} tCO2/yr</div>
+            //   <div>2030-2034: ${formatInt(co2limit_2030)} tCO2/yr</div>
+            //   <div>2035+: ${formatInt(co2limit_2035)} tCO2/yr</div>
+            //   <br/>
+            //   <div class = 'tip-header'><u>Carbon Fines</u></div>
+            //   <div>2024-2029: $${formatInt(fine_2024)}</div>
+            //   <div>2030-2034: $${formatInt(fine_2030)}</div>
+            //   <div>2035+: $${formatInt(fine_2035)}</div>
+            //     `
+            // )
+                .style("left", () => { return event.pageX - 100 })
+                .style("top", (event.pageY - 100) + "px");
+
+            select(this).transition().duration(200).attr("fill", function (d, i) {
+                return rgb(barcolor).darker()
+            })
+        })
+        .on("mouseout", function (d) {
+            tooltipdiv.transition()
+                .duration(500)
+                .style("opacity", 0);
+
+            select(this).transition().duration(200).attr("fill", function (d, i) {
+                return barcolor
+            })
+        })
             .transition().duration(duration)
             .attr("y", 40)
             .attr("height", barthickness)
-            .attr('fill', '#C4C4C4')
+            .attr('fill', barcolor)
             .attr("x", 0)
             .attr("width", (d) => { return xScale(total_carbon) })
+            
+        function getRectWidths(g, selector) {
+            return g.selectAll(selector).nodes().map((el) => el.getAttribute('width'))
+        }
 
+        let [width_2024, width_2030, width_2035] = getRectWidths(threshcontainer, '.rect-container')
+        linedata[0].rectwidth = width_2035
+        linedata[1].rectwidth = width_2030
+        linedata[2].rectwidth = width_2024
 
         let axisline = barg.selectAll('.axisline').data([0]).join('line')
             .attr('y1', (d) => { return 30 })
             .attr('x1', (d) => { return 0 })
             .attr('y2', (d) => { return 70 })
             .attr('x2', (d) => { return 0 })
-            .style('stroke', colors['fine'])
-            .attr("stroke-width", () => '1px')
+            .style('stroke', 'black')
+            .style("stroke-width", () => '1px')
+
+        svg.selectAll('.tick').nodes()[0].remove();
 
         let bartext = barg.selectAll('.bartext').data([0]).join('text')
         bartext
             .text((d) => { return formatInt(total_carbon) })
             .attr('class', 'bartext')
             .transition().duration(duration)
-            .attr('x', (d) => xScale(total_carbon) + 2)
-            .attr('y', 40 + (barthickness / 1.5))
+            .attr('x', (d) => xScale(total_carbon) + 20)
+            .attr('y', 40 + (barthickness / 1.4))
+            .style('fill', 'black')
 
         // polylines linked to rects
         let imap = {
@@ -190,12 +275,16 @@ class CarbonBar extends React.Component {
                     return ''
                 }
                 return `
-                        ${xScale(d.thresh)}, 80
+                        ${xScale(d.thresh)}, 60
                         ${xScale(d.thresh)}, ${40 - 15 * imap[i]}
-                        ${(i + 1) * 175}, ${40 - 15 * imap[i]}
-                        ${(i + 1) * 175}, -50
+                        ${i * threshspacing + d.rectwidth / 2}, ${40 - 15 * imap[i]}
+                        ${i * threshspacing + d.rectwidth / 2}, -50
                         `
             })
+
+        if (total_carbon == 0) {
+            barg.remove()
+        }
 
     }
 

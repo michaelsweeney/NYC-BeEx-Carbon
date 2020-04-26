@@ -67,7 +67,6 @@ class BarChart extends React.Component {
         if (params.ignoretransition) {
             duration = 0;
         }
-        console.log(duration)
         let width = divdims.width - divwidthoffset;
         let height = divdims.height - divheightoffset;
 
@@ -115,30 +114,54 @@ class BarChart extends React.Component {
             .join('g')
             .attr("class", "bar")
             .attr(`transform`, `translate(${margins.l}, ${margins.t})`)
-            .style("fill", (d, i) => { 
-                return colors[d.key]});
+            .style("fill", (d, i) => {
+                return colors[d.key]
+            });
 
         let rects = groups.selectAll("rect").data((d) => { return d })
             .join('rect')
+            .attr('class', (d) => `rect-${d.data.period.replace("+", "")}`)
             .attr("y", (d, i) => { return yScale(d.data.period) + (barwidth / 2) })
             .on("mouseover", function (d) {
                 tooltipdiv.transition()
                     .duration(200)
                     .style("opacity", 0.9);
-                tooltipdiv.html(
-                    `
-                    <span class = 'tip-header'>${d.data.period}</span>
-                    <br/>
-                    Utility Cost: $${formatInt(d.data.utility)}
-                    <br/>
-                    Carbon Fine: $${formatInt(d.data.fine)}
-                    <br/>
-                    Total Cost: $${formatInt(d.data.util_and_fine)} 
-                    `
-                )
+
+                if (d.data.period == '2035+') {
+                    tooltipdiv.html(`
+                    <div class = 'tip-header'><u>${d.data.period}</u></div>
+                    <div>Utility Cost: $${formatInt(d.data.utility)}</div>
+                    <div>Carbon Fine: $${formatInt(d.data.fine)}*</div>
+                    <div>Total Cost: $${formatInt(d.data.util_and_fine)}</div> 
+                    <p class='fine-print'>
+                        <i>
+                            *Fines for 2035 and up are <br/>
+                            highly variable and will <br/>
+                            likely change. Value shown <br/>
+                            for this period is only an <br/>
+                            estimate.
+                        </i>
+                    </p>
+                    `)
+
+                }
+
+                else {
+                    tooltipdiv.html(`
+                    <div class = 'tip-header'><u>${d.data.period}</u></div>
+                    <div>Utility Cost: $${formatInt(d.data.utility)}</div>
+                    <div>Carbon Fine: $${formatInt(d.data.fine)}</div>
+                    <div>Total Cost: $${formatInt(d.data.util_and_fine)}</div> 
+                    `)
+                }
+
+
+                tooltipdiv
                     .style("left", () => { return event.pageX - 100 })
                     .style("top", (event.pageY - 100) + "px");
-                select(this).transition().duration(200).style("fill", (d, i) => { return rgb(select(this).style('fill')).darker(); });
+                select(this).transition().duration(200).style("fill", (d, i) => {
+                    return rgb(select(this).style('fill')).darker();
+                });
             })
             .on("mouseout", function (d) {
                 tooltipdiv.transition()
@@ -150,7 +173,6 @@ class BarChart extends React.Component {
             .attr("x", (d) => { return xScale(d[0]); })
             .attr("width", (d) => { return xScale(d[1]) - xScale(d[0]); })
             .attr("height", barwidth)
-
 
 
         svg.selectAll('.x-axis').data([0]).join('g')
@@ -209,7 +231,16 @@ class BarChart extends React.Component {
                 }
             })
 
+
+        // lighten 2035 fine rects
+
+        svg.selectAll('.rect-2035').style('opacity', (d, i) => { if (i == 1) { return 0.5 } })
+
     }
+
+
+
+
     render() {
         return <div className='bar-container' ref={container => this.container = container}></div>
     }

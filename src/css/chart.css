@@ -56,7 +56,8 @@ div.tooltip {
   pointer-events: none;			
 }
 div.tooltip .tip-header {
-  font-family: 'CircularStd-Bold'
+  font-family: 'CircularStd-Bold';
+  margin-bottom: 5px;
 }
 
 
@@ -72,4 +73,51 @@ svg text {
 
 .legend-text {
   font-size: 14px;
+}
+
+
+.carbon-bar-card .domain {
+  display: none;
+}
+
+
+
+
+
+
+.carbon-summary-card {
+  align-content: center;
+  text-align: center;
+}
+.carbon-summary-head {
+  font-family: 'CircularStd-Bold';
+  font-size: 16px;
+
+}
+.carbon-summary-val {
+  display: inline-block;
+  color: white;
+  font-family: 'CircularStd-Bold';
+  font-size: 32px;
+  text-align: center;
+  min-width: 33%;
+  align-self: center;
+  vertical-align: middle;
+  padding: 10px;
+  background: #BAD636;
+  border-radius: 8px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.carbon-summary-text {
+  font-family: 'CircularStd-Bold';
+  font-size: 14px;
+  margin-bottom: 10px;
+  
+}
+
+
+.fine-print {
+  font-size: 12px;
 }

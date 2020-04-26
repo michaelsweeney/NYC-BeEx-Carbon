@@ -13,15 +13,6 @@ class PrintLayout extends React.Component {
 
     let { summary, utilities } = this.props.building
 
-    console.log(summary)
-    console.log(utilities)
-
-
-
-
-
-
-
     return (
       <div className='print-layout'>
 

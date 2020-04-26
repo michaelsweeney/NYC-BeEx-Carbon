@@ -36,8 +36,6 @@ class DonutChart extends React.Component {
           width={width}
           height={height}
           onSeriesClick={(event) => {
-            console.log(event)
-
           }}
         >
           <rv.ChartLabel

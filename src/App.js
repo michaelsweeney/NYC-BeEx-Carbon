@@ -51,7 +51,6 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.state.building)
     return (
       <React.Fragment>
         {/* <Modal isactive={this.state.modalactive} callback={this.hideModal}></Modal> */}
