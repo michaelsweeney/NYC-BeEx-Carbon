@@ -139,7 +139,7 @@ class DonutChart extends React.Component {
           }
           if (i == 1) {
             let val = d || 0
-            return `$${Math.round(val * 100) / 100}/sf`
+            return `$${formatInt(val)}/sf`
           }
         }
         else {
@@ -148,7 +148,7 @@ class DonutChart extends React.Component {
           }
           if (i == 1) {
             let val = d || 0
-            return `${Math.round(val * 100) / 100} ${unitlookup[tag].val_norm}`
+            return `${formatInt(val)} ${unitlookup[tag].val_norm}`
           }
         }
       })

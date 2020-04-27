@@ -1,39 +1,32 @@
-function formatInt(nStr) {
+import {format, formatPrefix} from 'd3';
 
-    if (+nStr < 5) {
-        return Math.round(+nStr * 1000) / 1000
-    }
-
-    if (!isFinite(nStr)) {
+function formatInt(n) {
+    
+    if (!isFinite(+n)) {
         return 0
     }
 
-    if (+nStr > 1e6 ) {
-        nStr = (+nStr / 1e6)
-        nStr += ''
-        var x = nStr.split('.');
-        var x1 = x[0];
-        var x2 = x.length > 1 ? '.' + x[1] : '';
-        var rgx = /(\d+)(\d{3})/;
-        while (rgx.test(x1)) {
-            x1 = x1.replace(rgx, '$1' + ',' + '$2');
-        }
-        return (x1 + Math.round(x2 * 100) / 100 ) + "M"
+    if (n < 1) {
+        return format(".2n")(+n)
+    }
+
+    if (n < 10) {
+        format(".2n")(+n)
+    }
+
+    if (n < 1000) {
+        return format(",.0f")(+n)
+    }
+
+    if (n >= 1000000) {
+        return format("s")(+n)
     }
 
     else {
-        nStr += '';
-        var x = nStr.split('.');
-        var x1 = x[0];
-        var x2 = x.length > 1 ? '.' + x[1] : '';
-        var rgx = /(\d+)(\d{3})/;
-        while (rgx.test(x1)) {
-            x1 = x1.replace(rgx, '$1' + ',' + '$2');
-        }
-        return (x1 + x2).split('.')[0];
+        return format(",.0f")(+n)
     }
 
-
+    
 }
 
 
