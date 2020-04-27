@@ -6,6 +6,14 @@ function formatInt(n) {
         return 0
     }
 
+    if (n == 0) {
+        return 0;
+    }
+
+    if (n < 0.001) {
+        return format(".2e")(+n)
+    }
+
     if (n < 1) {
         return format(".2n")(+n)
     }
@@ -19,14 +27,12 @@ function formatInt(n) {
     }
 
     if (n >= 1000000) {
-        return format("s")(+n)
+        return format(".3s")(+n)
     }
 
     else {
         return format(",.0f")(+n)
     }
-
-    
 }
 
 
