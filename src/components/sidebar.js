@@ -14,15 +14,28 @@ class Sidebar extends React.Component {
   }
 
 
-  useDefaultRates = () => {
-    let state = Object.assign({}, this.state)
-    state.utilities.elec.rate = '0.22'
-    state.utilities.gas.rate = '0.997'
-    state.utilities.steam.rate = '35'
-    state.utilities.fuel_two.rate = '1.65'
-    state.utilities.fuel_four.rate = '1.65'
-    this.setState(state)
-    this.props.callback(state)
+  useDefaultRates = (e) => {
+    if (e.target.checked) {
+      let state = Object.assign({}, this.state)
+      state.utilities.elec.rate = '0.22'
+      state.utilities.gas.rate = '0.997'
+      state.utilities.steam.rate = '35'
+      state.utilities.fuel_two.rate = '1.65'
+      state.utilities.fuel_four.rate = '1.65'
+      this.setState(state)
+      this.props.callback(state)
+    }
+    else {
+      let state = Object.assign({}, this.state)
+      state.utilities.elec.rate = ''
+      state.utilities.gas.rate = ''
+      state.utilities.steam.rate = ''
+      state.utilities.fuel_two.rate = ''
+      state.utilities.fuel_four.rate = ''
+      this.setState(state)
+      this.props.callback(state)
+    }
+
   }
 
   handleUtilityChange = (e) => {
@@ -117,7 +130,7 @@ class Sidebar extends React.Component {
         {/* ----- HEADER ------ */}
         <div className='head-text-1'>
 
-            <Print className='print-btn' onClick={this.printReport} style={{ color: 'rgb(184,215,52)', paddingTop: '5px' }}></Print>
+            {/* <Print className='print-btn' onClick={this.printReport} style={{ color: 'rgb(184,215,52)', paddingTop: '5px' }}></Print> */}
 
           <HelpOutline onClick={this.props.modalcallback} className='help-btn' style={{ color: 'rgb(184,215,52)', width: '25px', height: '25px', marginLeft: '10px' }}></HelpOutline>
           <div className=''>NYC LL97</div>
@@ -177,14 +190,11 @@ class Sidebar extends React.Component {
         {/* ----- UTILITY INPUTS ------ */}
 
         <div className='head-text-2'>Utility Inputs
+
           {/* <HelpOutline style={{ color: 'rgb(184,215,52)', width: '20px', height: '20px', marginLeft: '10px' }}></HelpOutline> */}
         </div>
-
-
-
-
-
-
+        {/* <button className='default-rate-btn sidebar-btn' onClick={this.useDefaultRates}>DEFAULT RATES</button> */}
+        <div className='default-rate-checkbox head-text-4'><input type='checkbox' onClick={this.useDefaultRates}/><div className='head-text-4' >Use Default Rates</div></div>
         <div className='utility-input-main-container'>
 
           <UtilityInput
@@ -243,7 +253,6 @@ class Sidebar extends React.Component {
             blurCallback={this.handleUtilityBlur}
 
           ></UtilityInput>
-          <button className='default-rate-btn sidebar-btn' onClick={this.useDefaultRates}>USE DEFAULT RATES</button>
         </div>
       </div>
     )

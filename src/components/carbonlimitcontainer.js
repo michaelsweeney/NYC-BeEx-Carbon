@@ -4,7 +4,6 @@ import React from 'react';
 import { formatInt } from './numformat.js'
 import { CarbonBar } from './charts/carbonbar.js'
 
-
 class CarbonLimitContainer extends React.Component {
     constructor(props) {
         super(props)

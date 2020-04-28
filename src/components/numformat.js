@@ -1,7 +1,7 @@
-import {format, formatPrefix} from 'd3';
+import { format } from 'd3';
 
 function formatInt(n) {
-    
+
     if (!isFinite(+n)) {
         return 0
     }
@@ -11,7 +11,7 @@ function formatInt(n) {
     }
 
     if (n < 0.001) {
-        return format(".2e")(+n)
+        return format(".1e")(+n)
     }
 
     if (n < 1) {

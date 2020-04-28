@@ -1,8 +1,12 @@
 
 
 .print-layout {
-  display: none;
+  /* display: none; */
+  background-color: white;
+  position: absolute;
+  z-index: 1;
 }
+
 
 .main-container {
   width: 100vw;
@@ -122,17 +126,12 @@
 }
 
 .carbon-summary-card {
-  /* position: relative; */
-  /* top:-80px; */
   vertical-align: top;
   display: inline-block;
   padding: 10px;
-  width: 200px;
-  /* border-radius: 7px; */
+  width: 220px;
   background: #FFFFFF;
-  /* border: 0.5px solid #d2d2d2; */
   box-sizing: border-box;
-  /* box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); */
   height: calc(100% - 40px);
   margin-right: 20px;
 }
@@ -142,7 +141,7 @@
   display: inline-block;
   top: -40px;
   padding: 20px;
-  width: calc(100% - 220px);
+  width: calc(100% - 240px);
   border-radius: 7px;
   background: #FFFFFF;
   border: 0.5px solid #d2d2d2;

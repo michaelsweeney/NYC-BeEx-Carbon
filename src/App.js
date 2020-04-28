@@ -46,7 +46,11 @@ class App extends React.Component {
 
   showModal = () => {
     let state = Object.assign({}, this.state)
+
+
+    
     state.modalactive = true
+  
     this.setState(state)
   }
 
@@ -59,7 +63,7 @@ class App extends React.Component {
           <CardLayout building={this.state.building}></CardLayout>
           <Footer></Footer>
         </div>
-        <PrintLayout building={this.state.building}></PrintLayout>
+        {/* <PrintLayout building={this.state.building}></PrintLayout> */}
       </React.Fragment>
 
     )
