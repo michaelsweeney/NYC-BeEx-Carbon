@@ -69,12 +69,10 @@ class Modal extends React.Component {
 
                     </div>
 
-
-
                     <div className='modal-logos'>
 
                         <a className='logo-nyc' href="https://retrofitaccelerator.cityofnewyork.us/" target="_blank" rel="noopener noreferrer">
-                            <img src='ACCELERATOR-WHITE.png' height='60' width='100'></img>
+                            <img src='ACCELERATOR-WHITE.png' height='60' width='120'></img>
                         </a>
                         <a className='logo-beex' href="http://www.be-exchange.org" target="_blank" rel="noopener noreferrer">
                             <BeExLogo></BeExLogo>
