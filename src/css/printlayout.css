@@ -1,4 +1,4 @@
-/* @media print { */
+@media print {
   .print-layout {
     display: inline-block !important;
     margin: 0px;
@@ -171,4 +171,4 @@
 
 
 
-/* } */
+}

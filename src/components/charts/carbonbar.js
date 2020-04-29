@@ -252,14 +252,14 @@ class CarbonBar extends React.Component {
 
         svg.selectAll('.tick').nodes()[0].remove();
 
-        let bartext = barg.selectAll('.bartext').data([0]).join('text')
-        bartext
-            .text((d) => { return formatInt(total_carbon) })
-            .attr('class', 'bartext')
-            .transition().duration(duration)
-            .attr('x', (d) => xScale(total_carbon) + 20)
-            .attr('y', 40 + (barthickness / 1.4))
-            .style('fill', 'black')
+        // let bartext = barg.selectAll('.bartext').data([0]).join('text')
+        // bartext
+        //     .text((d) => { return formatInt(total_carbon) })
+        //     .attr('class', 'bartext')
+        //     .transition().duration(duration)
+        //     .attr('x', (d) => xScale(total_carbon) + 20)
+        //     .attr('y', 40 + (barthickness / 1.4))
+        //     .style('fill', 'black')
 
         // polylines linked to rects
         let imap = {
