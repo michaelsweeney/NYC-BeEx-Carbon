@@ -2,10 +2,14 @@ import React from 'react';
 
 
 
-const BeExLogo = () => {
+const BeExLogo = (props) => {
+
+  let width = props.props.width;
+  let height = props.props.height; 
+  
   return (
     <React.Fragment>
-      <svg width='150px' height='75px' id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 624.98 212.81">
+      <svg width={width} height={height} id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 624.98 212.81">
         <defs>
           <clipPath id="clip-path" transform="translate(-89.19 -67.64)">
             <rect x="74" y="45.05" width="212.22" height="265.27" style={{fill: 'none'}}></rect>

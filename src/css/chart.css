@@ -88,6 +88,7 @@ svg text {
 .carbon-summary-card {
   align-content: center;
   text-align: center;
+  overflow: hidden;
 }
 .carbon-summary-head {
   font-family: 'CircularStd-Bold';

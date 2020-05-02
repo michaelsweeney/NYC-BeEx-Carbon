@@ -34,7 +34,7 @@ class PrintLayout extends React.Component {
             <img src='ACCELERATOR-WHITE.png' height='60' width='120'></img>
           </a>
           <a className='logo-beex' href="http://www.be-exchange.org" target="_blank" rel="noopener noreferrer">
-            <BeExLogo></BeExLogo>
+            <BeExLogo props={{width: '150px', height: '75px'}}></BeExLogo>
 
           </a>
           <a className='logo-akf' href="http://www.akfgroup.com" target="_blank" rel="noopener noreferrer">

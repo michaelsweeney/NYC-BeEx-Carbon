@@ -130,32 +130,28 @@ class BarChart extends React.Component {
                 if (d.data.period == '2035+') {
                     tooltipdiv.html(`
                     <div class = 'tip-header'><u>${d.data.period}</u></div>
-                    <div>Utility Cost: $${formatInt(d.data.utility)}</div>
-                    <div>Carbon Fine: $${formatInt(d.data.fine)}</div>
-                    <div>Total Cost: $${formatInt(d.data.util_and_fine)}</div> 
+                    <div>Utility Cost: $${formatInt(d.data.utility) + '/yr'}</div>
+                    <div>Carbon Penalty: $${formatInt(d.data.fine) + '/yr'}</div>
+                    <div>Total Cost: $${formatInt(d.data.util_and_fine) + '/yr'}</div> 
                     <p class='fine-print'>
                         <i>
-                            *Fines for 2035 and up are <br/>
-                            highly variable and will <br/>
+                            *Penalties for 2035 and up<br/>
+                            are highly variable and will <br/>
                             likely change. Value shown <br/>
                             for this period is only an <br/>
                             estimate.
                         </i>
                     </p>
                     `)
-
                 }
-
                 else {
                     tooltipdiv.html(`
                     <div class = 'tip-header'><u>${d.data.period}</u></div>
-                    <div>Utility Cost: $${formatInt(d.data.utility)}</div>
-                    <div>Carbon Fine: $${formatInt(d.data.fine)}</div>
-                    <div>Total Cost: $${formatInt(d.data.util_and_fine)}</div> 
+                    <div>Utility Cost: $${formatInt(d.data.utility) + '/yr'}</div>
+                    <div>Carbon Penalty: $${formatInt(d.data.fine) +'/yr'}</div>
+                    <div>Total Cost: $${formatInt(d.data.util_and_fine +'/yr')}</div> 
                     `)
                 }
-
-
                 tooltipdiv
                     .style("left", () => { return event.pageX - 100 })
                     .style("top", (event.pageY - 100) + "px");
@@ -174,7 +170,6 @@ class BarChart extends React.Component {
             .attr("width", (d) => { return xScale(d[1]) - xScale(d[0]); })
             .attr("height", barwidth)
 
-
         svg.selectAll('.x-axis').data([0]).join('g')
             .attr('class', 'x-axis')
             .attr('transform', `translate(${margins.l}, ${plotheight + margins.t})`)
@@ -185,6 +180,8 @@ class BarChart extends React.Component {
 
         svg.select('.y-axis')
             .call(yAxis)
+
+        svg.selectAll('.y-axis').selectAll('text').attr('x', -6)
 
         let labels = svg.selectAll(".label")
             .data(datatostack, (d) => d.period)
@@ -203,7 +200,7 @@ class BarChart extends React.Component {
                 if (d.util_and_fine == 0) {
                     return ''
                 }
-                return '$' + formatInt(d.util_and_fine)
+                return '$' + formatInt(d.util_and_fine) + '/yr'
             })
 
         // Draw legend
@@ -227,14 +224,14 @@ class BarChart extends React.Component {
             .text((d, i) => {
                 switch (d) {
                     case 'utility': return "Utility Cost ($)";
-                    case 'fine': return "Carbon Fine ($)";
+                    case 'fine': return "Estimated Penalty ($)";
                 }
             })
 
 
         // lighten 2035 fine rects
 
-        svg.selectAll('.rect-2035').style('opacity', (d, i) => { if (i == 1) { return 0.5 } })
+        svg.selectAll('.rect-2035').style('opacity', (d, i) => { if ((i == 1) || (i == 0)) { return 0.35 } })
 
     }
 

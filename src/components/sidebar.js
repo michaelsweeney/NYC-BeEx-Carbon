@@ -127,23 +127,6 @@ class Sidebar extends React.Component {
     return (
       <div className='sidebar'>
 
-        {/* ----- HEADER ------ */}
-        <div className='head-text-1'>
-
-            {/* <Print className='print-btn' onClick={this.printReport} style={{ color: 'rgb(184,215,52)', paddingTop: '5px' }}></Print> */}
-
-          <HelpOutline onClick={this.props.modalcallback} className='help-btn' style={{ color: 'rgb(184,215,52)', width: '25px', height: '25px', marginLeft: '10px' }}></HelpOutline>
-          <div className=''>NYC LL97</div>
-          <div className='sidebar-header'>Carbon Emissions</div>
-          <div className='sidebar-header'>Calculator</div>
-
-        </div>
-
-
-
-
-
-
 
         {/* ----- BUILDING TYPE INPUTS ------ */}
 

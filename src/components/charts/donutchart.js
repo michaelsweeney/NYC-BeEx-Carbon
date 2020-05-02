@@ -73,15 +73,15 @@ class DonutChart extends React.Component {
     let unitlookup = {
       'cost': {
         'val': '$',
-        'val_norm': '$/sf'
+        'val_norm': '$/sf/yr'
       },
       'energy': {
         'val': 'kBtu',
-        'val_norm': 'kBtu/sf'
+        'val_norm': 'kBtu/sf/yr'
       },
       'carbon': {
         'val': 'tCO2',
-        'val_norm': 'tCO2/sf'
+        'val_norm': 'tCO2/sf/yr'
       }
     }
 
@@ -139,7 +139,7 @@ class DonutChart extends React.Component {
           }
           if (i == 1) {
             let val = d || 0
-            return `$${formatInt(val)}/sf`
+            return `$${formatInt(val)}/sf/yr`
           }
         }
         else {
@@ -205,7 +205,7 @@ class DonutChart extends React.Component {
           <br/>
           ${tag == 'cost' ? `$${formatInt(d.data.val)}` : `${formatInt(d.data.val)} ${unitlookup[tag].val}`}
           <br/>
-          ${tag == 'cost' ? `$${formatInt(d.data.val_norm)}/sf` : `${formatInt(d.data.val_norm)} ${unitlookup[tag].val_norm}`}
+          ${tag == 'cost' ? `$${formatInt(d.data.val_norm)}/sf/yr` : `${formatInt(d.data.val_norm)} ${unitlookup[tag].val_norm}`}
             `
         )
           .style("left", () => { return event.pageX - 100 })

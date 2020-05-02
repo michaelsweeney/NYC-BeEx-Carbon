@@ -1,0 +1,97 @@
+
+
+.header {
+  /* display: inline-block; */
+  overflow-x: hidden;
+  overflow-y: hidden;
+  white-space: nowrap;
+  vertical-align: middle;
+  width: 100vw;
+}
+.header-copy {
+  float: left;
+  padding-top: 10px;
+  vertical-align: middle;
+}
+
+.header-copy .head {
+  font-family: 'CircularStd-Bold';
+  font-size: 20px;
+}
+.header-copy .mid {
+  font-family: 'CircularStd-Book';
+}
+.header .header-logos {
+  float: right;
+
+}
+
+.header img {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+
+.header .title-container {
+  position: absolute;
+  left: calc(40% - 200px);
+  right: calc(40% - 150px);
+  display: inline-block;
+  text-align: center;
+  font-family: 'CircularStd-Black';
+  font-size: 20px;
+}
+
+.title-text::after {
+  content: "";
+  position: relative;
+  bottom: 10px;
+  height: 4px;
+  /* margin-top: 4px; */
+  text-align: center;
+  align-content: center;
+  align-self: center;
+  /* left: calc(100% - 200px); */
+  /* right: calc(100% - 150px); */
+  width: 280px;
+  background-color: #bad636;
+  display: inline-block;
+}
+
+
+
+.header .print-btn {
+  /* position: absolute;
+  left: 220px;
+  top: 5px; */
+
+}
+.header .help-btn {
+  /* position: absolute; */
+  /* left: 250px; */
+  /* top: 10px; */
+}
+
+.header .print-btn:hover {
+  cursor: pointer;
+  fill: rgb(156, 182, 42);
+  transition: background-color 500ms;
+}
+.header .help-btn:hover {
+  cursor: pointer;
+  fill: rgb(156, 182, 42);
+  transition: background-color 500ms;
+}
+
+
+.header .logo-beex {
+  top: -20px;
+}
+.header .title-text {
+  vertical-align: top;
+}
+
+.header .help-btn {
+  vertical-align: top;
+}
+

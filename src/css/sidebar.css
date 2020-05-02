@@ -1,27 +1,4 @@
 
-.sidebar .print-btn {
-  position: absolute;
-  left: 220px;
-  top: 5px;
-
-}
-.sidebar .help-btn {
-  position: absolute;
-  left: 250px;
-  top: 10px;
-}
-
-.sidebar .print-btn:hover {
-  cursor: pointer;
-  fill: rgb(156, 182, 42);
-  transition: background-color 500ms;
-}
-.sidebar .help-btn:hover {
-  cursor: pointer;
-  fill: rgb(156, 182, 42);
-  transition: background-color 500ms;
-}
-
 
 .sidebar input {
   background: #FFFFFF;
