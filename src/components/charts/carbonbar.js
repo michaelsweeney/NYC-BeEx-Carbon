@@ -305,7 +305,6 @@ class CarbonBar extends React.Component {
 			.style('stroke-width', () => '1px');
 
 		// handle axis... remove entirely if too short, remove tickets otherwise.
-		console.log(height)
 		if (height < 230) {
 			svg.selectAll('.x-axis').remove();
 		}
@@ -352,7 +351,7 @@ class CarbonBar extends React.Component {
 					return '';
 				}
 				return `
-                        ${xScale(d.thresh)}, 80
+                        ${xScale(d.thresh)}, 70
                         ${xScale(d.thresh)}, ${40 - 15 * imap[i]}
                         ${i * threshspacing + d.rectwidth / 2}, ${40 - 15 * imap[i]}
                         ${i * threshspacing + d.rectwidth / 2}, ${-(barmargins.t - threshmargins.t - containerheight)}

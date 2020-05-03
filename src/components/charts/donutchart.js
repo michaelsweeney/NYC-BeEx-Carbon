@@ -39,7 +39,7 @@ class DonutChart extends React.Component {
     let title = this.props.title
     let tag = this.props.tag
 
-    let divdims = this.container.parentElement.getBoundingClientRect()
+    let divdims = this.container.parentElement.parentElement.getBoundingClientRect()
     let divheightoffset = 65;
     let divwidthoffset = 40;
 
@@ -50,7 +50,7 @@ class DonutChart extends React.Component {
     let width = (divdims.width - divwidthoffset) / 3
     let height = divdims.height - divheightoffset
 
-    let margintop = Math.max(height * 0.05, 10)
+    let margintop = Math.max(height * 0.01, 10)
     let marginbottom = Math.max(height * 0.05, 40)
 
     margintop = 0;
@@ -154,7 +154,7 @@ class DonutChart extends React.Component {
       })
       .attr('class', 'summarytext')
       .attr('x', width / 2)
-      .attr('y', (d, i) => (pieheight + margintop + (i * 16) + 5))
+      .attr('y', (d, i) => (pieheight + margintop + (i * 16) + 10))
       .attr('fill', 'black')
       .attr('text-anchor', 'middle')
 

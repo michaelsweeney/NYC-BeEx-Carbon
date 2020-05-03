@@ -58,7 +58,7 @@ class BarChart extends React.Component {
         })
 
         // parent container sizing
-        let divheightoffset = 50;
+        let divheightoffset = 0;
         let divwidthoffset = 28;
         let divdims = this.container.parentElement.getBoundingClientRect()
 
