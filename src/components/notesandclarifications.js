@@ -29,8 +29,8 @@ const NotesAndClarifications = () => {
 
                 <li>
                     LL 97 provides a number of possible adjustments to the
-                    annual building emissions limit, including appeal based o
-                    n special circumstances and critical building uses.
+                    annual building emissions limit, including appeal based
+                    on special circumstances and critical building uses.
                     These are not accounted for in the calculator.
                      </li>
 

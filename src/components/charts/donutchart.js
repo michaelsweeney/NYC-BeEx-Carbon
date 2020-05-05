@@ -80,8 +80,8 @@ class DonutChart extends React.Component {
         'val_norm': 'kBtu/sf/yr'
       },
       'carbon': {
-        'val': 'tCO2',
-        'val_norm': 'tCO2/sf/yr'
+        'val': 'tCO2e',
+        'val_norm': 'tCO2e/sf/yr'
       }
     }
 

@@ -186,7 +186,7 @@ class CarbonBar extends React.Component {
 				.attr('class', 'carbon-summary-text fine-text')
 				.attr('x', 10)
 				.attr('y', 35)
-				.text(`Threshold: ${formatInt(d.thresh)} tCO2/yr`);
+				.text(`Threshold: ${formatInt(d.thresh)} tCO2e/yr`);
 
 			g.selectAll('.thresh-text')
 				.data([0])
@@ -219,23 +219,9 @@ class CarbonBar extends React.Component {
 				tooltipdiv
 					.html(
 						`
-                <div>${formatInt(total_carbon)} tCO2/yr</div>
+                <div>${formatInt(total_carbon)} tCO2e/yr</div>
                 `
 					)
-					// // more verbose:
-					// tooltipdiv.html(
-					//     `
-					//   <div class = 'tip-header'><u>Carbon Thresholds</u></div>
-					//   <div>2024-2029: ${formatInt(co2limit_2024)} tCO2/yr</div>
-					//   <div>2030-2034: ${formatInt(co2limit_2030)} tCO2/yr</div>
-					//   <div>2035+: ${formatInt(co2limit_2035)} tCO2/yr</div>
-					//   <br/>
-					//   <div class = 'tip-header'><u>Carbon Fines</u></div>
-					//   <div>2024-2029: $${formatInt(fine_2024)}</div>
-					//   <div>2030-2034: $${formatInt(fine_2030)}</div>
-					//   <div>2035+: $${formatInt(fine_2035)}</div>
-					//     `
-					// )
 
 					.style('left', () => {
 						return event.pageX - 100;

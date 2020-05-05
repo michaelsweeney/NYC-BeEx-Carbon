@@ -154,7 +154,7 @@ class BarChart extends React.Component {
                 }
                 tooltipdiv
                     .style("left", () => { return event.pageX - 100 })
-                    .style("top", (event.pageY - 100) + "px");
+                    .style("top", (event.pageY - 300) + "px");
                 select(this).transition().duration(200).style("fill", (d, i) => {
                     return rgb(select(this).style('fill')).darker();
                 });
