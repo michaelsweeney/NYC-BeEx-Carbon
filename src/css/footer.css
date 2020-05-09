@@ -9,3 +9,11 @@
   /* float: right; */
 }
 
+
+
+.footer-text {
+  display: none;
+  position: absolute;
+  top: -20px;
+  left: 20px;
+}

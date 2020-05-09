@@ -1,5 +1,4 @@
 .print-layout {
-	/* display: none; */
 	background-color: white;
 	position: absolute;
 	z-index: 1;
@@ -14,19 +13,15 @@
 .sidebar {
 	position: fixed;
 	top: 100px;
-	/* background: rgb(182, 179, 179); */
-	border-right: 1px solid rgba(0, 0, 0, 0.25);
-	/* border-top: 1px solid rgba(0, 0, 0, 0.25); */
-
+	border-right: 4px solid rgba(0, 0, 0, 0.25);
 	box-sizing: border-box;
-	/* box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25); */
 	text-align: left;
-	height: calc(100% - 110px - 50px);
+	height: calc(100% - 110px - 100px);
 	width: 325px;
 	overflow-x: hidden;
-	/* padding-top: 20px; */
 	padding-left: 10px;
 	padding-right: 10px;
+	margin-top: 10px;
 }
 
 .content-layout {
@@ -34,16 +29,15 @@
 	left: 325px;
 	top: 100px;
 	width: calc(100% - 325px - 10px);
-	height: calc(100% - 100px - 50px);
+	height: calc(100% - 100px - 100px);
 	vertical-align: top;
 	white-space: nowrap;
 	box-sizing: border-box;
-	/* padding-top: 10px; */
 }
 
 .footer {
 	position: fixed;
-	height: 50px;
+	height: 100px;
 	bottom: 0px;
   width: 100vw;
 }
@@ -105,7 +99,7 @@
 	padding: 10px;
 	/* border-radius: 7px; */
 	background: #ffffff;
-	border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+	border-bottom: 4px solid rgba(0, 0, 0, 0.25);
 	/* border-left: 2px solid rgba(0, 0, 0, 0.25); */
 	box-sizing: border-box;
 	/* box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); */
@@ -151,7 +145,7 @@
 	background: #ffffff;
 	/* border: 0.5px solid #D2D2D2; */
 	box-sizing: border-box;
-	border-right: 1px solid rgba(0, 0, 0, 0.25);
+	border-right: 4px solid rgba(0, 0, 0, 0.25);
 
 	/* box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); */
 	margin-right: 5px;

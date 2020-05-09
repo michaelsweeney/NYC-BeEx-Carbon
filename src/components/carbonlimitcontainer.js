@@ -51,7 +51,7 @@ class CarbonLimitContainer extends React.Component {
 
         return (
             <div className='carbon-main-container'>
-                <div className='container-header'>Carbon Threshold Summary</div>
+                <div className='container-header'>Estimated Carbon Summary</div>
                 <div ref = {container => this.container = container} className='carbon-summary-card'>
                     {/* <div className='carbon-summary-head'>Carbon Footprint</div> */}
                     <div className='carbon-summary-val'>{formatInt(carbondata.total_carbon)}</div>

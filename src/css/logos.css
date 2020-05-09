@@ -17,3 +17,19 @@
   margin-left: 10px;
   margin-right: 10px;
 }
+
+.header .logo-beex {
+  top: -20px;
+}
+
+.footer .footer-logos {
+  position: relative;
+  top: 20px;
+  margin-left: 15px;
+  margin-right: 10px;
+}
+
+.footer .logo-akf {
+  margin-left: 40px;
+}
+

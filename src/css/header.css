@@ -34,7 +34,7 @@
 
 .header .title-container {
   position: absolute;
-  left: calc(40% - 200px);
+  left: calc(40% - 150px);
   right: calc(40% - 150px);
   display: inline-block;
   text-align: center;
@@ -42,21 +42,18 @@
   font-size: 20px;
 }
 
-.title-text::after {
+/* .title-text::after {
   content: "";
   position: relative;
   bottom: 10px;
   height: 4px;
-  /* margin-top: 4px; */
   text-align: center;
   align-content: center;
   align-self: center;
-  /* left: calc(100% - 200px); */
-  /* right: calc(100% - 150px); */
-  width: 280px;
+  width: 100vw;
   background-color: #bad636;
   display: inline-block;
-}
+} */
 
 
 
@@ -67,9 +64,9 @@
 
 }
 .header .help-btn {
-  /* position: absolute; */
-  /* left: 250px; */
-  /* top: 10px; */
+  position: absolute; 
+  right: 50px;
+  top: 35px;
 }
 
 .header .print-btn:hover {
@@ -84,14 +81,29 @@
 }
 
 
-.header .logo-beex {
-  top: -20px;
-}
 .header .title-text {
-  vertical-align: top;
+  display: inline-block;
+  font-family: 'CircularStd-Black';
+  padding-top: 12px;
+  /* vertical-align: top; */
+  font-size: 30px;
+  color: rgb(89,89,84);
+  letter-spacing: 2px;
 }
 
-.header .help-btn {
-  vertical-align: top;
-}
 
+
+
+.title-after {
+  content: "";
+  position: absolute;
+  left: 0px;
+  top: 95px;
+  height: 4px;
+  text-align: center;
+  align-content: center;
+  align-self: center;
+  width: calc(100vw - 35px);
+  background-color: #bad636;
+  display: inline-block;
+}

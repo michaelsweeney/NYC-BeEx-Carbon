@@ -304,15 +304,6 @@ class CarbonBar extends React.Component {
 			catch {}
 		}
 
-		// let bartext = barg.selectAll('.bartext').data([0]).join('text')
-		// bartext
-		//     .text((d) => { return formatInt(total_carbon) })
-		//     .attr('class', 'bartext')
-		//     .transition().duration(duration)
-		//     .attr('x', (d) => xScale(total_carbon) + 20)
-		//     .attr('y', 40 + (barthickness / 1.4))
-		//     .style('fill', 'black')
-
 		// polylines linked to rects
 		let imap = {
 			0: 3,

@@ -24,7 +24,7 @@ class AnnualCostSummaryContainer extends React.Component {
 
     return (
       <React.Fragment>
-        <div className='container-header'>Annual Cost Summary</div>
+        <div className='container-header'>Estimated Annual Cost Summary</div>
         <BarChart barprops = {barprops}></BarChart>
       </React.Fragment>
     )

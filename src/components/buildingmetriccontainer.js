@@ -97,7 +97,7 @@ class BuildingMetricContainer extends React.Component {
 
 		return (
 			<React.Fragment>
-				<div className="container-header">Building Metrics</div>
+				<div className="container-header">Estimated Building Metrics</div>
 
 				<div className="donuts">
 					<DonutChart title={'Cost'} donutprops={costdata} tag={'cost'}></DonutChart>
