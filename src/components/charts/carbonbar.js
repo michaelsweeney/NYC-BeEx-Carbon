@@ -161,7 +161,7 @@ class CarbonBar extends React.Component {
 				.data([d])
 				.join('rect')
 				.attr('class', 'rect-container')
-				.attr('width', 100)
+				.attr('width', 120) // starting width only
 				.attr('height', containerheight)
 				.attr('rx', 8)
 				.attr('fill', d => {
