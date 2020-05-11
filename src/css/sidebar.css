@@ -273,8 +273,8 @@ input[type=checkbox] {
   padding-right:5px;
   border-radius:15px;
   -webkit-appearance:button;
-  border: double 2px #00F;
-  background-color:#BAD636;
+  border: double 1px black;
+  background-color: white;
   color:#FFF;
   white-space: nowrap;
   overflow:hidden;
@@ -283,5 +283,5 @@ input[type=checkbox] {
 }
 
 input[type=checkbox]:checked {
-  background: #BAD636;
+  background-color: #BAD636;
 }

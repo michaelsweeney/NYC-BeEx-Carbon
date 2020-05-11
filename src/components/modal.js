@@ -45,12 +45,13 @@ class Modal extends React.Component {
 
                     <div className='instructions-container'>
                         <div className='head-text-3'> About this calculator</div>
+                        <div className='head-text-4'> This website is optimized for Google Chrome. If experiencing issues with a different browser, please try again using Chrome.</div>
+
                         <div className='head-text-4'> 
                             <p>
                                 The purpose of this calculator is to estimate a building's carbon penalty as a result of recently-enacted NYC LL97.
                                 Annual utility information and building type / floor area can be input to show thresholds and resulting estimated penalties
                                 for each of the three major penalty periods (2024-2029, 2030-2030, and 2035 and later).
-                        
                                 </p>
                             
                     </div>
