@@ -6,7 +6,14 @@ import * as serviceWorker from './serviceWorker';
 
 // ie polyfills
 if (!Object.values) Object.values = o=>Object.keys(o).map(k=>o[k]);
-
+if (window.NodeList && !NodeList.prototype.forEach) {
+    NodeList.prototype.forEach = function (callback, thisArg) {
+        thisArg = thisArg || window;
+        for (var i = 0; i < this.length; i++) {
+            callback.call(thisArg, this[i], i, this);
+        }
+    };
+}
 // import '@fortawesome/fontawesome-free/css/all.min.css'; 
 // import'bootstrap-css-only/css/bootstrap.min.css'; 
 // import 'mdbreact/dist/css/mdb.css';
