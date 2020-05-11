@@ -11,9 +11,7 @@ class Footer extends React.Component {
 		return (
 			<div className="footer">
 				<div className="footer-logos">
-					<span className='footer-text footer-text-ny'>
-					Produced By
-					</span>
+					<span className="footer-text footer-text-ny">Produced By</span>
 					<a
 						className="logo-nyc"
 						href="https://retrofitaccelerator.cityofnewyork.us/"
@@ -22,14 +20,11 @@ class Footer extends React.Component {
 					>
 						<img src="ACCELERATOR-WHITE.png" height="60" width="120"></img>
 					</a>
-					<span className='footer-text footer-text-akf'>
-					Powered By
-					</span>
+					<span className="footer-text footer-text-akf">Powered By</span>
 					<a className="logo-akf" href="http://www.akfgroup.com" target="_blank" rel="noopener noreferrer">
-						<img src="logo-akf.jpg" height="50" width="90"></img>
+						<img src="logo-akf.jpg" height="50" width="100"></img>
 					</a>
 				</div>
-
 			</div>
 		);
 	}

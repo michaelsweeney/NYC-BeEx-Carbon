@@ -28,7 +28,7 @@ class BarChart extends React.Component {
 			{ period: '2035+', utility: total_cost, fine: fine_2035, util_and_fine: fine_2035 + total_cost },
 		];
 
-		let colors = { fine: '#333333', utility: 'BAD636' };
+		let colors = { fine: '#333333', utility: '#BAD636' };
 		let keys = ['utility', 'fine'];
 
 		let data = stack().keys(keys)(datatostack);
@@ -101,7 +101,7 @@ class BarChart extends React.Component {
 			.selectAll('.bar')
 			.data(data, d => d.key)
 			.join('g')
-			.attr('class', 'bar')
+			.attr('class', (d) => `bar bar-${d.key}`)
 			.attr(`transform`, `translate(${margins.l}, ${margins.t})`)
 			.style('fill', (d, i) => {
 				return colors[d.key];
