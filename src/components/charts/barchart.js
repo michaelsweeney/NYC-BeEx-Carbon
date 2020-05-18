@@ -22,6 +22,7 @@ class BarChart extends React.Component {
 		// parse data
 		let { total_cost, fine_2024, fine_2030, fine_2035 } = this.props.barprops;
 
+
 		let datatostack = [
 			{ period: '2024-2029', utility: total_cost, fine: fine_2024, util_and_fine: fine_2024 + total_cost },
 			{ period: '2030-2034', utility: total_cost, fine: fine_2030, util_and_fine: fine_2030 + total_cost },
@@ -106,7 +107,6 @@ class BarChart extends React.Component {
 			.style('fill', (d, i) => {
 				return colors[d.key];
 			});
-
 		let rects = groups
 			.selectAll('rect')
 			.data(d => {
@@ -144,7 +144,7 @@ class BarChart extends React.Component {
                     <div class = 'tip-header'><u>${d.data.period}</u></div>
                     <div>Utility Cost: $${formatInt(d.data.utility) + '/yr'}</div>
                     <div>Carbon Penalty: $${formatInt(d.data.fine) + '/yr'}</div>
-                    <div>Total Cost: $${formatInt(d.data.util_and_fine + '/yr')}</div> 
+                    <div>Total Cost: $${formatInt(d.data.util_and_fine) + '/yr'}</div> 
                     `);
 				}
 				tooltipdiv

@@ -144,7 +144,7 @@ class Sidebar extends React.Component {
               <sup style={{marginLeft: '5px', paddingTop: '5px'}}>?</sup>
           </a>
           </div>
-          <div className='input-header-area head-text-4'>Area</div>
+          <div className='input-header-area head-text-4'>Area (SF)</div>
 
           {Object.keys(this.state.types).map((id) => {
             return (
