@@ -107,3 +107,42 @@
   background-color: #bad636;
   display: inline-block;
 }
+
+
+
+
+.demo-btn {
+  font-family: 'CircularStd-Bold';
+  position: absolute;
+  right: 100px;
+  top: 28px;
+  background-color: #BAD636; /* Green */
+  border: none;
+  color: white;
+  padding: 12px 30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  transition: background-color 200ms;
+  cursor: pointer;
+}
+
+
+
+.demo-btn.demo-on {
+  background-color: #BAD636; /* Green */
+
+}
+.demo-btn.demo-on:hover {
+  background-color: rgb(156, 182, 42);
+
+}
+
+.demo-btn.demo-off {
+  background-color: rgb(153,153,153)
+}
+
+.demo-btn.demo-off:hover {
+  background-color: rgb(135,135,135)
+}

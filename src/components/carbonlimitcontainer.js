@@ -29,10 +29,8 @@ class CarbonLimitContainer extends React.Component {
                 node.setAttribute('width', rectswidth)
             })
         }
-
-
-
     }
+    
     render() {
 
         let { summary } = this.props.building;

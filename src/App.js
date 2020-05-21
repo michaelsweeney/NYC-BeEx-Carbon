@@ -3,7 +3,7 @@ import { Sidebar } from './components/sidebar.js'
 import { CardLayout } from './components/cardlayout'
 import { Header } from './components/header.js'
 import { Modal } from './components/modal.js'
-import { defaultbuilding } from './components/defaultbuilding.js'
+import { defaultbuilding, demobuilding } from './components/defaultbuilding.js'
 import { compileBuilding } from './components/compilebuilding.js'
 import { PrintLayout } from './components/printlayout.js'
 import { Footer } from './components/footer.js'
@@ -27,6 +27,20 @@ class App extends React.Component {
     this.state = {
       building: compileBuilding(defaultbuilding),
       modalactive: true,
+      // isDemoMode: false,
+    }
+  }
+
+  demoModeCallback = (isactive) => {
+    let state = Object.assign({}, this.state)
+    // state.isDemoMode = isactive;
+    if (isactive) {
+      state.building = compileBuilding(demobuilding)
+      this.setState(state)
+    }
+    else {
+      state.building = compileBuilding(defaultbuilding)
+      this.setState(state)
     }
   }
 
@@ -57,8 +71,8 @@ class App extends React.Component {
       <React.Fragment>
         <Modal isactive={this.state.modalactive} callback={this.hideModal}></Modal>
         <div className="main-container">
-        <Header modalcallback = {this.showModal}></Header>
-          <Sidebar defaultbuilding={defaultbuilding} callback={this.inputCallback} modalcallback = {this.showModal}></Sidebar>
+        <Header demoModeCallback = {this.demoModeCallback} modalcallback = {this.showModal}></Header>
+          <Sidebar isDemoMode={this.state.isDemoMode} defaultbuilding={defaultbuilding} callback={this.inputCallback} modalcallback = {this.showModal}></Sidebar>
           <CardLayout building={this.state.building}></CardLayout>
         </div>
         <Footer modalcallback = {this.showModal}></Footer>

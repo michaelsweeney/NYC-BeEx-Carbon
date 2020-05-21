@@ -1,6 +1,11 @@
 
 
 const compileBuilding = (building) => {
+
+    console.log(building)
+
+
+
     const co2limitsbybuildingtype = {
       A: [0.01074, 0.0042, 0.0014],
       B_health: [0.02381, 0.0133, 0.0014],
@@ -29,6 +34,7 @@ const compileBuilding = (building) => {
     let utilities = building.utilities
   
     Object.values(types).forEach((type) => {
+      console.log(type)
       let limit_2024 = +co2limitsbybuildingtype[type.type][0] * +type.area
       let limit_2030 = +co2limitsbybuildingtype[type.type][1] * +type.area
       let limit_2035 = +co2limitsbybuildingtype[type.type][2] * +type.area

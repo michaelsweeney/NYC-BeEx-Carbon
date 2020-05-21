@@ -1,12 +1,33 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 
 import { BeExLogo } from './beexlogo.js';
 import { HelpOutline } from '@material-ui/icons';
+
+
+
+const DemoModeButton = (props) => {
+
+	const [isDemo, setIsDemo] = useState(false)
+	const setDemo = () => {
+    setIsDemo(!isDemo)
+    props.callback(!isDemo)
+  }
+  
+	return (
+		<button className={isDemo ? 'demo-btn demo-on' : ' demo-btn demo-off' } onClick={setDemo}>DEMO</button>
+	)
+}
+
 
 class Header extends React.Component {
 	constructor(props) {
 		super(props);
 	}
+
+	toggleDemo = (isdemo) => {
+		this.props.demoModeCallback(isdemo)
+	}
+
 	render() {
 		return (
 			<div className="header">
@@ -16,7 +37,8 @@ class Header extends React.Component {
 				<div className="title-container">
 					<div className="title-text">NYC LL97 Carbon Emissions Calculator</div>
 				</div>
-				<div className="title-after"></div>
+				<div className="title-after"></div> 
+				<DemoModeButton callback={this.toggleDemo}></DemoModeButton>
 				<HelpOutline
 					onClick={this.props.modalcallback}
 					className="help-btn"
