@@ -34,12 +34,12 @@
 
 .header .title-container {
   position: absolute;
-  left: calc(40% - 150px);
+  left: calc(40% - 175px);
   right: calc(40% - 150px);
   display: inline-block;
   text-align: center;
   font-family: 'CircularStd-Black';
-  font-size: 20px;
+  font-size: 20px; 
 }
 
 /* .title-text::after {

@@ -18,7 +18,13 @@ class BuildingType extends React.Component {
 	}
 
 	render() {
-		let { typenum } = this.props;
+		let { typenum, demoval } = this.props;
+
+		if (!demoval) {
+			demoval = {area: 0};
+		}
+
+				
 
 		let buildingtypes = {
 			A: 'A (Assembly)',
@@ -37,6 +43,7 @@ class BuildingType extends React.Component {
 			S: 'S (Storage)',
 			U: 'U (Utility/Misc)',
 		};
+
 
 		return (
 			<div className="bldg-input-container">
@@ -61,7 +68,7 @@ class BuildingType extends React.Component {
 							onChange={this.handleAreaChange}
 							onBlur={this.props.blurCallback}
 							type="number"
-							value={this.props.isDemoMode ? this.props.demoval.area : this.state.value}
+							value={this.props.isDemoMode ? demoval.area : this.state.value}
 						></input>
 						<button className={`type-remove-btn`} dataremove={typenum} onClick={this.props.removeCallback}>
 							X
