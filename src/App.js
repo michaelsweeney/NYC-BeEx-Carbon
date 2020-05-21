@@ -27,19 +27,20 @@ class App extends React.Component {
     this.state = {
       building: compileBuilding(defaultbuilding),
       modalactive: true,
-      // isDemoMode: false,
+      isDemoMode: false,
     }
   }
 
   demoModeCallback = (isactive) => {
     let state = Object.assign({}, this.state)
-    // state.isDemoMode = isactive;
     if (isactive) {
       state.building = compileBuilding(demobuilding)
+      state.isDemoMode = isactive;
       this.setState(state)
     }
     else {
       state.building = compileBuilding(defaultbuilding)
+      state.isDemoMode = isactive;
       this.setState(state)
     }
   }
@@ -48,11 +49,11 @@ class App extends React.Component {
     let state = Object.assign({}, this.state)
     let compiled = compileBuilding(building)
     state.building = compiled;
+    state.isDemoMode = false;
     this.setState(state)
   }
 
-  componentDidUpdate() {
-  }
+
 
   hideModal = () => {
     let state = Object.assign({}, this.state)
@@ -65,14 +66,19 @@ class App extends React.Component {
     state.modalactive = true
     this.setState(state)
   }
+  disableDemo =  () => {
+    let state = Object.assign({}, this.state)
+      state.isDemoMode = false;
+      this.setState(state)
+  }
 
   render() {
     return (
       <React.Fragment>
         <Modal isactive={this.state.modalactive} callback={this.hideModal}></Modal>
         <div className="main-container">
-        <Header demoModeCallback = {this.demoModeCallback} modalcallback = {this.showModal}></Header>
-          <Sidebar isDemoMode={this.state.isDemoMode} defaultbuilding={defaultbuilding} callback={this.inputCallback} modalcallback = {this.showModal}></Sidebar>
+        <Header isDemoMode={this.state.isDemoMode} demoModeCallback = {this.demoModeCallback} modalcallback = {this.showModal}></Header>
+          <Sidebar disableDemoCallback={this.disableDemo} isDemoMode={this.state.isDemoMode} demobuilding={demobuilding} defaultbuilding={defaultbuilding} callback={this.inputCallback} modalcallback = {this.showModal}></Sidebar>
           <CardLayout building={this.state.building}></CardLayout>
         </div>
         <Footer modalcallback = {this.showModal}></Footer>

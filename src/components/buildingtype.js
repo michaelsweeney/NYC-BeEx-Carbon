@@ -3,7 +3,20 @@ import React from 'react';
 class BuildingType extends React.Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			value: ''
+		}
 	}
+
+	componentDidUpdate() {
+		console.log(this.props)
+	}
+
+	handleAreaChange = (e) => {
+		this.props.updateCallback(e)
+		this.setState({value: e.target.value})
+	}
+
 	render() {
 		let { typenum } = this.props;
 
@@ -43,10 +56,12 @@ class BuildingType extends React.Component {
 					</div>
 					<div className="area-container">
 						<input
+							onFocus={this.props.disableDemoCallback}
 							datatag={typenum}
-							onInput={this.props.updateCallback}
+							onChange={this.handleAreaChange}
 							onBlur={this.props.blurCallback}
 							type="number"
+							value={this.props.isDemoMode ? this.props.demoval.area : this.state.value}
 						></input>
 						<button className={`type-remove-btn`} dataremove={typenum} onClick={this.props.removeCallback}>
 							X

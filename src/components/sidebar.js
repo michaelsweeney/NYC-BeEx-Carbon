@@ -8,9 +8,12 @@ import { Print } from '@material-ui/icons';
 class Sidebar extends React.Component {
 	constructor(props) {
 		super(props);
-    this.state = props.defaultbuilding;
+		this.state = props.defaultbuilding;
 	}
 
+	disableDemo = e => {
+		this.props.disableDemoCallback();
+	};
 
 	useDefaultRates = e => {
 		if (e.target.checked) {
@@ -40,7 +43,6 @@ class Sidebar extends React.Component {
 		let state = Object.assign({}, this.state);
 		state.utilities[fuel][type] = value;
 		this.setState(state);
-		// this.props.callback(state)
 	};
 
 	handleUtilityBlur = e => {
@@ -48,7 +50,6 @@ class Sidebar extends React.Component {
 		let [fuel, type] = e.target.getAttribute('datatag').split('-');
 		let state = Object.assign({}, this.state);
 		state.utilities[fuel][type] = value;
-		// this.setState(state)
 		this.props.callback(state);
 	};
 
@@ -120,14 +121,12 @@ class Sidebar extends React.Component {
 	};
 
 	render() {
+		console.log(this.props.demobuilding);
 		return (
 			<div className="sidebar">
 				{/* ----- BUILDING TYPE INPUTS ------ */}
 
-				<div className="head-text-2">
-					Building Inputs
-					{/* <HelpOutline style={{ color: 'rgb(184,215,52)', width: '20px', height: '20px', marginLeft: '10px' }}></HelpOutline> */}
-				</div>
+				<div className="head-text-2">Building Inputs</div>
 				<div className="bldg-input-main-container">
 					<div className="input-header-type head-text-4">
 						Building Type
@@ -145,6 +144,9 @@ class Sidebar extends React.Component {
 						return (
 							<React.Fragment key={id}>
 								<BuildingType
+									disableDemoCallback={this.disableDemo}
+									isDemoMode={this.props.isDemoMode}
+									demoval={this.props.demobuilding.types[id]}
 									typenum={id}
 									removeCallback={this.removeBuildingType}
 									updateCallback={this.handleBuildingTypeChange}
@@ -173,6 +175,9 @@ class Sidebar extends React.Component {
 				</div>
 				<div className="utility-input-main-container">
 					<UtilityInput
+						disableDemoCallback={this.disableDemo}
+						isDemoMode={this.props.isDemoMode}
+						demoval={this.props.demobuilding.utilities.elec}
 						title="Electricity"
 						cons_title="kWh"
 						utiltag="elec"
@@ -183,6 +188,9 @@ class Sidebar extends React.Component {
 					></UtilityInput>
 
 					<UtilityInput
+						disableDemoCallback={this.disableDemo}
+						isDemoMode={this.props.isDemoMode}
+						demoval={this.props.demobuilding.utilities.gas}
 						title="Natural Gas"
 						cons_title="therms"
 						utiltag="gas"
@@ -193,6 +201,9 @@ class Sidebar extends React.Component {
 					></UtilityInput>
 
 					<UtilityInput
+						disableDemoCallback={this.disableDemo}
+						isDemoMode={this.props.isDemoMode}
+						demoval={this.props.demobuilding.utilities.steam}
 						title="Steam"
 						cons_title="mLbs"
 						utiltag="steam"
@@ -203,6 +214,9 @@ class Sidebar extends React.Component {
 					></UtilityInput>
 
 					<UtilityInput
+						disableDemoCallback={this.disableDemo}
+						isDemoMode={this.props.isDemoMode}
+						demoval={this.props.demobuilding.utilities.fuel_two}
 						title="Fuel Oil 2"
 						cons_title="gal"
 						utiltag="fuel_two"
@@ -214,6 +228,9 @@ class Sidebar extends React.Component {
 					></UtilityInput>
 
 					<UtilityInput
+						disableDemoCallback={this.disableDemo}
+						isDemoMode={this.props.isDemoMode}
+						demoval={this.props.demobuilding.utilities.fuel_four}
 						title="Fuel Oil 4"
 						cons_title="gal"
 						utiltag="fuel_four"

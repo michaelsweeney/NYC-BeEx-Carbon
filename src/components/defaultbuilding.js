@@ -3,7 +3,7 @@ const defaultbuilding = {
     types: {
       1: {
         type: 'A',
-        area: 0,
+        area: '',
         id: 1,
       }
     },
@@ -36,30 +36,30 @@ const demobuilding = {
   types: {
     1: {
       type: 'A',
-      area: 0,
+      area: 60000,
       id: 1,
-    }
+    },
   },
   utilities: {
     elec: {
-      cons: 40,
-      rate: 0.22,
+      cons: 750000,
+      rate: 0.193,
     },
     gas: {
-      cons: 30,
-      rate: 1.0
+      cons: 10000,
+      rate: 1.001 
     },
     steam: {
-      cons: '',
-      rate: ''
+      cons: 250,
+      rate: 32.8,
     },
     fuel_two: {
-      cons: '',
-      rate: ''
+      cons: 500,
+      rate: 1.43
     },
     fuel_four: {
-      cons: '',
-      rate: ''
+      cons: 0,
+      rate: 1.43
     },
   },
 }
