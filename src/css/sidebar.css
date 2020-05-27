@@ -95,7 +95,7 @@
 .bldg-type-select {
   font-family: 'CircularStd-Book';
   height: 30px;
-  padding: .6em 1.4em .5em .8em;
+  padding: .4em .25em .4em .4em;
   width: 150px;
   max-width: 100%;
   box-sizing: border-box;
@@ -229,6 +229,8 @@ text-align: left;
 }
 .area-container input {
   margin-left: 5px;
+
+  /* height: 30px; */
 }
 
 
