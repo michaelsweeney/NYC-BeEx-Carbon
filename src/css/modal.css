@@ -1,89 +1,84 @@
 .modal {
-  z-index: 999;
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
-  box-sizing: border-box;
-  background-color: rgba(0, 0, 0, 0.75);
+	z-index: 999;
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	box-sizing: border-box;
+	background-color: rgba(0, 0, 0, 0.75);
 }
 
 .modal .modal-content {
-  /* height: 80%; */
-  width: 80%;
-  margin-left: 10%;
-  margin-right: 10%;
-  margin-top: 20px;
-  padding: 20px;
-  border-radius: 5px;
-  border-color: black;
-  border-width: 1px;
-  background-color: white;
-  animation-name: animatetop;
-  animation-duration: 1s;
-  box-sizing: border-box;
-  overflow-y: scroll;
-  overflow-x: scoll;
+	width: 80%;
+	margin-left: 10%;
+	margin-right: 10%;
+	margin-top: 20px;
+	padding: 20px;
+	border-radius: 5px;
+	border-color: black;
+	border-width: 1px;
+	background-color: white;
+	animation-name: animatetop;
+	animation-duration: 1s;
+	box-sizing: border-box;
+	overflow-y: scroll;
+	overflow-x: scoll;
 }
 
 .modal.inactive {
-  left: -9999px;
-  /* display: none; */
+	left: -9999px;
 }
 
 .modal {
-  transition: left 2000ms;
+	transition: left 2000ms;
 }
 
 @keyframes animatetop {
-  from {
-    left: -9999px;
-    opacity: 0
-  }
-  to {
-    left: 0;
-    opacity: 1
-  }
+	from {
+		left: -9999px;
+		opacity: 0;
+	}
+	to {
+		left: 0;
+		opacity: 1;
+	}
 }
 
 .modal-exit-btn {
-  background-color: rgb(255, 255, 255);
-  border: none;
-  color: black;
-  cursor: pointer;
-  font-size: 20px;
-  padding-bottom: 10px;
-  text-align: center;
-  text-decoration: none;
-  float: right;
-  border-radius: 5px;
-  height: 35px;
+	background-color: rgb(255, 255, 255);
+	border: none;
+	color: black;
+	cursor: pointer;
+	font-size: 20px;
+	padding-bottom: 10px;
+	text-align: center;
+	text-decoration: none;
+	float: right;
+	border-radius: 5px;
+	height: 35px;
 }
 
 .modal-exit-btn:hover {
-  color: red;
+	color: red;
 }
 
-.instructions-container, .notes-clarifications-container {
-  margin-left: 20px;
-  margin-right: 20px;
+.instructions-container,
+.notes-clarifications-container {
+	margin-left: 20px;
+	margin-right: 20px;
 }
-
-
 
 .modal-logos {
-  margin-left: 10px;
+	margin-left: 10px;
 }
 .modal-logos a {
-  margin-left: 20px;
-  margin-right: 20px;
-
+	margin-left: 20px;
+	margin-right: 20px;
 }
 
-
 .notes-clarifications-container li {
-  font-size: 12px;
+	font-size: 12px;
 }
 
 .modal li {
-  margin-bottom: 5px;
+	margin-bottom: 5px;
 }

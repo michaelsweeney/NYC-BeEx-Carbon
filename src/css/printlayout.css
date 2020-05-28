@@ -1,174 +1,135 @@
 @media print {
-  .print-layout {
-    display: inline-block !important;
-    margin: 0px;
-    padding: 20px;
-    width: 670px;
-    /* width: 7in; */
-    height: 900px;
-    /* or height: 9.5in; */
-    clear: both;
-    page-break-after: always;
-    border: 1px solid black;
-    position: absolute;
-    left: 50px;
-  }
-  /* .main-container {
-    display: none !important;
-  } */
+	.print-layout {
+		display: inline-block !important;
+		margin: 0px;
+		padding: 20px;
+		width: 670px;
+		height: 900px;
+		clear: both;
+		page-break-after: always;
+		border: 1px solid black;
+		position: absolute;
+		left: 50px;
+	}
 
+	.print-logos {
+		position: absolute;
+		bottom: 0px;
+		margin-left: 50px;
+		margin-right: 50px;
+	}
+	.print-logos a {
+		display: inline-block;
+		margin-left: 40px;
+		margin-right: 40px;
+	}
 
+	.print-layout .container-header {
+		font-family: 'CircularStd-Bold';
+		font-size: 16px;
+		margin-bottom: 15px;
+	}
 
+	.print-layout .container-header:after {
+		content: '';
+		height: 4px;
+		margin-top: 4px;
+		width: 50px;
+		background-color: #bad636;
+		display: block;
+	}
 
+	.print-layout .print-top-row {
+		display: block;
+		height: 250px;
+		width: 625px;
+		box-sizing: border-box;
+		margin-top: 10px;
+		margin-left: 20px;
+		margin-right: 20px;
+	}
 
-  .print-logos {
-    position: absolute;
-    bottom: 0px;
-    margin-left: 50px;
-    margin-right: 50px;
-    /* text-align: center; */
-    /* align-content: center; */
-    /* align-items: center; */
-  }
-  .print-logos a {
-    display: inline-block;
-    margin-left: 40px;
-    margin-right: 40px;
-  }
+	.print-layout .print-bottom-row {
+		display: block;
+		box-sizing: border-box;
+		height: 300px;
+		width: 650px;
+		margin-top: 10px;
+		margin-left: 20px;
+		margin-right: 20px;
+		overflow: hidden;
+	}
 
+	.print-layout .carbon-main-container {
+		display: inline-block;
+		width: 100%;
+		padding: 20px;
+		border-radius: 7px;
+		background: #ffffff;
+		border: 0.5px solid #d2d2d2;
+		box-sizing: border-box;
+		box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+		height: 100%;
+		vertical-align: top;
+	}
 
+	.print-layout .carbon-summary-card {
+		vertical-align: top;
+		display: inline-block;
+		padding: 10px;
+		width: 150px;
+		background: #ffffff;
+		box-sizing: border-box;
+		height: 100%;
+		margin-right: 20px;
+	}
 
+	.print-layout .carbon-bar-card {
+		position: relative;
+		top: 15px;
+		display: inline-block;
+		padding: 20px;
+		height: 225px;
+		width: 400px;
+		border-radius: 7px;
+		background: #ffffff;
+		border: 0.5px solid #d2d2d2;
+		box-sizing: border-box;
+		box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+		margin-right: 10px;
+	}
 
+	.print-layout .cost-card {
+		display: inline-block;
+		vertical-align: top;
+		padding: 20px;
+		border-radius: 7px;
+		background: #ffffff;
+		border: 0.5px solid #d2d2d2;
+		box-sizing: border-box;
+		box-shadow: 2px 2px 4px rgba(48, 44, 44, 0.3);
+		margin-right: 5px;
+		width: 200px;
+	}
 
+	.print-layout .donut-card {
+		display: inline-block;
+		vertical-align: top;
+		padding: 20px;
+		border-radius: 7px;
+		background: #ffffff;
+		border: 0.5px solid #d2d2d2;
+		box-sizing: border-box;
+		box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+		margin-left: 5px;
+		width: 400px;
+	}
 
+	.print-layout .print-left-bottom {
+		height: 300px !important;
+	}
 
-  .print-layout .container-header {
-    font-family: 'CircularStd-Bold';
-    font-size: 16px;
-    margin-bottom: 15px;
-  }
-  
-  .print-layout .container-header:after {
-    content: "";
-    height: 4px;
-    margin-top: 4px;
-    width: 50px;
-    background-color: #bad636;
-    display: block;
-  }
-  
-  .print-layout .print-top-row {
-    display: block;
-    height: 250px;
-    width: 625px;
-    box-sizing: border-box;
-    margin-top: 10px;
-    margin-left: 20px;
-    margin-right: 20px;
-  }
-  
-  .print-layout .print-bottom-row {
-    display: block;
-    box-sizing: border-box;
-    height: 300px;
-    width: 650px;
-    margin-top: 10px;
-    margin-left: 20px;
-    margin-right: 20px;
-    overflow: hidden;
-  }
-  
-  .print-layout .carbon-main-container {
-    display: inline-block;
-    width: 100%;
-    padding: 20px;
-    border-radius: 7px;
-    background: #FFFFFF;
-    border: 0.5px solid #d2d2d2;
-    box-sizing: border-box;
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    height: 100%;
-    vertical-align: top;
-  
-  }
-  
-  .print-layout .carbon-summary-card {
-    vertical-align: top;
-    display: inline-block;
-    padding: 10px;
-    width: 150px;
-    background: #FFFFFF;
-    box-sizing: border-box;
-    height: 100%;
-    margin-right: 20px;
-  }
-  
-  .print-layout .carbon-bar-card {
-    position: relative;
-    top: 15px;
-    display: inline-block;
-    padding: 20px;
-    height: 225px;
-    width: 400px;
-    border-radius: 7px;
-    background: #FFFFFF;
-    border: 0.5px solid #d2d2d2;
-    box-sizing: border-box;
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    margin-right: 10px;
-  }
-
-  
-  .print-layout .cost-card {
-    display: inline-block;
-    vertical-align: top;
-    /* height: 100%; */
-    padding: 20px;
-    border-radius: 7px;
-    background: #FFFFFF;
-    border: 0.5px solid #D2D2D2;
-    box-sizing: border-box;
-    box-shadow: 2px 2px 4px rgba(48, 44, 44, 0.3);
-    margin-right: 5px;
-    width: 200px;
-  }
-  
-  .print-layout .donut-card {
-    display: inline-block;
-    vertical-align: top;
-    padding: 20px;
-    border-radius: 7px;
-    background: #FFFFFF;
-    border: 0.5px solid #D2D2D2;
-    box-sizing: border-box;
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    margin-left: 5px;
-    width: 400px;
-  }
-  
-  .print-layout .print-left-bottom {
-    height: 300px !important;
-  }
-
-  .print-layout .print-right-bottom {
-
-    height: 300px !important;
-  }
-
-  
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	.print-layout .print-right-bottom {
+		height: 300px !important;
+	}
 }

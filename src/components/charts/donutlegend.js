@@ -104,7 +104,7 @@ class DonutLegend extends React.Component {
 
 		let computedwidth = g.node().getBBox().width;
 
-		g.attr('transform', `translate(${((width - computedwidth - 20) / 2)}, 10)`);
+		g.attr('transform', `translate(${(width - computedwidth - 20) / 2}, 10)`);
 	}
 
 	render() {

@@ -22,7 +22,6 @@ class BarChart extends React.Component {
 		// parse data
 		let { total_cost, fine_2024, fine_2030, fine_2035 } = this.props.barprops;
 
-
 		let datatostack = [
 			{ period: '2024-2029', utility: total_cost, fine: fine_2024, util_and_fine: fine_2024 + total_cost },
 			{ period: '2030-2034', utility: total_cost, fine: fine_2030, util_and_fine: fine_2030 + total_cost },
@@ -102,7 +101,7 @@ class BarChart extends React.Component {
 			.selectAll('.bar')
 			.data(data, d => d.key)
 			.join('g')
-			.attr('class', (d) => `bar bar-${d.key}`)
+			.attr('class', d => `bar bar-${d.key}`)
 			.attr(`transform`, `translate(${margins.l}, ${margins.t})`)
 			.style('fill', (d, i) => {
 				return colors[d.key];
@@ -238,13 +237,13 @@ class BarChart extends React.Component {
 			.attr('x', (d, i) => {
 				return i * 180 + 5;
 			})
-			.attr('y',  0)
+			.attr('y', 0)
 			.attr('width', 15)
 			.attr('height', 15)
 			.style('fill', (d, i) => {
 				return colors[d];
-            })
-            .style('opacity', 1)
+			})
+			.style('opacity', 1);
 
 		legend
 			.selectAll('text')
@@ -253,11 +252,11 @@ class BarChart extends React.Component {
 			.attr('x', (d, i) => {
 				return i * 180 + 30;
 			})
-            .attr('y', 12)
+			.attr('y', 12)
 			.attr('font-size', 14)
 			.attr('class', 'legend-text')
-            .style('text-anchor', 'start')
-            .style('opacity', 1)
+			.style('text-anchor', 'start')
+			.style('opacity', 1)
 			.text((d, i) => {
 				switch (d) {
 					case 'utility':
@@ -267,30 +266,32 @@ class BarChart extends React.Component {
 				}
 			});
 
-        // lighten 2035 fine rects
+		// lighten 2035 fine rects
 		svg.selectAll('.rect-2035').style('opacity', (d, i) => {
 			if (i == 1 || i == 0) {
 				return 0.35;
 			}
-        });
+		});
 
-        // reposition legend
+		// reposition legend
 
-        let legenddims = legend.node().getBoundingClientRect()
-        let legendwidth = legenddims.width
-        let legendheight = legenddims.height
+		let legenddims = legend.node().getBoundingClientRect();
+		let legendwidth = legenddims.width;
+		let legendheight = legenddims.height;
 
-        legend
-        .attr('transform', `translate(${margins.l + (plotwidth - legendwidth)/2}, ${margins.t + plotheight + legendtoppad})`);
-        
-        if (total_cost == 0) {
-            select(legend.selectAll('text').nodes()[1]).style('opacity', 0.5)
-            select(legend.selectAll('rect').nodes()[1]).style('opacity', 0.5)
-        }
-        if (fine_2024 == 0) {
-            select(legend.selectAll('text').nodes()[0]).style('opacity', 0.5)
-            select(legend.selectAll('rect').nodes()[0]).style('opacity', 0.5)
-        }      
+		legend.attr(
+			'transform',
+			`translate(${margins.l + (plotwidth - legendwidth) / 2}, ${margins.t + plotheight + legendtoppad})`
+		);
+
+		if (total_cost == 0) {
+			select(legend.selectAll('text').nodes()[1]).style('opacity', 0.5);
+			select(legend.selectAll('rect').nodes()[1]).style('opacity', 0.5);
+		}
+		if (fine_2024 == 0) {
+			select(legend.selectAll('text').nodes()[0]).style('opacity', 0.5);
+			select(legend.selectAll('rect').nodes()[0]).style('opacity', 0.5);
+		}
 	};
 
 	render() {

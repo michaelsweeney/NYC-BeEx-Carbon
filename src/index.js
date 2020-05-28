@@ -77,24 +77,6 @@ if (!Array.prototype.map) {
           //     method of callback with T as the this value and argument 
           //     list containing kValue, k, and O.
           mappedValue = callback.call(T, kValue, k, O);
-  
-          // iii. Call the DefineOwnProperty internal method of A with arguments
-          // Pk, Property Descriptor
-          // { Value: mappedValue,
-          //   Writable: true,
-          //   Enumerable: true,
-          //   Configurable: true },
-          // and false.
-  
-          // In browsers that support Object.defineProperty, use the following:
-          // Object.defineProperty(A, k, {
-          //   value: mappedValue,
-          //   writable: true,
-          //   enumerable: true,
-          //   configurable: true
-          // });
-  
-          // For best browser support, use the following:
           A[k] = mappedValue;
         }
         // d. Increase k by 1.

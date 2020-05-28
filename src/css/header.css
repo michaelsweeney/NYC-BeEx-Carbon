@@ -1,7 +1,6 @@
 
 
 .header {
-  /* display: inline-block; */
   overflow-x: hidden;
   overflow-y: hidden;
   white-space: nowrap;
@@ -42,27 +41,6 @@
   font-size: 20px; 
 }
 
-/* .title-text::after {
-  content: "";
-  position: relative;
-  bottom: 10px;
-  height: 4px;
-  text-align: center;
-  align-content: center;
-  align-self: center;
-  width: 100vw;
-  background-color: #bad636;
-  display: inline-block;
-} */
-
-
-
-.header .print-btn {
-  /* position: absolute;
-  left: 220px;
-  top: 5px; */
-
-}
 .header .help-btn {
   position: absolute; 
   right: 50px;
@@ -80,19 +58,14 @@
   transition: background-color 500ms;
 }
 
-
 .header .title-text {
   display: inline-block;
   font-family: 'CircularStd-Black';
   padding-top: 12px;
-  /* vertical-align: top; */
   font-size: 30px;
   color: rgb(89,89,84);
   letter-spacing: 2px;
 }
-
-
-
 
 .title-after {
   content: "";
@@ -108,15 +81,12 @@
   display: inline-block;
 }
 
-
-
-
 .demo-btn {
   font-family: 'CircularStd-Bold';
   position: absolute;
   right: 100px;
   top: 28px;
-  background-color: #BAD636; /* Green */
+  background-color: #BAD636; 
   border: none;
   color: white;
   padding: 12px 30px;
@@ -128,10 +98,8 @@
   cursor: pointer;
 }
 
-
-
 .demo-btn.demo-on {
-  background-color: #BAD636; /* Green */
+  background-color: #BAD636; 
 
 }
 .demo-btn.demo-on:hover {

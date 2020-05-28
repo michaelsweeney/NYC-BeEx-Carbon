@@ -4,27 +4,25 @@ class BuildingType extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			value: ''
-		}
+			value: '',
+		};
 	}
 
 	componentDidUpdate() {
-		console.log(this.props)
+		// console.log(this.props)
 	}
 
-	handleAreaChange = (e) => {
-		this.props.updateCallback(e)
-		this.setState({value: e.target.value})
-	}
+	handleAreaChange = e => {
+		this.props.updateCallback(e);
+		this.setState({ value: e.target.value });
+	};
 
 	render() {
 		let { typenum, demoval } = this.props;
 
 		if (!demoval) {
-			demoval = {area: 0};
+			demoval = { area: 0 };
 		}
-
-				
 
 		let buildingtypes = {
 			A: 'A (Assembly)',
@@ -43,7 +41,6 @@ class BuildingType extends React.Component {
 			S: 'S (Storage)',
 			U: 'U (Utility/Misc)',
 		};
-
 
 		return (
 			<div className="bldg-input-container">

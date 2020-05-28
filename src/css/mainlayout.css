@@ -39,7 +39,7 @@
 	position: fixed;
 	height: 100px;
 	bottom: 0px;
-  width: 100vw;
+	width: 100vw;
 }
 
 .header {
@@ -71,7 +71,6 @@
 }
 
 .top-row {
-
 	display: block;
 	height: calc(50% - 10px);
 	width: calc(100% - 20px);

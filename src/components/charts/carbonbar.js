@@ -124,8 +124,8 @@ class CarbonBar extends React.Component {
 			.join('g')
 			.attr('class', 'x-axis')
 			.attr('transform', `translate(${barmargins.l}, ${plotheight + barmargins.t})`);
-		
-		xaxisg.call(xAxis)
+
+		xaxisg.call(xAxis);
 
 		svg.selectAll('.axis-title')
 			.data([0])
@@ -293,15 +293,13 @@ class CarbonBar extends React.Component {
 		// handle axis... remove entirely if too short, remove tickets otherwise.
 		if (height < 230) {
 			svg.selectAll('.x-axis').remove();
-		}
-		else {
-			xaxisg.call(xAxis)
+		} else {
+			xaxisg.call(xAxis);
 			try {
 				svg.selectAll('.tick')
-				.nodes()[0]
-				.remove();
-			}
-			catch {}
+					.nodes()[0]
+					.remove();
+			} catch {}
 		}
 
 		// polylines linked to rects

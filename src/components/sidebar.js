@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { HelpOutline } from '@material-ui/icons';
 import { UtilityInput } from './utilityinput.js';
 import { BuildingType } from './buildingtype.js';
-import { Add } from '@material-ui/icons';
-import { Print } from '@material-ui/icons';
 
 class Sidebar extends React.Component {
 	constructor(props) {
@@ -121,7 +118,6 @@ class Sidebar extends React.Component {
 	};
 
 	render() {
-		console.log(this.props.demobuilding);
 		return (
 			<div className="sidebar">
 				{/* ----- BUILDING TYPE INPUTS ------ */}
