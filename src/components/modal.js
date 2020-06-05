@@ -70,7 +70,7 @@ class Modal extends React.Component {
 								</a>
 								developed by the Building Energy Exchange in partnership with the NYC Accelerator to
 								help demystify the Climate Mobilization Act and connect our community to solutions. This
-								calculator is powered by AKF Group with UX/UI support from Jessica Celano.
+								calculator is powered by AKF Group with UX/UI design by Jessica Celano.
 							</p>
 
 							<p>

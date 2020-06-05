@@ -82,6 +82,15 @@ const compileBuilding = (building) => {
     let fine_2030 = total_carbon > co2limit_2030 ? (total_carbon - co2limit_2030) * fine_per_ton_co2 : 0;
     let fine_2035 = total_carbon > co2limit_2035 ? (total_carbon - co2limit_2035) * fine_per_ton_co2 : 0;
   
+    if (area < 25000) {
+      fine_2024 = 0
+      fine_2030 = 0
+      fine_2035 = 0
+      co2limit_2024 = 0
+      co2limit_2030 = 0
+      co2limit_2035 = 0
+    }
+
     let compiled = {
       summary: {
         total_carbon: total_carbon,
@@ -94,7 +103,6 @@ const compileBuilding = (building) => {
         fine_2030: fine_2030,
         fine_2035: fine_2035
       },
-  
   
       utilities: {
         native: {
