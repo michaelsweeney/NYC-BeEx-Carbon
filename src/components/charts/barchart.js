@@ -62,7 +62,6 @@ class BarChart extends React.Component {
 
 		let plotwidth = width - margins.l - margins.r;
 		let plotheight = height - margins.t - margins.b;
-
 		let barwidth = plotheight / 6;
 
 		let svg = select(this.container)

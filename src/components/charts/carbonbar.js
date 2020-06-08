@@ -41,8 +41,9 @@ class CarbonBar extends React.Component {
 
 		let width = divdims.width - divwidthoffset;
 		let height = divdims.height - divheightoffset;
-
-		let barthickness = height / 14;
+		// console.log(height)
+		// let barthickness = (height - 10) / 6; // 14 /// normalize to other
+		let barthickness = height / 12; // 14 /// normalize to other
 
 		let barmargins = {
 			t: height / 2 + 10,
@@ -123,7 +124,7 @@ class CarbonBar extends React.Component {
 			.data([0])
 			.join('g')
 			.attr('class', 'x-axis')
-			.attr('transform', `translate(${barmargins.l}, ${plotheight + barmargins.t})`);
+			.attr('transform', `translate(${barmargins.l}, ${plotheight + barmargins.t - 1 * (plotheight / 300) + 1})`);
 
 		xaxisg.call(xAxis);
 
@@ -250,7 +251,7 @@ class CarbonBar extends React.Component {
 			})
 			.transition()
 			.duration(duration)
-			.attr('y', 40)
+			.attr('y', () => 40 - 5 * (plotheight / 250))
 			.attr('height', barthickness)
 			.attr('fill', barcolor)
 			.attr('x', 0)
@@ -276,13 +277,13 @@ class CarbonBar extends React.Component {
 			.join('line')
 			.attr('class', 'axisline')
 			.attr('y1', d => {
-				return 40 + barthickness / 1.4 - 20;
+				return barthickness / 1.4 + 16;
 			})
 			.attr('x1', d => {
 				return 0;
 			})
 			.attr('y2', d => {
-				return 40 + barthickness / 1.4 + 15;
+				return 40 + barthickness / 1.4 + 15  - 5 * (plotheight / 250);
 			})
 			.attr('x2', d => {
 				return 0;
