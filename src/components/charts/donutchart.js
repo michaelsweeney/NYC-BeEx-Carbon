@@ -28,7 +28,6 @@ class DonutChart extends React.Component {
     this.createDonutChart({})
   }
   addResize() {
-
     window.addEventListener('resize', () => {
       this.createDonutChart({})
     })

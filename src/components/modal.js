@@ -31,14 +31,12 @@ class Modal extends React.Component {
 			<div className={`modal ${this.props.isactive ? 'active' : 'inactive'}`}>
 				<div className="modal-content">
 					<div className="head-text-1">
-						{' '}
 						NYC LL97 Carbon Emissions Calculator (BETA)
 						<button className="modal-exit-btn" onClick={this.setInactive}>
 							x
 						</button>
 					</div>
 					<div className="head-text-2">
-						{' '}
 						This tool is currently in BETA testing. Please{' '}
 						<a href="mailto:calculator@be-exchange.org">email us</a> with comments or bug reports.
 					</div>
@@ -103,7 +101,7 @@ class Modal extends React.Component {
 						<NotesAndClarifications></NotesAndClarifications>
 					</div>
 
-					<div className="modal-logos">
+					{/* <div className="modal-logos">
 						<a
 							className="logo-nyc"
 							href="https://retrofitaccelerator.cityofnewyork.us/"
@@ -128,7 +126,7 @@ class Modal extends React.Component {
 						>
 							<img src="logo-akf.jpg" height="50" width="90"></img>
 						</a>
-					</div>
+					</div> */}
 				</div>
 			</div>
 		);

@@ -37,9 +37,10 @@
 
 .footer {
 	position: fixed;
-	height: 100px;
+	height: 70px;
 	bottom: 0px;
-	width: 100vw;
+	width: calc(100vw - 30px);
+	
 }
 
 .header {
@@ -89,7 +90,7 @@
 	margin-top: 10px;
 	margin-left: 20px;
 	margin-right: 20px;
-	height: calc(50% - 10px);
+	height: calc(50% - 30px);
 }
 
 .carbon-main-container {
