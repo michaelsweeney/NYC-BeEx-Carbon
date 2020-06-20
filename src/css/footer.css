@@ -1,12 +1,7 @@
-
-
-
-
-
 .footer {
 	font-family: 'CircularStd-Black';
 	font-size: 16px;
-	border-top: 4px solid #BAD636;
+	border-top: 4px solid #bad636;
 	color: #bad636;
 	font-weight: bold;
 	padding-bottom: 10px;
@@ -27,7 +22,6 @@
 }
 
 .footer-right {
-
 	padding-top: 5px;
 	text-align: right;
 	float: right;
@@ -35,6 +29,5 @@
 }
 
 .footer-right a {
-
-	color: #bad636
+	color: #bad636;
 }
