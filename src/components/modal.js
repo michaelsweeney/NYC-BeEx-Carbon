@@ -67,8 +67,8 @@ class Modal extends React.Component {
 									suite of resources{' '}
 								</a>
 								developed by the Building Energy Exchange in partnership with the NYC Accelerator to
-								help demystify the Climate Mobilization Act and connect our community to solutions. This
-								calculator is powered by AKF Group with UX/UI design by Jessica Celano.
+								help demystify the Climate Mobilization Act and connect our community to solutions. The
+								calculator engine was developed by AKF Group LLC with UX/UI design by Jessica Celano.
 							</p>
 
 							<p>
