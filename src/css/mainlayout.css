@@ -28,7 +28,7 @@
 	position: fixed;
 	left: 325px;
 	top: 100px;
-	width: calc(100% - 325px - 10px);
+	width: max(750px, calc(100% - 325px - 10px));
 	height: calc(100% - 100px - 100px);
 	vertical-align: top;
 	white-space: nowrap;
@@ -39,17 +39,17 @@
 	position: fixed;
 	height: 70px;
 	bottom: 0px;
-	width: calc(100vw - 30px);
+	width: max(750px, calc(100vw - 30px));
 }
 
 .header {
 	position: fixed;
 	top: 0px;
 	height: 100px;
-	width: calc(100vw);
-
+	width: calc(max(750px, 100vw));
 	padding: 20px;
 	margin-bottom: 10px;
+	overflow: hidden;
 	box-sizing: border-box;
 }
 

@@ -1,34 +1,32 @@
-
 @font-face {
-  font-family: 'CircularStd-Black';
-  src: local('CircularStd'), url('./fonts/CircularStd-Black.otf') format('truetype');
+	font-family: 'CircularStd-Black';
+	src: local('CircularStd'), url('./fonts/CircularStd-Black.otf') format('truetype');
 }
 
 @font-face {
-  font-family: 'CircularStd-Book';
-  src: local('CircularStd'), url('./fonts/CircularStd-Book.otf') format('truetype');
+	font-family: 'CircularStd-Book';
+	src: local('CircularStd'), url('./fonts/CircularStd-Book.otf') format('truetype');
 }
 @font-face {
-  font-family: 'CircularStd-Medium';
-  src: local('CircularStd'), url('./fonts/CircularStd-Medium.otf') format('truetype');
+	font-family: 'CircularStd-Medium';
+	src: local('CircularStd'), url('./fonts/CircularStd-Medium.otf') format('truetype');
 }
 @font-face {
-  font-family: 'CircularStd-Bold';
-  src: local('CircularStd'), url('./fonts/CircularStd-Bold.otf') format('truetype');
+	font-family: 'CircularStd-Bold';
+	src: local('CircularStd'), url('./fonts/CircularStd-Bold.otf') format('truetype');
 }
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+	-webkit-appearance: none;
+	margin: 0;
 }
 
 /* Firefox */
-input[type=number] {
-  -moz-appearance: textfield;
+input[type='number'] {
+	-moz-appearance: textfield;
 }
-
 
 /*
 BE-EX COLORS
@@ -68,7 +66,7 @@ GRAYS:
 */
 
 body {
-  font-family: 'CircularStd-Book';
-  box-sizing: border-box;
-  /* overflow-x: scroll; */
+	font-family: 'CircularStd-Book';
+	box-sizing: border-box;
+	overflow-x: hidden;
 }

@@ -48,12 +48,12 @@ class BuildingMetricContainer extends React.Component {
 			{
 				utility: 'Gas',
 				val: kbtu.gas,
-				val_norm: cost_sf.gas,
+				val_norm: kbtu_sf.gas,
 			},
 			{
 				utility: 'Steam',
 				val: kbtu.steam,
-				val_norm: cost_sf.steam,
+				val_norm: kbtu_sf.steam,
 			},
 			{
 				utility: 'Fuel Two',

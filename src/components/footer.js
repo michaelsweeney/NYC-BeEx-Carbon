@@ -1,8 +1,5 @@
 import React from 'react';
 
-import { BeExLogo } from './beexlogo.js';
-import { HelpOutline } from '@material-ui/icons';
-
 class Footer extends React.Component {
 	constructor(props) {
 		super(props);
