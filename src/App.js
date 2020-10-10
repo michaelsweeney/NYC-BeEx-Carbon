@@ -91,8 +91,7 @@ class App extends React.Component {
 	render() {
 		let { width, height } = this.state.dims;
 
-		if (width < 1000 || height < 750) {
-			console.log(width);
+		if (width < 750 || height < 500) {
 			return (
 				<React.Fragment>
 					<SmallScreen />
