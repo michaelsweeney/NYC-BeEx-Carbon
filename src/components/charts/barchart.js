@@ -10,14 +10,21 @@ class BarChart extends React.Component {
 		this.createBarChart({});
 		this.addResize();
 	}
-	addResize() {
-		window.addEventListener('resize', () => {
-			this.createBarChart({ ignoretransition: true });
-		});
-	}
 	componentDidUpdate() {
 		this.createBarChart({});
 	}
+	componentWillUnmount() {
+		window.removeEventListener('resize', this.handleResize);
+	}
+	handleResize = () => {
+		this.createBarChart({ ignoretransition: true });
+	};
+
+	addResize = () => {
+		window.addEventListener('resize', this.handleResize);
+	};
+
+
 	createBarChart = params => {
 		// parse data
 		let { total_cost, fine_2024, fine_2030, fine_2035 } = this.props.barprops;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { max, scaleLinear, select, selectAll, event, rgb, axisBottom } from 'd3';
+import { max, scaleLinear, select, selectAll, event, rgb, axisLeft, axisBottom } from 'd3';
 import { formatInt } from '../numformat.js';
 
 class CarbonBar extends React.Component {
@@ -13,11 +13,18 @@ class CarbonBar extends React.Component {
 	componentDidUpdate() {
 		this.createBarChart({});
 	}
+
+	handleResize = () => {
+		this.createBarChart({ ignoretransition: true });
+	};
 	addResize() {
-		window.addEventListener('resize', () => {
-			this.createBarChart({ ignoretransition: true });
-		});
+		window.addEventListener('resize', this.handleResize);
 	}
+
+	componentWillUnmount() {
+		window.removeEventListener('resize', this.handleResize);
+	}
+
 	createBarChart = params => {
 		// parse data
 		let {
@@ -30,7 +37,7 @@ class CarbonBar extends React.Component {
 			fine_2035,
 		} = this.props.carbondata;
 
-		let divheightoffset = 25;
+		let divheightoffset = 0;
 		let divwidthoffset = 28;
 		let divdims = this.container.getBoundingClientRect();
 
@@ -41,20 +48,18 @@ class CarbonBar extends React.Component {
 
 		let width = divdims.width - divwidthoffset;
 		let height = divdims.height - divheightoffset;
-		// console.log(height)
-		// let barthickness = (height - 10) / 6; // 14 /// normalize to other
-		let barthickness = height / 12; // 14 /// normalize to other
+
+		let barthickness = height / 6 / 1.5;
 
 		let barmargins = {
-			t: height / 2 + 10,
-			b: 50,
+			t: Math.max(height * 0.4, 100),
+			b: 35 + height * 0.025,
 			r: 100,
 			l: 20,
 		};
 
 		let threshmargins = {
-			t: 10,
-			b: height / 2 + 10,
+			t: 5,
 			l: 20,
 			r: 20,
 		};
@@ -63,7 +68,6 @@ class CarbonBar extends React.Component {
 		let plotheight = height - barmargins.t - barmargins.b;
 
 		let threshwidth = width - threshmargins.l - threshmargins.r;
-		let threshheight = height - threshmargins.t - threshmargins.b;
 
 		let threshspacing = threshwidth / 3;
 
@@ -88,7 +92,8 @@ class CarbonBar extends React.Component {
 		let containercolor = '#595954';
 		let barcolor = '#C4C4C4';
 		let barcolor_nofine = '#999999';
-		let containerheight = 70;
+		let containerheight = 60;
+		let containerwidth = 270;
 
 		let tooltipdiv = select(this.container)
 			.selectAll('.tooltip.tooltip-carbon-bar')
@@ -100,6 +105,10 @@ class CarbonBar extends React.Component {
 		let xScale = scaleLinear()
 			.domain([0, max([co2limit_2024, total_carbon])])
 			.range([0, plotwidth]);
+
+		let yScale = scaleLinear()
+			.domain([1, 0])
+			.range([-5, barthickness + 5]);
 
 		let svg = select(this.container)
 			.selectAll('svg')
@@ -117,16 +126,25 @@ class CarbonBar extends React.Component {
 			.attr('height', plotheight)
 			.attr('transform', `translate(${barmargins.l}, ${barmargins.t})`);
 
-		let xAxis = axisBottom(xScale).ticks(5);
+		let xAxis = axisBottom(xScale)
+			.ticks(5)
+			.tickSizeOuter(0);
+		let yAxis = axisLeft(yScale).tickSizeOuter(0);
 
 		let xaxisg = svg
 			.selectAll('.x-axis')
 			.data([0])
 			.join('g')
 			.attr('class', 'x-axis')
-			.attr('transform', `translate(${barmargins.l}, ${plotheight + barmargins.t - 1 * (plotheight / 300) + 1})`);
+			.attr('transform', `translate(${barmargins.l}, ${barmargins.b + barthickness + barmargins.t})`);
 
-		xaxisg.call(xAxis);
+		let yaxisg = svg
+			.selectAll('.y-axis')
+			.data([0])
+			.join('g')
+			.attr('class', 'y-axis')
+			.attr('transform', `translate(${barmargins.l}, ${barmargins.t + barthickness})`)
+			.call(yAxis);
 
 		svg.selectAll('.axis-title')
 			.data([0])
@@ -134,7 +152,7 @@ class CarbonBar extends React.Component {
 			.attr('class', 'axis-title')
 			.text(() => (total_carbon != 0 ? 'Tons CO2 per year' : ''))
 			.attr('x', barmargins.l + plotwidth / 2)
-			.attr('y', plotheight + barmargins.t + 40);
+			.attr('y', barmargins.b + barmargins.t + barthickness + 40 + height * 0.05);
 
 		// create threshold containers
 		let threshcontainer = svg
@@ -162,7 +180,7 @@ class CarbonBar extends React.Component {
 				.data([d])
 				.join('rect')
 				.attr('class', 'rect-container')
-				.attr('width', 120) // starting width only
+				.attr('width', containerwidth) // starting width only
 				.attr('height', containerheight)
 				.attr('rx', 8)
 				.attr('fill', d => {
@@ -251,7 +269,7 @@ class CarbonBar extends React.Component {
 			})
 			.transition()
 			.duration(duration)
-			.attr('y', () => 40 - 5 * (plotheight / 250))
+			.attr('y', barthickness)
 			.attr('height', barthickness)
 			.attr('fill', barcolor)
 			.attr('x', 0)
@@ -271,28 +289,7 @@ class CarbonBar extends React.Component {
 		linedata[1].rectwidth = width_2030;
 		linedata[2].rectwidth = width_2024;
 
-		let axisline = barg
-			.selectAll('.axisline')
-			.data([0])
-			.join('line')
-			.attr('class', 'axisline')
-			.attr('y1', d => {
-				return barthickness / 1.4 + 16;
-			})
-			.attr('x1', d => {
-				return 0;
-			})
-			.attr('y2', d => {
-				return 40 + barthickness / 1.4 + 15  - 5 * (plotheight / 250);
-			})
-			.attr('x2', d => {
-				return 0;
-			})
-			.style('stroke', 'black')
-			.style('stroke-width', () => '1px');
-
-		// handle axis... remove entirely if too short, remove tickets otherwise.
-		if (height < 230) {
+		if (height < 100) {
 			svg.selectAll('.x-axis').remove();
 		} else {
 			xaxisg.call(xAxis);
@@ -327,22 +324,23 @@ class CarbonBar extends React.Component {
 					return '';
 				}
 				return `
-                        ${xScale(d.thresh)}, 70
-                        ${xScale(d.thresh)}, ${40 - 15 * imap[i]}
-                        ${i * threshspacing + d.rectwidth / 2}, ${40 - 15 * imap[i]}
+                        ${xScale(d.thresh)}, ${barthickness * 2}
+                        ${xScale(d.thresh)}, ${20 - 15 * imap[i]}
+                        ${i * threshspacing + d.rectwidth / 2}, ${20 - 15 * imap[i]}
                         ${i * threshspacing + d.rectwidth / 2}, ${-(barmargins.t - threshmargins.t - containerheight)}
                         `;
 			});
 
-		// some combo of threshmargins.t barthickness, containerheight
-
-		// g is threshmargins.t
-		// .attr('transform', `translate(${barmargins.l}, ${barmargins.t})`) << barg translate
-
 		// remove if nothing entered
 		if (total_carbon == 0) {
+			yaxisg.remove();
+			xaxisg.remove();
 			barg.remove();
 		}
+
+		// remove y axis components
+		xaxisg.selectAll('.domain').remove();
+		yaxisg.selectAll('.tick').remove();
 	};
 
 	render() {

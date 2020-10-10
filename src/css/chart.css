@@ -64,7 +64,7 @@ svg text {
 	font-size: 14px;
 }
 
-.carbon-bar-card .domain {
+.bar-g .domain {
 	display: none;
 }
 
@@ -92,6 +92,7 @@ svg text {
 	border-radius: 8px;
 	margin-top: 5px;
 	margin-bottom: 5px;
+	height: 40px;
 }
 
 .carbon-summary-text {

@@ -17,7 +17,7 @@
 	box-sizing: border-box;
 	text-align: left;
 	height: calc(100% - 110px - 100px);
-	width: 325px;
+	width: 300px;
 	overflow-x: hidden;
 	padding-left: 10px;
 	padding-right: 10px;
@@ -26,9 +26,9 @@
 
 .content-layout {
 	position: fixed;
-	left: 325px;
+	left: 300px;
 	top: 100px;
-	width: max(750px, calc(100% - 325px - 10px));
+	width: max(750px, calc(100% - 300px - 10px));
 	height: calc(100% - 100px - 100px);
 	vertical-align: top;
 	white-space: nowrap;
@@ -99,29 +99,36 @@
 	vertical-align: top;
 }
 
+.carbon-main-container .container-header {
+	margin-bottom: 0px;
+}
+
 .carbon-summary-card {
 	vertical-align: top;
 	display: inline-block;
-	padding: 10px;
-	width: 220px;
+	margin: 10px;
+	padding: 0px;
+	width: 200px;
 	background: #ffffff;
 	box-sizing: border-box;
-	height: calc(100% - 40px);
+	height: calc(100% - 30px);
 	margin-right: 20px;
+}
+.summary-container {
+	height: max(45%, 100px);
 }
 
 .carbon-bar-card {
 	position: relative;
 	display: inline-block;
-	top: -40px;
-	padding: 20px;
+	margin: 10px;
 	width: calc(100% - 240px);
 	background: #ffffff;
 	border-right-width: 0px;
 	border-top-width: 0px;
 	border-bottom-width: 0px;
 	box-sizing: border-box;
-	height: 100%;
+	height: calc(100% - 30px);
 	margin-right: 20px;
 }
 

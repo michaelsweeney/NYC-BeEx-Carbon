@@ -72,6 +72,7 @@ class BuildingType extends React.Component {
 						</button>
 					</div>
 				</div>
+				<div className="bldg-input-border"></div>
 			</div>
 		);
 	}

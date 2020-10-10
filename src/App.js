@@ -7,6 +7,7 @@ import { defaultbuilding, demobuilding } from './components/defaultbuilding.js';
 import { compileBuilding } from './components/compilebuilding.js';
 import { PrintLayout } from './components/printlayout.js';
 import { Footer } from './components/footer.js';
+import { SmallScreen } from './components/smallscreen.js';
 
 import './App.css';
 import './css/sidebar.css';
@@ -26,7 +27,18 @@ class App extends React.Component {
 			building: compileBuilding(defaultbuilding),
 			modalactive: true,
 			isDemoMode: false,
+			dims: {
+				height: window.innerHeight,
+				width: window.innerWidth,
+			},
 		};
+	}
+	componentDidMount() {
+		window.addEventListener('resize', this.handleResize);
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener('resize', this.handleResize);
 	}
 
 	demoModeCallback = isactive => {
@@ -67,29 +79,49 @@ class App extends React.Component {
 		this.setState(state);
 	};
 
+	handleResize = () => {
+		let state = Object.assign({}, this.state);
+		state.dims = {
+			height: window.innerHeight,
+			width: window.innerWidth,
+		};
+		this.setState(state);
+	};
+
 	render() {
-		return (
-			<React.Fragment>
-				<Modal isactive={this.state.modalactive} callback={this.hideModal}></Modal>
-				<div className="main-container">
-					<Header
-						isDemoMode={this.state.isDemoMode}
-						demoModeCallback={this.demoModeCallback}
-						modalcallback={this.showModal}
-					></Header>
-					<Sidebar
-						disableDemoCallback={this.disableDemo}
-						isDemoMode={this.state.isDemoMode}
-						demobuilding={demobuilding}
-						defaultbuilding={defaultbuilding}
-						callback={this.inputCallback}
-						modalcallback={this.showModal}
-					></Sidebar>
-					<CardLayout building={this.state.building}></CardLayout>
-				</div>
-				<Footer modalcallback={this.showModal}></Footer>
-			</React.Fragment>
-		);
+		let { width, height } = this.state.dims;
+
+		if (width < 1000 || height < 750) {
+			console.log(width);
+			return (
+				<React.Fragment>
+					<SmallScreen />
+				</React.Fragment>
+			);
+		} else {
+			return (
+				<React.Fragment>
+					<Modal isactive={this.state.modalactive} callback={this.hideModal}></Modal>
+					<div className="main-container">
+						<Header
+							isDemoMode={this.state.isDemoMode}
+							demoModeCallback={this.demoModeCallback}
+							modalcallback={this.showModal}
+						></Header>
+						<Sidebar
+							disableDemoCallback={this.disableDemo}
+							isDemoMode={this.state.isDemoMode}
+							demobuilding={demobuilding}
+							defaultbuilding={defaultbuilding}
+							callback={this.inputCallback}
+							modalcallback={this.showModal}
+						></Sidebar>
+						<CardLayout building={this.state.building}></CardLayout>
+					</div>
+					<Footer modalcallback={this.showModal}></Footer>
+				</React.Fragment>
+			);
+		}
 	}
 }
 

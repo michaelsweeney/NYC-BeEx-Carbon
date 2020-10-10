@@ -14,13 +14,13 @@ class DonutLegend extends React.Component {
 	componentDidUpdate() {
 		this.createLegend();
 	}
-
-	addResize() {
-		window.addEventListener('resize', () => {
-			this.createLegend();
-		});
+	componentWillUnmount() {
+		window.removeEventListener('resize', this.createLegend);
 	}
-	createLegend() {
+	addResize = () => {
+		window.addEventListener('resize', this.createLegend);
+	};
+	createLegend = () => {
 		let colorlookups = {
 			Electricity: '#358FB4',
 			Gas: '#6EB12C',
@@ -105,7 +105,7 @@ class DonutLegend extends React.Component {
 		let computedwidth = g.node().getBBox().width;
 
 		g.attr('transform', `translate(${(width - computedwidth - 20) / 2}, 10)`);
-	}
+	};
 
 	render() {
 		return <div className="donut-legend-container" ref={container => (this.container = container)}></div>;

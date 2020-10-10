@@ -10,9 +10,19 @@
 	padding-right: 10px;
 }
 
+.bldg-input-border {
+	display: inline-block;
+	border-top: solid rgb(153, 153, 153) 1px;
+	margin-bottom: 10px;
+	width: 220px;
+	margin-left: 10px;
+	box-sizing: border-box;
+}
+
 .bldg-input-main-container {
-	margin-left: 12px;
-	margin-right: 20px;
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-bottom: 20px;
 }
 
 .input-header-type {
@@ -31,7 +41,7 @@
 }
 
 .area-container input {
-	width: 70px;
+	width: 80px;
 	margin: 0px 0px 0px 10px;
 }
 
@@ -41,13 +51,13 @@
 
 .type-container {
 	width: 125px;
-	margin: 0px 10px 10px 0px;
+	margin: 0px 10px 0px 0px;
 }
 
 .type-controls-container {
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-	border-bottom-color: rgb(153, 153, 153);
+	display: inline-block;
+	overflow: visible;
+	white-space: nowrap;
 }
 
 .cost-container input {
@@ -57,7 +67,7 @@
 
 .utility-input-main-container {
 	margin-left: 20px;
-	margin-right: 20px;
+	margin-right: 10px;
 }
 
 .utility-input-container {
@@ -80,7 +90,7 @@
 }
 
 .cost-container input {
-	width: 70px;
+	width: 80px;
 	margin: 5px 0px 5px 10px;
 }
 
@@ -158,9 +168,9 @@
 .add-building-type button {
 	cursor: pointer;
 	margin-top: 10px;
-	width: 24px;
-	height: 24px;
-	border-radius: 0px;
+	width: 20px;
+	height: 20px;
+	border-radius: 2px;
 	font-size: 18px;
 	padding: 0px;
 	padding-bottom: 5px;

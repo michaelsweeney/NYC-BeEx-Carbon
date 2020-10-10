@@ -160,11 +160,7 @@ class Sidebar extends React.Component {
 
 				{/* ----- UTILITY INPUTS ------ */}
 
-				<div className="head-text-2">
-					Utility Inputs
-					{/* <HelpOutline style={{ color: 'rgb(184,215,52)', width: '20px', height: '20px', marginLeft: '10px' }}></HelpOutline> */}
-				</div>
-				{/* <button className='default-rate-btn sidebar-btn' onClick={this.useDefaultRates}>DEFAULT RATES</button> */}
+				<div className="head-text-2">Utility Inputs</div>
 				<div className="default-rate-checkbox head-text-4">
 					<input type="checkbox" onClick={this.useDefaultRates} />
 					<div className="head-text-4">Use Default Rates</div>
