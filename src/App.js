@@ -90,37 +90,34 @@ class App extends React.Component {
 
 	render() {
 		let { width, height } = this.state.dims;
-
+		let isSmallScreen = false;
 		if (width < 750 || height < 500) {
-			return (
-				<React.Fragment>
-					<SmallScreen />
-				</React.Fragment>
-			);
-		} else {
-			return (
-				<React.Fragment>
-					<Modal isactive={this.state.modalactive} callback={this.hideModal}></Modal>
-					<div className="main-container">
-						<Header
-							isDemoMode={this.state.isDemoMode}
-							demoModeCallback={this.demoModeCallback}
-							modalcallback={this.showModal}
-						></Header>
-						<Sidebar
-							disableDemoCallback={this.disableDemo}
-							isDemoMode={this.state.isDemoMode}
-							demobuilding={demobuilding}
-							defaultbuilding={defaultbuilding}
-							callback={this.inputCallback}
-							modalcallback={this.showModal}
-						></Sidebar>
-						<CardLayout building={this.state.building}></CardLayout>
-					</div>
-					<Footer modalcallback={this.showModal}></Footer>
-				</React.Fragment>
-			);
+			isSmallScreen = true;
 		}
+
+		return (
+			<React.Fragment>
+				<Modal isactive={this.state.modalactive} callback={this.hideModal} />
+				<SmallScreen visible={isSmallScreen} />
+				<div className="main-container">
+					<Header
+						isDemoMode={this.state.isDemoMode}
+						demoModeCallback={this.demoModeCallback}
+						modalcallback={this.showModal}
+					></Header>
+					<Sidebar
+						disableDemoCallback={this.disableDemo}
+						isDemoMode={this.state.isDemoMode}
+						demobuilding={demobuilding}
+						defaultbuilding={defaultbuilding}
+						callback={this.inputCallback}
+						modalcallback={this.showModal}
+					></Sidebar>
+					<CardLayout building={this.state.building}></CardLayout>
+				</div>
+				<Footer modalcallback={this.showModal}></Footer>
+			</React.Fragment>
+		);
 	}
 }
 
