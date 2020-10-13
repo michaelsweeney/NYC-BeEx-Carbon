@@ -1,8 +1,11 @@
+import './wdyr';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-// import './fonts/CircularStd-Black.otf'
+
+import './fonts/CircularStd-Black.otf';
 
 // ie polyfills
 if (!Object.values) Object.values = o => Object.keys(o).map(k => o[k]);

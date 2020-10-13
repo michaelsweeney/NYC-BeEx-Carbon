@@ -1,116 +1,137 @@
-
-
 .header {
-  overflow-x: hidden;
-  overflow-y: hidden;
-  white-space: nowrap;
-  vertical-align: middle;
-  width: 100vw;
+	overflow-x: hidden;
+	overflow-y: hidden;
+	white-space: nowrap;
+	vertical-align: middle;
+	width: 100vw;
 }
 .header-copy {
-  float: left;
-  padding-top: 10px;
-  vertical-align: middle;
+	float: left;
+	padding-top: 10px;
+	vertical-align: middle;
 }
 
 .header-copy .head {
-  font-family: 'CircularStd-Bold';
-  font-size: 20px;
+	font-family: 'CircularStd-Bold';
+	font-size: 20px;
 }
 .header-copy .mid {
-  font-family: 'CircularStd-Book';
+	font-family: 'CircularStd-Book';
 }
 .header .header-logos {
-  float: right;
-
+	float: right;
 }
 
 .header img {
-  margin-left: 10px;
-  margin-right: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
 }
 
-
 .header .title-container {
-  position: absolute;
-  left: calc(40% - 175px);
-  right: calc(40% - 150px);
-  display: inline-block;
-  text-align: center;
-  font-family: 'CircularStd-Black';
-  font-size: 20px; 
+	position: absolute;
+	left: calc(40% - 175px);
+	right: calc(40% - 150px);
+	display: inline-block;
+	text-align: center;
+	font-family: 'CircularStd-Black';
+	font-size: 20px;
 }
 
 .header .help-btn {
-  position: absolute; 
-  right: 50px;
-  top: 35px;
+	position: absolute;
+	right: 50px;
+	top: 35px;
 }
 
 .header .print-btn:hover {
-  cursor: pointer;
-  fill: rgb(156, 182, 42);
-  transition: background-color 500ms;
+	cursor: pointer;
+	fill: rgb(156, 182, 42);
+	transition: background-color 500ms;
 }
 .header .help-btn:hover {
-  cursor: pointer;
-  fill: rgb(156, 182, 42);
-  transition: background-color 500ms;
+	cursor: pointer;
+	fill: rgb(156, 182, 42);
+	transition: background-color 500ms;
 }
 
 .header .title-text {
-  display: inline-block;
-  font-family: 'CircularStd-Black';
-  padding-top: 12px;
-  font-size: 30px;
-  color: rgb(89,89,84);
-  letter-spacing: 2px;
+	display: inline-block;
+	font-family: 'CircularStd-Black';
+	padding-top: 12px;
+	font-size: 30px;
+	color: rgb(89, 89, 84);
+	letter-spacing: 2px;
 }
 
 .title-after {
-  content: "";
-  position: absolute;
-  left: 0px;
-  top: 95px;
-  height: 4px;
-  text-align: center;
-  align-content: center;
-  align-self: center;
-  width: calc(100vw - 35px);
-  background-color: #bad636;
-  display: inline-block;
+	content: '';
+	position: absolute;
+	left: 0px;
+	top: 95px;
+	height: 4px;
+	text-align: center;
+	align-content: center;
+	align-self: center;
+	width: calc(100vw - 35px);
+	background-color: #bad636;
+	display: inline-block;
+}
+
+.load-bldg-btn {
+	font-family: 'CircularStd-Bold';
+	position: absolute;
+	right: 215px;
+	top: 28px;
+	background-color: #bad636;
+	border: none;
+	color: white;
+	padding: 12px 30px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 14px;
+	transition: background-color 200ms;
+	cursor: pointer;
+}
+.load-bldg-btn.demo-on {
+	background-color: #bad636;
+}
+.load-bldg-btn.demo-on:hover {
+	background-color: rgb(156, 182, 42);
+}
+
+.load-bldg-btn.demo-off {
+	background-color: rgb(153, 153, 153);
 }
 
 .demo-btn {
-  font-family: 'CircularStd-Bold';
-  position: absolute;
-  right: 100px;
-  top: 28px;
-  background-color: #BAD636; 
-  border: none;
-  color: white;
-  padding: 12px 30px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 14px;
-  transition: background-color 200ms;
-  cursor: pointer;
+	font-family: 'CircularStd-Bold';
+	position: absolute;
+	right: 100px;
+	top: 28px;
+	background-color: #bad636;
+	border: none;
+	color: white;
+	padding: 12px 30px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 14px;
+	transition: background-color 200ms;
+	cursor: pointer;
 }
 
 .demo-btn.demo-on {
-  background-color: #BAD636; 
-
+	background-color: #bad636;
 }
 .demo-btn.demo-on:hover {
-  background-color: rgb(156, 182, 42);
-
+	background-color: rgb(156, 182, 42);
 }
 
 .demo-btn.demo-off {
-  background-color: rgb(153,153,153)
+	background-color: rgb(153, 153, 153);
 }
 
 .demo-btn.demo-off:hover {
-  background-color: rgb(135,135,135)
+	background-color: rgb(135, 135, 135);
 }

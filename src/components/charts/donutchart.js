@@ -1,37 +1,29 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import { nest, select, selectAll, pie, arc, interpolateObject, interpolate, event, rgb } from 'd3';
 
 import { formatInt } from '../numformat.js';
 
-class DonutChart extends React.Component {
-	constructor(props) {
-		super(props);
-	}
+const DonutChart = props => {
+	const container = useRef(null);
 
-	componentDidMount() {
-		this.createDonutChart({});
-		this.addResize();
-	}
-	componentDidUpdate() {
-		this.createDonutChart({});
-	}
-	handleResize = () => {
-		this.createDonutChart({});
+	useEffect(() => {
+		createDonutChart({});
+		window.addEventListener('resize', handleResize);
+		return () => window.removeEventListener('resize', handleResize);
+	});
+
+	const handleResize = () => {
+		createDonutChart({});
 	};
-	addResize = () => {
-		window.addEventListener('resize', this.handleResize);
-	};
-	componentWillUnmount() {
-		window.removeEventListener('resize', this.handleResize);
-	}
 
-	createDonutChart = params => {
-		let data = this.props.donutprops;
-		let title = this.props.title;
-		let tag = this.props.tag;
+	const createDonutChart = params => {
+		const node = container.current;
+		let data = props.donutprops;
+		let title = props.title;
+		let tag = props.tag;
 
-		let divdims = this.container.parentElement.parentElement.getBoundingClientRect();
+		let divdims = node.parentElement.parentElement.getBoundingClientRect();
 		let divheightoffset = 65;
 		let divwidthoffset = 40;
 
@@ -87,7 +79,7 @@ class DonutChart extends React.Component {
 			.outerRadius(radius - margin);
 
 		//  build container
-		let svg = select(this.container)
+		let svg = select(node)
 			.selectAll('svg')
 			.data([0])
 			.join('svg')
@@ -162,7 +154,7 @@ class DonutChart extends React.Component {
 			.attr('text-anchor', 'middle');
 
 		// add tip
-		let tooltipdiv = select(this.container)
+		let tooltipdiv = select(node)
 			.selectAll('.tooltip.tooltip-donut')
 			.data([0])
 			.join('div')
@@ -314,9 +306,7 @@ class DonutChart extends React.Component {
 		}
 	};
 
-	render() {
-		return <div className="donut-container" ref={container => (this.container = container)}></div>;
-	}
-}
+	return <div className="donut-container" ref={container}></div>;
+};
 
 export { DonutChart };

@@ -1,26 +1,20 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import { select } from 'd3';
 
-class DonutLegend extends React.Component {
-	constructor(props) {
-		super(props);
-	}
+const DonutLegend = props => {
+	const container = useRef(null);
 
-	componentDidMount() {
-		this.createLegend();
-		this.addResize();
-	}
-	componentDidUpdate() {
-		this.createLegend();
-	}
-	componentWillUnmount() {
-		window.removeEventListener('resize', this.createLegend);
-	}
-	addResize = () => {
-		window.addEventListener('resize', this.createLegend);
-	};
-	createLegend = () => {
+	const { legendprops } = props;
+
+	useEffect(() => {
+		createLegend();
+		window.addEventListener('resize', createLegend);
+		return () => window.removeEventListener('resize', createLegend);
+	});
+
+	const createLegend = () => {
+		const node = container.current;
 		let colorlookups = {
 			Electricity: '#358FB4',
 			Gas: '#6EB12C',
@@ -39,7 +33,7 @@ class DonutLegend extends React.Component {
 
 		let legendobj = {};
 
-		this.props.legendprops.forEach(e => {
+		legendprops.forEach(e => {
 			if (e.val != 0) {
 				legendobj[e.utility] = {
 					color: colorlookups[e.utility],
@@ -47,12 +41,12 @@ class DonutLegend extends React.Component {
 				};
 			}
 		});
-		let divdims = this.container.parentElement.parentElement.getBoundingClientRect();
+		let divdims = node.parentElement.parentElement.getBoundingClientRect();
 
 		let width = divdims.width;
 		let height = divdims.height;
 
-		let svg = select(this.container)
+		let svg = select(node)
 			.selectAll('svg')
 			.data([0])
 			.join('svg');
@@ -107,9 +101,7 @@ class DonutLegend extends React.Component {
 		g.attr('transform', `translate(${(width - computedwidth - 20) / 2}, 10)`);
 	};
 
-	render() {
-		return <div className="donut-legend-container" ref={container => (this.container = container)}></div>;
-	}
-}
+	return <div className="donut-legend-container" ref={container}></div>;
+};
 
 export { DonutLegend };

@@ -1,33 +1,26 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+
 import { stack, max, scaleLinear, axisLeft, axisBottom, select, scaleBand, selectAll, event, rgb } from 'd3';
 import { formatInt } from '../numformat.js';
 
-class BarChart extends React.Component {
-	constructor(props) {
-		super(props);
-	}
-	componentDidMount() {
-		this.createBarChart({});
-		this.addResize();
-	}
-	componentDidUpdate() {
-		this.createBarChart({});
-	}
-	componentWillUnmount() {
-		window.removeEventListener('resize', this.handleResize);
-	}
-	handleResize = () => {
-		this.createBarChart({ ignoretransition: true });
+const BarChart = props => {
+	const container = useRef(null);
+
+	useEffect(() => {
+		createBarChart({});
+		window.addEventListener('resize', handleResize);
+		return () => window.removeEventListener('resize', handleResize);
+	});
+
+	const handleResize = () => {
+		createBarChart({ ignoretransition: true });
 	};
 
-	addResize = () => {
-		window.addEventListener('resize', this.handleResize);
-	};
-
-
-	createBarChart = params => {
+	const createBarChart = params => {
 		// parse data
-		let { total_cost, fine_2024, fine_2030, fine_2035 } = this.props.barprops;
+		const node = container.current;
+
+		let { total_cost, fine_2024, fine_2030, fine_2035 } = props.barprops;
 
 		let datatostack = [
 			{ period: '2024-2029', utility: total_cost, fine: fine_2024, util_and_fine: fine_2024 + total_cost },
@@ -49,7 +42,7 @@ class BarChart extends React.Component {
 		// parent container sizing
 		let divheightoffset = 0;
 		let divwidthoffset = 28;
-		let divdims = this.container.parentElement.getBoundingClientRect();
+		let divdims = node.parentElement.getBoundingClientRect();
 
 		let duration = 500;
 
@@ -71,7 +64,7 @@ class BarChart extends React.Component {
 		let plotheight = height - margins.t - margins.b;
 		let barwidth = plotheight / 6;
 
-		let svg = select(this.container)
+		let svg = select(node)
 			.selectAll('svg')
 			.data([0])
 			.join('svg')
@@ -96,7 +89,7 @@ class BarChart extends React.Component {
 			.tickSize(0)
 			.tickSizeOuter(0);
 
-		let tooltipdiv = select(this.container)
+		let tooltipdiv = select(node)
 			.selectAll('.tooltip.tooltip-cost')
 			.data([0])
 			.join('div')
@@ -300,9 +293,7 @@ class BarChart extends React.Component {
 		}
 	};
 
-	render() {
-		return <div className="bar-container" ref={container => (this.container = container)}></div>;
-	}
-}
+	return <div className="bar-container" ref={container}></div>;
+};
 
 export { BarChart };

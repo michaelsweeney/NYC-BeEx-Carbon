@@ -1,31 +1,23 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+
 import { max, scaleLinear, select, selectAll, event, rgb, axisLeft, axisBottom } from 'd3';
 import { formatInt } from '../numformat.js';
 
-class CarbonBar extends React.Component {
-	constructor(props) {
-		super(props);
-		this.addResize();
-	}
-	componentDidMount() {
-		this.createBarChart({});
-	}
-	componentDidUpdate() {
-		this.createBarChart({});
-	}
+const CarbonBar = props => {
+	const container = useRef(null);
 
-	handleResize = () => {
-		this.createBarChart({ ignoretransition: true });
+	useEffect(() => {
+		createBarChart({});
+		window.addEventListener('resize', handleResize);
+		return () => window.removeEventListener('resize', handleResize);
+	});
+
+	const handleResize = () => {
+		createBarChart({ ignoretransition: true });
 	};
-	addResize() {
-		window.addEventListener('resize', this.handleResize);
-	}
 
-	componentWillUnmount() {
-		window.removeEventListener('resize', this.handleResize);
-	}
-
-	createBarChart = params => {
+	const createBarChart = params => {
+		const node = container.current;
 		// parse data
 		let {
 			total_carbon,
@@ -35,11 +27,11 @@ class CarbonBar extends React.Component {
 			fine_2024,
 			fine_2030,
 			fine_2035,
-		} = this.props.carbondata;
+		} = props.carbondata;
 
 		let divheightoffset = 0;
 		let divwidthoffset = 28;
-		let divdims = this.container.getBoundingClientRect();
+		let divdims = node.getBoundingClientRect();
 
 		let duration = 500;
 		if (params.ignoretransition) {
@@ -95,7 +87,7 @@ class CarbonBar extends React.Component {
 		let containerheight = 60;
 		let containerwidth = 270;
 
-		let tooltipdiv = select(this.container)
+		let tooltipdiv = select(node)
 			.selectAll('.tooltip.tooltip-carbon-bar')
 			.data([0])
 			.join('div')
@@ -110,7 +102,7 @@ class CarbonBar extends React.Component {
 			.domain([1, 0])
 			.range([-5, barthickness + 5]);
 
-		let svg = select(this.container)
+		let svg = select(node)
 			.selectAll('svg')
 			.data([0])
 			.join('svg')
@@ -343,9 +335,7 @@ class CarbonBar extends React.Component {
 		yaxisg.selectAll('.tick').remove();
 	};
 
-	render() {
-		return <div className="carbon-bar-card" ref={container => (this.container = container)}></div>;
-	}
-}
+	return <div className="carbon-bar-card" ref={container}></div>;
+};
 
 export { CarbonBar };
