@@ -103,6 +103,9 @@
 .load-bldg-btn.demo-off {
 	background-color: rgb(153, 153, 153);
 }
+.load-bldg-btn.demo-off:hover {
+	background-color: rgb(135, 135, 135);
+}
 
 .demo-btn {
 	font-family: 'CircularStd-Bold';

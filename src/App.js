@@ -16,7 +16,8 @@ import './css/mainlayout.css';
 import './css/header.css';
 import './css/chart.css';
 import './css/printlayout.css';
-import './css/modal.css';
+import './css/infomodal.css';
+import './css/loadmodal.css';
 import './css/typography.css';
 import './css/logos.css';
 import './css/footer.css';
@@ -29,7 +30,8 @@ const App = props => {
 	const [buildingInputs, setBuildingInputs] = useState(defaultbuilding);
 
 	const [infoModalActive, setInfoModalActive] = useState(false);
-	const [loadBldgModalActive, setLoadBldgModalActive] = useState(false);
+	const [loadBldgModalActive, setLoadBldgModalActive] = useState(true);
+
 	const [dims, setDims] = useState({
 		height: window.innerHeight,
 		width: window.innerWidth,
@@ -37,6 +39,8 @@ const App = props => {
 
 	const [isDemoMode, setIsDemoMode] = useState(false);
 	const [isLoadMode, setIsLoadMode] = useState(false);
+
+	const [defaultRates, setDefaultRates] = useState(false);
 
 	useEffect(() => {
 		window.addEventListener('resize', handleResize);
