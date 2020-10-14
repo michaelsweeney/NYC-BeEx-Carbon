@@ -30,7 +30,7 @@ const App = props => {
 	const [buildingInputs, setBuildingInputs] = useState(defaultbuilding);
 
 	const [infoModalActive, setInfoModalActive] = useState(false);
-	const [loadBldgModalActive, setLoadBldgModalActive] = useState(true);
+	const [loadBldgModalActive, setLoadBldgModalActive] = useState(false);
 
 	const [dims, setDims] = useState({
 		height: window.innerHeight,
