@@ -96,7 +96,9 @@ const LoadBldgModal = props => {
 								<tr>
 									<td> - </td>
 									{Object.keys(Object.values(tableData)[0]).map((row, i) => (
-										<td key={i}>{row}</td>
+										<td style={{ width: [300, 300, 150, 150, 150, 100][i] }} key={i}>
+											{row}
+										</td>
 									))}
 								</tr>
 							</thead>

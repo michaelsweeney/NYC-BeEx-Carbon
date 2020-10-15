@@ -40,8 +40,6 @@ const App = props => {
 	const [isDemoMode, setIsDemoMode] = useState(false);
 	const [isLoadMode, setIsLoadMode] = useState(false);
 
-	const [defaultRates, setDefaultRates] = useState(false);
-
 	useEffect(() => {
 		window.addEventListener('resize', handleResize);
 		return () => window.removeEventListener('resize', handleResize);
