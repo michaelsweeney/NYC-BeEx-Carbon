@@ -44,12 +44,10 @@ GREENS:
 95,153,38
 79,127,32
 
-
 BLUES:
 53,143,180
 44,122,156
 35,103,133
-
 
 GRAYS:
   DARK:
@@ -60,12 +58,13 @@ GRAYS:
     210,210,210
     153,153,153
 
-
     FONTS:
     CIRCULAR STD-BOLD
 */
 
 body {
+	margin: 0;
+	padding: 0;
 	font-family: 'CircularStd-Book';
 	box-sizing: border-box;
 	overflow-x: hidden;

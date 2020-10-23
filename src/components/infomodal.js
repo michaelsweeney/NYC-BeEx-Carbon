@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import { BeExLogo } from './beexlogo.js';
 import { NotesAndClarifications } from './notesandclarifications.js';

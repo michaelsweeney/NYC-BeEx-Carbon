@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { UtilityInput } from './utilityinput.js';
 import { BuildingType } from './buildingtype.js';
 

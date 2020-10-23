@@ -1,9 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import { handleResponse, parseResponse } from './soqlquery.js';
+import { conn } from '../store/connect';
 
 const LoadBldgModal = props => {
 	const { isactive, hideCallback, loadBuildingCallback } = props;
+
+	const { loadInputValue, loadInputResponse, loadTableData } = props.data.ui;
+
+	const inputref = useRef(null);
+
+	useEffect(() => {
+		inputref.current.focus();
+	}, [isactive]);
 
 	useEffect(() => {
 		window.addEventListener('keydown', handleKeyDown);
@@ -27,25 +36,20 @@ const LoadBldgModal = props => {
 		}
 	};
 
-	const [value, setValue] = useState('');
-	const [response, setResponse] = useState([{}]);
-	const [tableData, setTableData] = useState([{}]);
-
 	const handleChange = e => {
-		setValue(e.target.value);
-		handleResponse(e.target.value, setResponse);
+		props.actions.setLoadInputValue(e.target.value);
+		handleResponse(e.target.value, props.actions.setLoadInputResponse);
 	};
 
 	const handleLoad = bldginfo => {
 		let formatted_bldg = parseResponse(bldginfo);
+		alert(JSON.stringify(formatted_bldg));
 		loadBuildingCallback(formatted_bldg);
 		hideCallback();
 	};
 
 	useEffect(() => {
-		console.log(response);
-
-		let formatted = response.map(res => {
+		let formatted = loadInputResponse.map(res => {
 			return {
 				Name: res.property_name,
 				BBL: res.bbl_10_digits,
@@ -54,10 +58,8 @@ const LoadBldgModal = props => {
 				'Property Type 3': res._3rd_largest_property_use,
 			};
 		});
-		setTableData(formatted);
-	}, [response]);
-
-	// Object.values(response).forEach((row, i) => console.log(Object.keys(row).length));
+		props.actions.setLoadTableData(formatted);
+	}, [loadInputResponse, props.actions]);
 
 	return (
 		<div className={`modal ${isactive ? 'active' : 'inactive'}`}>
@@ -88,14 +90,14 @@ const LoadBldgModal = props => {
 					<div>
 						<span className="head-text-3">Input BBL ID Number or Search for Building Name</span>
 					</div>
-					<input className="bldg-input" value={value} onChange={handleChange} />
+					<input ref={inputref} className="bldg-input" value={loadInputValue} onChange={handleChange} />
 
 					<div className="load-modal-results-table-container">
 						<table className="load-modal-results-table">
 							<thead>
 								<tr>
 									<td> - </td>
-									{Object.keys(Object.values(tableData)[0]).map((row, i) => (
+									{Object.keys(Object.values(loadTableData)[0]).map((row, i) => (
 										<td style={{ width: [300, 300, 150, 150, 150, 100][i] }} key={i}>
 											{row}
 										</td>
@@ -103,13 +105,13 @@ const LoadBldgModal = props => {
 								</tr>
 							</thead>
 							<tbody>
-								{Object.values(tableData).map((row, i) => (
+								{Object.values(loadTableData).map((row, i) => (
 									<tr key={i}>
 										<td>
 											{Object.keys(row).length > 0 ? (
 												<div
 													className="select-bldg-btn"
-													onClick={() => handleLoad(response[i])}
+													onClick={() => handleLoad(loadInputResponse[i])}
 												>
 													LOAD
 												</div>
@@ -131,4 +133,5 @@ const LoadBldgModal = props => {
 	);
 };
 
-export { LoadBldgModal };
+const connected = conn()(LoadBldgModal);
+export default conn()(connected);

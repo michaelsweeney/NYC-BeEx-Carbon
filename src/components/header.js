@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import { BeExLogo } from './beexlogo.js';
 import { HelpOutline } from '@material-ui/icons';

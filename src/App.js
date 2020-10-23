@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Sidebar } from './components/sidebar.js';
 import { CardLayout } from './components/cardlayout';
 import { Header } from './components/header.js';
 import { InfoModal } from './components/infomodal.js';
-import { createDefaultBuilding, createDemoBuilding } from './components/defaultbuilding.js';
-import { compileBuilding } from './components/compilebuilding.js';
-import { PrintLayout } from './components/printlayout.js';
 import { Footer } from './components/footer.js';
 import { SmallScreen } from './components/smallscreen.js';
-import { LoadBldgModal } from './components/loadbldgmodal';
+
+import LoadBldgModal from './components/loadbldgmodal';
+
+import { conn } from './store/connect';
 
 import './App.css';
 import './css/sidebar.css';
@@ -23,22 +23,14 @@ import './css/logos.css';
 import './css/footer.css';
 
 const App = props => {
-	const defaultbuilding = createDefaultBuilding();
-	const demobuilding = createDemoBuilding();
+	const { compiled, inputs } = props.data.building;
 
-	const [building, setBuilding] = useState(compileBuilding(defaultbuilding));
-	const [buildingInputs, setBuildingInputs] = useState(defaultbuilding);
+	const { dims, isDemoMode, isLoadMode, infoModalActive, loadBldgModalActive } = props.data.ui;
 
-	const [infoModalActive, setInfoModalActive] = useState(false);
-	const [loadBldgModalActive, setLoadBldgModalActive] = useState(false);
-
-	const [dims, setDims] = useState({
-		height: window.innerHeight,
-		width: window.innerWidth,
-	});
-
-	const [isDemoMode, setIsDemoMode] = useState(false);
-	const [isLoadMode, setIsLoadMode] = useState(false);
+	let isSmallScreen = false;
+	if (dims.width < 750 || dims.height < 500) {
+		isSmallScreen = true;
+	}
 
 	useEffect(() => {
 		window.addEventListener('resize', handleResize);
@@ -47,57 +39,45 @@ const App = props => {
 
 	const demoModeCallback = isdemoflag => {
 		if (isdemoflag) {
-			setBuilding(compileBuilding(demobuilding));
-			inputCallback(demobuilding);
+			props.actions.setDemoBuilding();
 		} else {
-			setBuilding(compileBuilding(defaultbuilding));
-			inputCallback(defaultbuilding);
+			props.actions.setDefaultBuilding();
 		}
-		setIsDemoMode(!isDemoMode);
+		props.actions.setIsDemoMode(!isDemoMode);
 	};
 
 	const inputCallback = building => {
-		setIsDemoMode(false);
-		setIsLoadMode(false);
-		setBuilding(compileBuilding(building));
-		setBuildingInputs(building);
+		props.actions.setBuilding(building);
 	};
 
 	const hideInfoModal = () => {
-		setInfoModalActive(false);
+		props.actions.setInfoModalActive(false);
 	};
 
 	const showInfoModal = () => {
-		setInfoModalActive(true);
+		props.actions.setInfoModalActive(true);
 	};
 
 	const handleResize = () => {
-		setDims({
+		props.actions.setDimensions({
 			height: window.innerHeight,
 			width: window.innerWidth,
 		});
 	};
 
 	const toggleLoadBldgModal = () => {
-		setLoadBldgModalActive(!loadBldgModalActive);
+		props.actions.setLoadBldgModalActive(!loadBldgModalActive);
 	};
 
 	const hideLoadBldgModal = () => {
-		setLoadBldgModalActive(false);
+		props.actions.setLoadBldgModalActive(false);
 	};
 
 	const loadBuildingCallback = bldg => {
-		setIsLoadMode(!isLoadMode);
-		setIsDemoMode(false);
-		setBuilding(compileBuilding(bldg));
-		setBuildingInputs(bldg);
+		props.actions.setIsLoadMode(!isDemoMode);
+		props.actions.setIsDemoMode(false);
+		props.actions.setBuilding(bldg);
 	};
-
-	let { width, height } = dims;
-	let isSmallScreen = false;
-	if (width < 750 || height < 500) {
-		isSmallScreen = true;
-	}
 
 	return (
 		<React.Fragment>
@@ -116,17 +96,12 @@ const App = props => {
 					modalcallback={showInfoModal}
 					loadModalCallback={toggleLoadBldgModal}
 				></Header>
-				<Sidebar
-					buildingInputs={buildingInputs}
-					defaultbuilding={defaultbuilding}
-					inputCallback={inputCallback}
-					modalcallback={showInfoModal}
-				></Sidebar>
-				<CardLayout building={building}></CardLayout>
+				<Sidebar buildingInputs={inputs} inputCallback={inputCallback} modalcallback={showInfoModal}></Sidebar>
+				<CardLayout building={compiled}></CardLayout>
 			</div>
 			<Footer modalcallback={showInfoModal}></Footer>
 		</React.Fragment>
 	);
 };
 
-export default App;
+export default conn()(App);
