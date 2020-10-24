@@ -5,16 +5,25 @@ import { HelpOutline } from '@material-ui/icons';
 
 import { DemoModeButton } from './demomodebutton';
 import { LoadBldgButton } from './loadbldgbutton';
+import { conn } from '../store/connect';
 
 const Header = props => {
-	const { isDemoMode, isLoadMode, modalcallback, demoModeCallback, loadModalCallback } = props;
+	const { isDemoMode, isLoadMode } = props;
 
-	const toggleDemo = isdemo => {
-		demoModeCallback(isdemo);
+	const setInfoModalActive = () => {
+		props.actions.setInfoModalActive(true);
+	};
+	const setLoadModalActive = () => {
+		props.actions.setLoadBldgModalActive(true);
 	};
 
-	const toggleLoad = () => {
-		loadModalCallback();
+	const toggleDemo = isdemo => {
+		if (isdemo) {
+			props.actions.setDemoBuilding();
+		} else {
+			props.actions.setDefaultBuilding();
+		}
+		props.actions.setIsDemoMode(!isDemoMode);
 	};
 
 	const helpStyle = {
@@ -32,13 +41,19 @@ const Header = props => {
 				<div className="title-text">NYC LL97 Carbon Emissions Calculator</div>
 			</div>
 			<div className="title-after"></div>
-			<LoadBldgButton isLoadMode={isLoadMode} loadBldgCallback={toggleLoad} />
+			<LoadBldgButton isLoadMode={isLoadMode} loadBldgCallback={setLoadModalActive} />
 			<DemoModeButton isDemoMode={isDemoMode} callback={toggleDemo}></DemoModeButton>
-			<div className="help-btn" style={helpStyle} onClick={modalcallback}>
+			<div className="help-btn" style={helpStyle} onClick={setInfoModalActive}>
 				<HelpOutline></HelpOutline>
 			</div>
 		</div>
 	);
 };
 
-export { Header };
+const mapStateToProps = state => {
+	return {
+		isDemoMode: state.ui.isDemoMode,
+		isLoadMode: state.ui.isLoadMode,
+	};
+};
+export default conn(mapStateToProps)(Header);

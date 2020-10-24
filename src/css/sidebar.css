@@ -196,18 +196,14 @@
 
 .type-label {
 	position: relative;
-	left: -15px;
-	top: 10px;
+	left: -7px;
+	top: 1px;
 	display: inline-block;
 	align-content: right;
 	align-self: right;
 	text-align: right;
-	float: left;
-}
-
-.type-label {
 	width: 8px;
-	text-align: left;
+	text-align: right;
 }
 
 .add-building-type {

@@ -1,12 +1,14 @@
 import React from 'react';
 import { BeExLogo } from './beexlogo';
+import { conn } from '../store/connect';
 
 const SmallScreen = props => {
+	const { isSmallScreen } = props;
 	return (
 		<div
 			className="modal"
 			style={{
-				visibility: props.visible ? 'visible' : 'hidden',
+				visibility: isSmallScreen ? 'visible' : 'hidden',
 			}}
 		>
 			<div className="modal-content" style={{ height: '75vh', width: '75vw' }}>
@@ -22,5 +24,10 @@ const SmallScreen = props => {
 		</div>
 	);
 };
+const mapStateToProps = state => {
+	return {
+		isSmallScreen: state.ui.isSmallScreen,
+	};
+};
 
-export { SmallScreen };
+export default conn(mapStateToProps)(SmallScreen);

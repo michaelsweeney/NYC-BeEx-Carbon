@@ -2,9 +2,10 @@ import React, { useEffect } from 'react';
 
 import { BeExLogo } from './beexlogo.js';
 import { NotesAndClarifications } from './notesandclarifications.js';
+import { conn } from '../store/connect';
 
 const InfoModal = props => {
-	const { hideCallback, isactive } = props;
+	const { infoModalActive } = props;
 
 	useEffect(() => {
 		window.addEventListener('keydown', handleKeyDown);
@@ -16,24 +17,26 @@ const InfoModal = props => {
 		};
 	});
 
+	const hideModal = () => {
+		props.actions.setInfoModalActive(false);
+	};
 	const handleKeyDown = e => {
 		if (e.key == 'Escape') {
-			hideCallback();
+			hideModal();
 		}
 	};
-
 	const handleClick = e => {
 		if (!e.target.classList.contains('modal-content') && e.target.classList.contains('modal')) {
-			hideCallback();
+			hideModal();
 		}
 	};
 
 	return (
-		<div className={`modal ${isactive ? 'active' : 'inactive'}`}>
+		<div className={`modal ${infoModalActive ? 'active' : 'inactive'}`}>
 			<div className="modal-content">
 				<div className="head-text-1">
 					NYC LL97 Carbon Emissions Calculator (BETA)
-					<button className="modal-exit-btn" onClick={hideCallback}>
+					<button className="modal-exit-btn" onClick={hideModal}>
 						x
 					</button>
 				</div>
@@ -105,5 +108,10 @@ const InfoModal = props => {
 		</div>
 	);
 };
+const mapStateToProps = state => {
+	return {
+		infoModalActive: state.ui.infoModalActive,
+	};
+};
 
-export { InfoModal };
+export default conn(mapStateToProps)(InfoModal);

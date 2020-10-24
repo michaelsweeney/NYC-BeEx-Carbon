@@ -2,9 +2,10 @@ import React from 'react';
 import { AnnualCostSummaryContainer } from './annualcostsummarycontainer.js';
 import { CarbonLimitContainer } from './carbonlimitcontainer.js';
 import { BuildingMetricContainer } from './buildingmetriccontainer.js';
+import { conn } from '../store/connect';
 
 const CardLayout = props => {
-	let { building } = props;
+	const { building } = props;
 	return (
 		<div className="content-layout">
 			<div className="top-row">
@@ -22,4 +23,9 @@ const CardLayout = props => {
 	);
 };
 
-export { CardLayout };
+const mapStateToProps = state => {
+	return {
+		building: state.building.compiled,
+	};
+};
+export default conn(mapStateToProps)(CardLayout);

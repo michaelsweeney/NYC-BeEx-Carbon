@@ -4,15 +4,13 @@ import { handleResponse, parseResponse } from './soqlquery.js';
 import { conn } from '../store/connect';
 
 const LoadBldgModal = props => {
-	const { isactive, hideCallback, loadBuildingCallback } = props;
-
-	const { loadInputValue, loadInputResponse, loadTableData } = props.data.ui;
+	const { loadInputValue, loadInputResponse, loadTableData, loadBldgModalActive, isDemoMode } = props;
 
 	const inputref = useRef(null);
 
 	useEffect(() => {
 		inputref.current.focus();
-	}, [isactive]);
+	}, [loadBldgModalActive]);
 
 	useEffect(() => {
 		window.addEventListener('keydown', handleKeyDown);
@@ -23,16 +21,18 @@ const LoadBldgModal = props => {
 			window.removeEventListener('mousedown', handleClick);
 		};
 	});
-
+	const hideModal = () => {
+		props.actions.setLoadBldgModalActive(false);
+	};
 	const handleKeyDown = e => {
 		if (e.key == 'Escape') {
-			hideCallback();
+			hideModal();
 		}
 	};
 
 	const handleClick = e => {
 		if (!e.target.classList.contains('modal-content') && e.target.classList.contains('modal')) {
-			hideCallback();
+			hideModal();
 		}
 	};
 
@@ -44,8 +44,10 @@ const LoadBldgModal = props => {
 	const handleLoad = bldginfo => {
 		let formatted_bldg = parseResponse(bldginfo);
 		alert(JSON.stringify(formatted_bldg));
-		loadBuildingCallback(formatted_bldg);
-		hideCallback();
+		props.actions.setIsLoadMode(!isDemoMode);
+		props.actions.setIsDemoMode(false);
+		props.actions.setBuilding(formatted_bldg);
+		hideModal();
 	};
 
 	useEffect(() => {
@@ -62,12 +64,12 @@ const LoadBldgModal = props => {
 	}, [loadInputResponse, props.actions]);
 
 	return (
-		<div className={`modal ${isactive ? 'active' : 'inactive'}`}>
+		<div className={`modal ${loadBldgModalActive ? 'active' : 'inactive'}`}>
 			<div className="modal-content load-modal-content">
 				<div>
 					<div className="head-text-1">
 						Building Utility Info Loader
-						<button className="modal-exit-btn" onClick={hideCallback}>
+						<button className="modal-exit-btn" onClick={hideModal}>
 							x
 						</button>
 					</div>
@@ -133,5 +135,14 @@ const LoadBldgModal = props => {
 	);
 };
 
-const connected = conn()(LoadBldgModal);
-export default conn()(connected);
+const mapStateToProps = state => {
+	return {
+		loadInputValue: state.ui.loadInputValue,
+		loadInputResponse: state.ui.loadInputResponse,
+		loadTableData: state.ui.loadTableData,
+		loadBldgModalActive: state.ui.loadBldgModalActive,
+		isDemoMode: state.ui.isDemoMode,
+	};
+};
+
+export default conn(mapStateToProps)(LoadBldgModal);

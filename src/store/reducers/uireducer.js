@@ -12,10 +12,17 @@ const initialState = {
 	loadInputValue: '',
 	loadInputResponse: [{}],
 	loadTableData: [{}],
+	isSmallScreen: false,
 };
 
 export default function uiReducer(state = initialState, action) {
 	switch (action.type) {
+		case 'SET_IS_SMALL_SCREEN': {
+			return {
+				...state,
+				isSmallScreen: action.payload,
+			};
+		}
 		case 'SET_LOAD_TABLE_DATA': {
 			return {
 				...state,

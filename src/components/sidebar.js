@@ -1,13 +1,19 @@
 import React from 'react';
+
+import { conn } from '../store/connect';
 import { UtilityInput } from './utilityinput.js';
 import { BuildingType } from './buildingtype.js';
 
 const Sidebar = props => {
-	const { inputCallback, buildingInputs } = props;
+	const { inputs } = props;
+
+	const inputCallback = building => {
+		props.actions.setBuilding(building);
+	};
 
 	const useDefaultRates = e => {
 		if (e.target.checked) {
-			let state = Object.assign({}, buildingInputs);
+			let state = Object.assign({}, inputs);
 			state.utilities.elec.rate = '0.22';
 			state.utilities.gas.rate = '0.997';
 			state.utilities.steam.rate = '35';
@@ -16,7 +22,7 @@ const Sidebar = props => {
 			// setBldg(state);
 			inputCallback(state);
 		} else {
-			let state = Object.assign({}, buildingInputs);
+			let state = Object.assign({}, inputs);
 			state.utilities.elec.rate = '';
 			state.utilities.gas.rate = '';
 			state.utilities.steam.rate = '';
@@ -30,7 +36,7 @@ const Sidebar = props => {
 		console.log('utility change');
 		let value = e.target.value;
 		let [fuel, type] = e.target.getAttribute('datatag').split('-');
-		let state = Object.assign({}, buildingInputs);
+		let state = Object.assign({}, inputs);
 		state.utilities[fuel][type] = value;
 		inputCallback(state);
 	};
@@ -39,13 +45,13 @@ const Sidebar = props => {
 		console.log('utility blur');
 		let value = e.target.value;
 		let [fuel, type] = e.target.getAttribute('datatag').split('-');
-		let state = Object.assign({}, buildingInputs);
+		let state = Object.assign({}, inputs);
 		state.utilities[fuel][type] = value;
 		inputCallback(state);
 	};
 
 	const handleBuildingTypeChange = e => {
-		let state = Object.assign({}, buildingInputs);
+		let state = Object.assign({}, inputs);
 		let value = e.target.value;
 		let bldgtypeid = e.target.getAttribute('datatag');
 		let inputtype = e.target.type;
@@ -64,7 +70,7 @@ const Sidebar = props => {
 	};
 
 	const handleBuildingTypeBlur = e => {
-		let state = Object.assign({}, buildingInputs);
+		let state = Object.assign({}, inputs);
 		let value = e.target.value;
 		let bldgtypeid = e.target.getAttribute('datatag');
 		let inputtype = e.target.type;
@@ -81,15 +87,14 @@ const Sidebar = props => {
 
 	const removeBuildingType = e => {
 		let toremove = e.target.getAttribute('dataremove');
-		let state = Object.assign({}, buildingInputs);
+		let state = Object.assign({}, inputs);
 		delete state.types[toremove];
 
-		// setBldg(state);
 		inputCallback(state);
 	};
 
 	const addBuildingType = () => {
-		let state = Object.assign({}, buildingInputs);
+		let state = Object.assign({}, inputs);
 		let numtypes = Object.keys(state.types).length;
 		let nextid = numtypes + 1;
 
@@ -125,8 +130,8 @@ const Sidebar = props => {
 				</div>
 				<div className="input-header-area head-text-4">Area (SF)</div>
 
-				{Object.keys(buildingInputs.types).map(id => {
-					let { type, area } = buildingInputs.types[id];
+				{Object.keys(inputs.types).map(id => {
+					let { type, area } = inputs.types[id];
 					return (
 						<React.Fragment key={id}>
 							<BuildingType
@@ -160,7 +165,7 @@ const Sidebar = props => {
 					cons_title="kWh"
 					utiltag="elec"
 					cost_title="$/kWh"
-					vals={buildingInputs.utilities.elec}
+					vals={inputs.utilities.elec}
 					changeCallback={handleUtilityChange}
 					blurCallback={handleUtilityBlur}
 				></UtilityInput>
@@ -170,7 +175,7 @@ const Sidebar = props => {
 					cons_title="therms"
 					utiltag="gas"
 					cost_title="$/therm"
-					vals={buildingInputs.utilities.gas}
+					vals={inputs.utilities.gas}
 					changeCallback={handleUtilityChange}
 					blurCallback={handleUtilityBlur}
 				></UtilityInput>
@@ -180,7 +185,7 @@ const Sidebar = props => {
 					cons_title="mLbs"
 					utiltag="steam"
 					cost_title="$/mLb"
-					vals={buildingInputs.utilities.steam}
+					vals={inputs.utilities.steam}
 					changeCallback={handleUtilityChange}
 					blurCallback={handleUtilityBlur}
 				></UtilityInput>
@@ -191,7 +196,7 @@ const Sidebar = props => {
 					utiltag="fuel_two"
 					cost_title="$/gal"
 					default_rate="1.65"
-					vals={buildingInputs.utilities.fuel_two}
+					vals={inputs.utilities.fuel_two}
 					changeCallback={handleUtilityChange}
 					blurCallback={handleUtilityBlur}
 				></UtilityInput>
@@ -202,7 +207,7 @@ const Sidebar = props => {
 					utiltag="fuel_four"
 					cost_title="$/gal"
 					default_rate="1.65"
-					vals={buildingInputs.utilities.fuel_four}
+					vals={inputs.utilities.fuel_four}
 					changeCallback={handleUtilityChange}
 					blurCallback={handleUtilityBlur}
 				></UtilityInput>
@@ -210,5 +215,10 @@ const Sidebar = props => {
 		</div>
 	);
 };
+const mapStateToProps = state => {
+	return {
+		inputs: state.building.inputs,
+	};
+};
 
-export { Sidebar };
+export default conn(mapStateToProps)(Sidebar);

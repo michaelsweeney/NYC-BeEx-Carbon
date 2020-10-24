@@ -51,7 +51,12 @@ export function setDemoBuilding() {
 		type: 'SET_DEMO_BUILDING',
 	};
 }
-
+export function setIsSmallScreen(bool) {
+	return {
+		type: 'SET_IS_SMALL_SCREEN',
+		payload: bool,
+	};
+}
 // LOAD INPUT FUNCTIONS
 
 export function setLoadTableData(data) {
