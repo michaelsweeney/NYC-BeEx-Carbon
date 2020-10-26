@@ -1,11 +1,54 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { conn } from '../store/connect';
 
 const BuildingType = props => {
+	const { typenum, bldgtype, area } = props;
+	const { inputs } = props;
+
 	const handleAreaChange = e => {
-		props.updateCallback(e);
+		updateCallback(e);
 	};
 
-	let { typenum, bldgtype, area } = props;
+	const updateCallback = e => {
+		let state = Object.assign({}, inputs);
+		let value = e.target.value;
+		let bldgtypeid = e.target.getAttribute('datatag');
+		let inputtype = e.target.type;
+		let subkey;
+		if (inputtype == 'select-one') {
+			subkey = 'type';
+			state.types[bldgtypeid][subkey] = value;
+		}
+
+		if (inputtype == 'number') {
+			subkey = 'area';
+			state.types[bldgtypeid][subkey] = value;
+		}
+		props.actions.setBuilding(state);
+	};
+
+	const removeCallback = e => {
+		let toremove = e.target.getAttribute('dataremove');
+		let state = Object.assign({}, inputs);
+		delete state.types[toremove];
+		props.actions.setBuilding(state);
+	};
+
+	const blurCallback = e => {
+		let state = Object.assign({}, inputs);
+		let value = e.target.value;
+		let bldgtypeid = e.target.getAttribute('datatag');
+		let inputtype = e.target.type;
+		let subkey;
+		if (inputtype == 'select-one') {
+			subkey = 'type';
+		}
+		if (inputtype == 'number') {
+			subkey = 'area';
+		}
+		state.types[bldgtypeid][subkey] = value;
+		props.actions.setBuilding(state);
+	};
 
 	let buildingtypes = {
 		A: 'A (Assembly)',
@@ -31,12 +74,7 @@ const BuildingType = props => {
 				<div className="type-label">{`${typenum}`}</div>
 
 				<div className="type-container">
-					<select
-						className="bldg-type-select"
-						datatag={typenum}
-						onChange={props.updateCallback}
-						value={bldgtype}
-					>
+					<select className="bldg-type-select" datatag={typenum} onChange={updateCallback} value={bldgtype}>
 						{Object.keys(buildingtypes).map(type => {
 							return (
 								<option value={type} key={type + '-option'}>
@@ -50,11 +88,11 @@ const BuildingType = props => {
 					<input
 						datatag={typenum}
 						onChange={handleAreaChange}
-						onBlur={props.blurCallback}
+						onBlur={blurCallback}
 						type="number"
 						value={area}
 					></input>
-					<button className={`type-remove-btn`} dataremove={typenum} onClick={props.removeCallback}>
+					<button className={`type-remove-btn`} dataremove={typenum} onClick={removeCallback}>
 						X
 					</button>
 				</div>
@@ -64,4 +102,10 @@ const BuildingType = props => {
 	);
 };
 
-export { BuildingType };
+const mapStateToProps = state => {
+	return {
+		inputs: state.building.inputs,
+	};
+};
+
+export default conn(mapStateToProps)(BuildingType);

@@ -214,7 +214,7 @@ const CarbonBar = props => {
 					textwidths.push(node.getBBox().width);
 				});
 			let maxwidth = max(textwidths);
-			g.select('.rect-container').attr('width', () => maxwidth + 30);
+			g.select('.rect-container').attr('width', () => maxwidth + 40);
 		}
 
 		let bar = barg

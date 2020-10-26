@@ -52,7 +52,7 @@ const App = props => {
 			<SmallScreen />
 			<div className="main-container">
 				<Header />
-				<Sidebar></Sidebar>
+				<Sidebar />
 				<CardLayout />
 			</div>
 			<Footer />

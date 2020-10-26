@@ -79,3 +79,24 @@ export function setLoadInputResponse(response) {
 		payload: response,
 	};
 }
+
+// DEFAULT RATES
+
+export function setIsDefaultRates(bool) {
+	return {
+		type: 'SET_IS_DEFAULT_RATES',
+		payload: bool,
+	};
+}
+
+export function useDefaultRates() {
+	return {
+		type: 'USE_DEFAULT_RATES',
+	};
+}
+
+export function useNullRates() {
+	return {
+		type: 'USE_NULL_RATES',
+	};
+}

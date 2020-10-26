@@ -1,96 +1,20 @@
 import React from 'react';
 
 import { conn } from '../store/connect';
-import { UtilityInput } from './utilityinput.js';
-import { BuildingType } from './buildingtype.js';
+import UtilityInput from './utilityinput.js';
+import BuildingType from './buildingtype.js';
 
 const Sidebar = props => {
-	const { inputs } = props;
+	const { inputs, isDefaultRates } = props;
 
-	const inputCallback = building => {
-		props.actions.setBuilding(building);
-	};
-
-	const useDefaultRates = e => {
-		if (e.target.checked) {
-			let state = Object.assign({}, inputs);
-			state.utilities.elec.rate = '0.22';
-			state.utilities.gas.rate = '0.997';
-			state.utilities.steam.rate = '35';
-			state.utilities.fuel_two.rate = '1.65';
-			state.utilities.fuel_four.rate = '1.65';
-			// setBldg(state);
-			inputCallback(state);
+	const setDefaultRates = () => {
+		if (isDefaultRates) {
+			props.actions.setIsDefaultRates(false);
+			props.actions.useNullRates();
 		} else {
-			let state = Object.assign({}, inputs);
-			state.utilities.elec.rate = '';
-			state.utilities.gas.rate = '';
-			state.utilities.steam.rate = '';
-			state.utilities.fuel_two.rate = '';
-			state.utilities.fuel_four.rate = '';
-			inputCallback(state);
+			props.actions.setIsDefaultRates(true);
+			props.actions.useDefaultRates();
 		}
-	};
-
-	const handleUtilityChange = e => {
-		console.log('utility change');
-		let value = e.target.value;
-		let [fuel, type] = e.target.getAttribute('datatag').split('-');
-		let state = Object.assign({}, inputs);
-		state.utilities[fuel][type] = value;
-		inputCallback(state);
-	};
-
-	const handleUtilityBlur = e => {
-		console.log('utility blur');
-		let value = e.target.value;
-		let [fuel, type] = e.target.getAttribute('datatag').split('-');
-		let state = Object.assign({}, inputs);
-		state.utilities[fuel][type] = value;
-		inputCallback(state);
-	};
-
-	const handleBuildingTypeChange = e => {
-		let state = Object.assign({}, inputs);
-		let value = e.target.value;
-		let bldgtypeid = e.target.getAttribute('datatag');
-		let inputtype = e.target.type;
-		let subkey;
-		if (inputtype == 'select-one') {
-			subkey = 'type';
-			state.types[bldgtypeid][subkey] = value;
-			inputCallback(state);
-		}
-
-		if (inputtype == 'number') {
-			subkey = 'area';
-			state.types[bldgtypeid][subkey] = value;
-			inputCallback(state);
-		}
-	};
-
-	const handleBuildingTypeBlur = e => {
-		let state = Object.assign({}, inputs);
-		let value = e.target.value;
-		let bldgtypeid = e.target.getAttribute('datatag');
-		let inputtype = e.target.type;
-		let subkey;
-		if (inputtype == 'select-one') {
-			subkey = 'type';
-		}
-		if (inputtype == 'number') {
-			subkey = 'area';
-		}
-		state.types[bldgtypeid][subkey] = value;
-		inputCallback(state);
-	};
-
-	const removeBuildingType = e => {
-		let toremove = e.target.getAttribute('dataremove');
-		let state = Object.assign({}, inputs);
-		delete state.types[toremove];
-
-		inputCallback(state);
 	};
 
 	const addBuildingType = () => {
@@ -107,8 +31,7 @@ const Sidebar = props => {
 			area: 0,
 			id: nextid,
 		};
-		// setBldg(state);
-		inputCallback(state);
+		props.actions.setBuilding(state);
 	};
 
 	return (
@@ -134,14 +57,7 @@ const Sidebar = props => {
 					let { type, area } = inputs.types[id];
 					return (
 						<React.Fragment key={id}>
-							<BuildingType
-								bldgtype={type}
-								area={area}
-								typenum={id}
-								removeCallback={removeBuildingType}
-								updateCallback={handleBuildingTypeChange}
-								blurCallback={handleBuildingTypeBlur}
-							></BuildingType>
+							<BuildingType bldgtype={type} area={area} typenum={id}></BuildingType>
 						</React.Fragment>
 					);
 				})}
@@ -156,61 +72,15 @@ const Sidebar = props => {
 
 			<div className="head-text-2">Utility Inputs</div>
 			<div className="default-rate-checkbox head-text-4">
-				<input type="checkbox" onClick={useDefaultRates} />
+				<input type="checkbox" checked={isDefaultRates} onChange={setDefaultRates} />
 				<div className="head-text-4">Use Default Rates</div>
 			</div>
 			<div className="utility-input-main-container">
-				<UtilityInput
-					title="Electricity"
-					cons_title="kWh"
-					utiltag="elec"
-					cost_title="$/kWh"
-					vals={inputs.utilities.elec}
-					changeCallback={handleUtilityChange}
-					blurCallback={handleUtilityBlur}
-				></UtilityInput>
-
-				<UtilityInput
-					title="Natural Gas"
-					cons_title="therms"
-					utiltag="gas"
-					cost_title="$/therm"
-					vals={inputs.utilities.gas}
-					changeCallback={handleUtilityChange}
-					blurCallback={handleUtilityBlur}
-				></UtilityInput>
-
-				<UtilityInput
-					title="Steam"
-					cons_title="mLbs"
-					utiltag="steam"
-					cost_title="$/mLb"
-					vals={inputs.utilities.steam}
-					changeCallback={handleUtilityChange}
-					blurCallback={handleUtilityBlur}
-				></UtilityInput>
-
-				<UtilityInput
-					title="Fuel Oil 2"
-					cons_title="gal"
-					utiltag="fuel_two"
-					cost_title="$/gal"
-					default_rate="1.65"
-					vals={inputs.utilities.fuel_two}
-					changeCallback={handleUtilityChange}
-					blurCallback={handleUtilityBlur}
-				></UtilityInput>
-
-				<UtilityInput
-					title="Fuel Oil 4"
-					cons_title="gal"
-					utiltag="fuel_four"
-					cost_title="$/gal"
-					default_rate="1.65"
-					vals={inputs.utilities.fuel_four}
-					changeCallback={handleUtilityChange}
-					blurCallback={handleUtilityBlur}
-				></UtilityInput>
+				<UtilityInput title="Electricity" cons_title="kWh" utiltag="elec" cost_title="$/kWh" />
+				<UtilityInput title="Natural Gas" cons_title="therms" utiltag="gas" cost_title="$/therm" />
+				<UtilityInput title="Steam" cons_title="mLbs" utiltag="steam" cost_title="$/mLb" />
+				<UtilityInput title="Fuel Oil 2" cons_title="gal" utiltag="fuel_two" cost_title="$/gal" />
+				<UtilityInput title="Fuel Oil 4" cons_title="gal" utiltag="fuel_four" cost_title="$/gal" />
 			</div>
 		</div>
 	);
@@ -218,6 +88,7 @@ const Sidebar = props => {
 const mapStateToProps = state => {
 	return {
 		inputs: state.building.inputs,
+		isDefaultRates: state.building.isDefaultRates,
 	};
 };
 

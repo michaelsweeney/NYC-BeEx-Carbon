@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 
-import { BeExLogo } from './beexlogo.js';
 import { NotesAndClarifications } from './notesandclarifications.js';
 import { conn } from '../store/connect';
 
@@ -102,7 +101,7 @@ const InfoModal = props => {
 				</div>
 				<div className="notes-clarifications-container">
 					<div className="head-text-3">Notes and Clarifications</div>
-					<NotesAndClarifications></NotesAndClarifications>
+					<NotesAndClarifications />
 				</div>
 			</div>
 		</div>

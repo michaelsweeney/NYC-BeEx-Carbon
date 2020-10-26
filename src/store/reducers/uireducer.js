@@ -13,6 +13,7 @@ const initialState = {
 	loadInputResponse: [{}],
 	loadTableData: [{}],
 	isSmallScreen: false,
+
 };
 
 export default function uiReducer(state = initialState, action) {
