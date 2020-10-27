@@ -6,10 +6,6 @@ const BuildingType = props => {
 	const { inputs } = props;
 
 	const handleAreaChange = e => {
-		updateCallback(e);
-	};
-
-	const updateCallback = e => {
 		let state = Object.assign({}, inputs);
 		let value = e.target.value;
 		let bldgtypeid = e.target.getAttribute('datatag');
@@ -74,7 +70,7 @@ const BuildingType = props => {
 				<div className="type-label">{`${typenum}`}</div>
 
 				<div className="type-container">
-					<select className="bldg-type-select" datatag={typenum} onChange={updateCallback} value={bldgtype}>
+					<select className="bldg-type-select" datatag={typenum} onChange={handleAreaChange} value={bldgtype}>
 						{Object.keys(buildingtypes).map(type => {
 							return (
 								<option value={type} key={type + '-option'}>

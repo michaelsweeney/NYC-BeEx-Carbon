@@ -19,7 +19,7 @@
 	box-sizing: border-box;
 }
 
-.bldg-input-main-container {
+.sidebar-main-container {
 	margin-left: 10px;
 	margin-right: 10px;
 	margin-bottom: 20px;
@@ -66,7 +66,7 @@
 }
 
 .utility-input-main-container {
-	margin-left: 20px;
+	margin-left: 10px;
 	margin-right: 10px;
 }
 
@@ -208,6 +208,7 @@
 
 .add-building-type {
 	margin-left: 10px;
+	margin-bottom: 20px;
 }
 .area-container input {
 	margin-left: 5px;
@@ -215,6 +216,7 @@
 
 .sidebar .head-text-2 {
 	margin-top: 10px;
+	margin-left: 10px;
 }
 
 .default-rate-btn {
@@ -223,7 +225,7 @@
 
 .default-rate-checkbox {
 	display: inline-block;
-	margin-left: 15px;
+	margin-left: 5px;
 	margin-bottom: 5px;
 }
 
