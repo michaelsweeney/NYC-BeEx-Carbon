@@ -5,19 +5,25 @@ const initialState = {
 	},
 	isDemoMode: false,
 	isLoadMode: false,
-
 	infoModalActive: true,
 	loadBldgModalActive: false,
-
 	loadInputValue: '',
 	loadInputResponse: [{}],
+	loadInputSelection: {},
 	loadTableData: [{}],
 	isSmallScreen: false,
-
+	loadConfirmDialogActive: false,
 };
 
 export default function uiReducer(state = initialState, action) {
 	switch (action.type) {
+		case 'SET_LOAD_CONFIRM_DIALOG_ACTIVE': {
+			return {
+				...state,
+				loadConfirmDialogActive: action.payload,
+			};
+		}
+
 		case 'SET_IS_SMALL_SCREEN': {
 			return {
 				...state,
@@ -40,6 +46,12 @@ export default function uiReducer(state = initialState, action) {
 			return {
 				...state,
 				loadInputResponse: action.payload,
+			};
+		}
+		case 'SET_LOAD_INPUT_SELECTION': {
+			return {
+				...state,
+				loadInputSelection: action.payload,
 			};
 		}
 

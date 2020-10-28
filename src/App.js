@@ -7,6 +7,7 @@ import { Footer } from './components/footer.js';
 import SmallScreen from './components/smallscreen.js';
 
 import LoadBldgModal from './components/loadbldgmodal';
+import LoadConfirmDialog from './components/loadconfirmdialog';
 
 import { conn } from './store/connect';
 
@@ -49,6 +50,7 @@ const App = props => {
 		<React.Fragment>
 			<InfoModal />
 			<LoadBldgModal />
+			<LoadConfirmDialog />
 			<SmallScreen />
 			<div className="main-container">
 				<Header />

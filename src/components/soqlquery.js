@@ -98,29 +98,29 @@ const parseResponse = response => {
 	bldg.types = {
 		1: {
 			type: 'A',
-			area: bldg_type_one_area,
+			area: +bldg_type_one_area,
 			id: 1,
 		},
 		2: {
 			type: 'A',
-			area: bldg_type_two_area,
+			area: +bldg_type_two_area,
 			id: 2,
 		},
 		3: {
 			type: 'A',
-			area: bldg_type_three_area,
+			area: +bldg_type_three_area,
 			id: 3,
 		},
 	};
 
-	if (bldg_type_one == 'Not Available' || bldg_type_one_area == 'Not Available' || bldg_type_one_area == 0) {
-		delete bldg.types[0];
-	}
-	if (bldg_type_two == 'Not Available' || bldg_type_two_area == 'Not Available' || bldg_type_two_area == 0) {
+	if (bldg_type_one === 'Not Available' || !bldg_type_one_area || bldg_type_one_area == 0) {
 		delete bldg.types[1];
 	}
-	if (bldg_type_three == 'Not Available' || bldg_type_three_area == 'Not Available' || bldg_type_three_area == 0) {
+	if (bldg_type_two === 'Not Available' || !bldg_type_two_area || bldg_type_two_area == 0) {
 		delete bldg.types[2];
+	}
+	if (bldg_type_three === 'Not Available' || !bldg_type_three_area || bldg_type_three_area == 0) {
+		delete bldg.types[3];
 	}
 
 	return bldg;

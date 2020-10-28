@@ -32,6 +32,12 @@
 .select-bldg-btn:hover {
 	background-color: rgb(135, 135, 135);
 }
+.select-bldg-btn.active {
+	background-color: #bad636;
+}
+.select-bldg-btn.active:hover {
+	background-color: rgb(156, 182, 42);
+}
 
 .load-modal-results-table-container {
 	height: 100%;

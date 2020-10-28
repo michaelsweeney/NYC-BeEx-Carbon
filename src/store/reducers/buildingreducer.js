@@ -5,6 +5,7 @@ const initialState = {
 	inputs: createDefaultBuilding(),
 	compiled: compileBuilding(createDefaultBuilding()),
 	isDefaultRates: false,
+	loadedResponse: {},
 };
 
 export default function buildingReducer(state = initialState, action) {

@@ -27,6 +27,13 @@ export function setLoadBldgModalActive(bool) {
 	};
 }
 
+export function setLoadConfirmDialogActive(bool) {
+	return {
+		type: 'SET_LOAD_CONFIRM_DIALOG_ACTIVE',
+		payload: bool,
+	};
+}
+
 export function setInfoModalActive(bool) {
 	return {
 		type: 'SET_INFO_MODAL_ACTIVE',
@@ -76,6 +83,13 @@ export function setLoadInputValue(value) {
 export function setLoadInputResponse(response) {
 	return {
 		type: 'SET_LOAD_INPUT_RESPONSE',
+		payload: response,
+	};
+}
+
+export function setLoadInputSelection(response) {
+	return {
+		type: 'SET_LOAD_INPUT_SELECTION',
 		payload: response,
 	};
 }

@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-
+import React, { useEffect, useRef } from 'react';
+import { Modal } from './modal.js';
 import { handleResponse, parseResponse } from './soqlquery.js';
 import { conn } from '../store/connect';
 
@@ -12,28 +12,8 @@ const LoadBldgModal = props => {
 		inputref.current.focus();
 	}, [loadBldgModalActive]);
 
-	useEffect(() => {
-		window.addEventListener('keydown', handleKeyDown);
-		window.addEventListener('mousedown', handleClick);
-
-		return () => {
-			window.removeEventListener('keydown', handleKeyDown);
-			window.removeEventListener('mousedown', handleClick);
-		};
-	});
 	const hideModal = () => {
 		props.actions.setLoadBldgModalActive(false);
-	};
-	const handleKeyDown = e => {
-		if (e.key == 'Escape') {
-			hideModal();
-		}
-	};
-
-	const handleClick = e => {
-		if (!e.target.classList.contains('modal-content') && e.target.classList.contains('modal')) {
-			hideModal();
-		}
 	};
 
 	const handleChange = e => {
@@ -43,10 +23,14 @@ const LoadBldgModal = props => {
 
 	const handleLoad = bldginfo => {
 		let formatted_bldg = parseResponse(bldginfo);
-		alert(JSON.stringify(formatted_bldg));
+		props.actions.setLoadInputSelection(bldginfo);
+
 		props.actions.setIsLoadMode(!isDemoMode);
 		props.actions.setIsDemoMode(false);
 		props.actions.setBuilding(formatted_bldg);
+		props.actions.setIsDefaultRates(true);
+		props.actions.useDefaultRates();
+		props.actions.setLoadConfirmDialogActive(true);
 		hideModal();
 	};
 
@@ -64,74 +48,72 @@ const LoadBldgModal = props => {
 	}, [loadInputResponse, props.actions]);
 
 	return (
-		<div className={`modal ${loadBldgModalActive ? 'active' : 'inactive'}`}>
-			<div className="modal-content load-modal-content">
-				<div>
-					<div className="head-text-1">
-						Building Utility Info Loader
-						<button className="modal-exit-btn" onClick={hideModal}>
-							x
-						</button>
-					</div>
-				</div>
-
-				<div className="load-modal-body">
-					<div>
-						<div className="head-text-3">
-							This form allows for querying the LL84 Benchmarking Database for building utility
-							information, either using the property's BBL number or the property name (property name
-							searches are case sensitive)
-						</div>
-						<div className="head-text-3">
-							Note that the "Building Type" submitted under the LL84 dataset does not align with the
-							"Building Type" in LL97. For the sake of convenience, an attempt has been made to map these
-							types and it is up to the user to correct them in the "Building Inputs" section of the
-							sidebar. Refer to ...... for information on LL84 Benchmarking Data set.
-						</div>
-					</div>
-					<div>
-						<span className="head-text-3">Input BBL ID Number or Search for Building Name</span>
-					</div>
-					<input ref={inputref} className="bldg-input" value={loadInputValue} onChange={handleChange} />
-
-					<div className="load-modal-results-table-container">
-						<table className="load-modal-results-table">
-							<thead>
-								<tr>
-									<td> - </td>
-									{Object.keys(Object.values(loadTableData)[0]).map((row, i) => (
-										<td style={{ width: [300, 300, 150, 150, 150, 100][i] }} key={i}>
-											{row}
-										</td>
-									))}
-								</tr>
-							</thead>
-							<tbody>
-								{Object.values(loadTableData).map((row, i) => (
-									<tr key={i}>
-										<td>
-											{Object.keys(row).length > 0 ? (
-												<div
-													className="select-bldg-btn"
-													onClick={() => handleLoad(loadInputResponse[i])}
-												>
-													LOAD
-												</div>
-											) : (
-												''
-											)}
-										</td>
-										{Object.values(row).map((e, i) => (
-											<td key={i}>{e}</td>
-										))}
-									</tr>
-								))}
-							</tbody>
-						</table>
-					</div>
+		<Modal active={loadBldgModalActive} hideCallback={hideModal}>
+			<div>
+				<div className="head-text-1">
+					Building Utility Info Loader
+					<button className="modal-exit-btn" onClick={hideModal}>
+						x
+					</button>
 				</div>
 			</div>
-		</div>
+
+			<div className="load-modal-body">
+				<div>
+					<div className="head-text-3">
+						This form allows for querying the LL84 Benchmarking Database for building utility information,
+						either using the property's BBL number or the property name (property name searches are case
+						sensitive)
+					</div>
+					<div className="head-text-3">
+						Note that the "Building Type" submitted under the LL84 dataset does not align with the "Building
+						Type" in LL97. For the sake of convenience, an attempt has been made to map these types and it
+						is up to the user to correct them in the "Building Inputs" section of the sidebar. Refer to
+						...... for information on LL84 Benchmarking Data set.
+					</div>
+				</div>
+				<div>
+					<span className="head-text-3">Input BBL ID Number or Search for Building Name</span>
+				</div>
+				<input ref={inputref} className="bldg-input" value={loadInputValue} onChange={handleChange} />
+
+				<div className="load-modal-results-table-container">
+					<table className="load-modal-results-table">
+						<thead>
+							<tr>
+								<td> - </td>
+								{Object.keys(Object.values(loadTableData)[0]).map((row, i) => (
+									<td style={{ width: [300, 300, 150, 150, 150, 100][i] }} key={i}>
+										{row}
+									</td>
+								))}
+							</tr>
+						</thead>
+						<tbody>
+							{Object.values(loadTableData).map((row, i) => (
+								<tr key={i}>
+									<td>
+										{Object.keys(row).length > 0 ? (
+											<div
+												className="select-bldg-btn"
+												onClick={() => handleLoad(loadInputResponse[i])}
+											>
+												LOAD
+											</div>
+										) : (
+											''
+										)}
+									</td>
+									{Object.values(row).map((e, i) => (
+										<td key={i}>{e}</td>
+									))}
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</Modal>
 	);
 };
 
