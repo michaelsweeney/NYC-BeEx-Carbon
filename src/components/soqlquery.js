@@ -1,3 +1,5 @@
+import { translateBuildingType } from './ll84buildingtypelookup';
+
 const handleResponse = (val, callback) => {
 	let fields = [
 		'property_name',
@@ -23,7 +25,12 @@ const handleResponse = (val, callback) => {
 		val +
 		"%25' OR property_id LIKE '%25" +
 		val +
+		"%25' OR bbl_10_digits LIKE '%25" +
+		val +
+		"%25' OR address_1_self_reported LIKE '%25" +
+		val +
 		"%25' LIMIT 10";
+
 	let xmlhttp = new XMLHttpRequest();
 	xmlhttp.open('GET', query, true);
 	xmlhttp.onreadystatechange = d => {
@@ -97,17 +104,17 @@ const parseResponse = response => {
 
 	bldg.types = {
 		1: {
-			type: 'A',
+			type: translateBuildingType(bldg_type_one).ll97_short,
 			area: +bldg_type_one_area,
 			id: 1,
 		},
 		2: {
-			type: 'A',
+			type: translateBuildingType(bldg_type_two).ll97_short,
 			area: +bldg_type_two_area,
 			id: 2,
 		},
 		3: {
-			type: 'A',
+			type: translateBuildingType(bldg_type_three).ll97_short,
 			area: +bldg_type_three_area,
 			id: 3,
 		},

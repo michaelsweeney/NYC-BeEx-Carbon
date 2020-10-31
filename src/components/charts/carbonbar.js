@@ -281,8 +281,10 @@ const CarbonBar = props => {
 		linedata[1].rectwidth = width_2030;
 		linedata[2].rectwidth = width_2024;
 
-		if (height < 100) {
-			svg.selectAll('.x-axis').remove();
+		// updates for dimension changes
+		if (height < 220) {
+			xaxisg.call(xAxis);
+			svg.selectAll('.axis-title').remove();
 		} else {
 			xaxisg.call(xAxis);
 			try {
@@ -291,7 +293,6 @@ const CarbonBar = props => {
 					.remove();
 			} catch {}
 		}
-
 		// polylines linked to rects
 		let imap = {
 			0: 3,

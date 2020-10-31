@@ -19,11 +19,11 @@ const Modal = props => {
 
 	useEffect(() => {
 		window.addEventListener('keydown', handleKeyDown);
-		window.addEventListener('click', handleClick);
+		window.addEventListener('mousedown', handleClick);
 
 		return () => {
 			window.removeEventListener('keydown', handleKeyDown);
-			window.removeEventListener('click', handleClick);
+			window.removeEventListener('mousedown', handleClick);
 		};
 	});
 

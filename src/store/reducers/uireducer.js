@@ -64,7 +64,7 @@ export default function uiReducer(state = initialState, action) {
 		case 'SET_IS_LOAD_MODE': {
 			return {
 				...state,
-				isDemoMode: action.payload,
+				isLoadMode: action.payload,
 			};
 		}
 

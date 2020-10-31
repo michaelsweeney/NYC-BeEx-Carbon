@@ -1,10 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import { Modal } from './modal.js';
 import { handleResponse, parseResponse } from './soqlquery.js';
+
 import { conn } from '../store/connect';
 
 const LoadBldgModal = props => {
-	const { loadInputValue, loadInputResponse, loadTableData, loadBldgModalActive, isDemoMode } = props;
+	const { loadInputValue, loadInputResponse, loadTableData, loadBldgModalActive, isLoadMode } = props;
 
 	const inputref = useRef(null);
 
@@ -24,8 +25,7 @@ const LoadBldgModal = props => {
 	const handleLoad = bldginfo => {
 		let formatted_bldg = parseResponse(bldginfo);
 		props.actions.setLoadInputSelection(bldginfo);
-
-		props.actions.setIsLoadMode(!isDemoMode);
+		props.actions.setIsLoadMode(true);
 		props.actions.setIsDemoMode(false);
 		props.actions.setBuilding(formatted_bldg);
 		props.actions.setIsDefaultRates(true);
@@ -124,6 +124,7 @@ const mapStateToProps = state => {
 		loadTableData: state.ui.loadTableData,
 		loadBldgModalActive: state.ui.loadBldgModalActive,
 		isDemoMode: state.ui.isDemoMode,
+		isLoadMode: state.ui.isLoadMode,
 	};
 };
 

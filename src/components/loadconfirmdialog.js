@@ -2,13 +2,83 @@ import React from 'react';
 import { Modal } from './modal.js';
 
 import { conn } from '../store/connect';
+import { translateBuildingType } from './ll84buildingtypelookup';
 
 const LoadConfirmDialog = props => {
-	const { loadConfirmDialogActive, loadInputSelection } = props;
+	const { loadConfirmDialogActive, loadInputSelection, building, inputs } = props;
 
 	const hideDialog = () => {
 		props.actions.setLoadConfirmDialogActive(false);
 	};
+
+	const getConvertedTypes = () => {
+		let type1 = translateBuildingType(loadInputSelection['largest_property_use_type']);
+		let type2 = translateBuildingType(loadInputSelection['_2nd_largest_property_use']);
+		let type3 = translateBuildingType(loadInputSelection['_3rd_largest_property_use']);
+
+		let type1_ll84 = type1.ll84;
+		let type2_ll84 = type2.ll84;
+		let type3_ll84 = type3.ll84;
+
+		let type1_ll97 = type1.ll97_long;
+		let type2_ll97 = type2.ll97_long;
+		let type3_ll97 = type3.ll97_long;
+		let type1_ll97_area = inputs.types[1] ? inputs.types[1].area : undefined;
+		let type2_ll97_area = inputs.types[2] ? inputs.types[2].area : undefined;
+		let type3_ll97_area = inputs.types[3] ? inputs.types[3].area : undefined;
+
+		return {
+			1: {
+				ll84: type1_ll84,
+				ll97: type1_ll97,
+				area: type1_ll97_area,
+			},
+			2: {
+				ll84: type2_ll84,
+				ll97: type2_ll97,
+				area: type2_ll97_area,
+			},
+			3: {
+				ll84: type3_ll84,
+				ll97: type3_ll97,
+				area: type3_ll97_area,
+			},
+		};
+	};
+
+	const typemap = getConvertedTypes();
+	const TypeMapMarkup = (
+		<table>
+			<thead>
+				<tr>
+					<td>Building Type</td>
+					<td>Area (SF)</td>
+					<td>LL84 Input</td>
+					<td>LL94 Map</td>
+				</tr>
+			</thead>
+			<tbody>
+				{Object.keys(typemap).map((d, i) => {
+					let typenum = d;
+					let ll84type = typemap[d].ll84;
+					let ll97type = typemap[d].ll97;
+					let area = typemap[d].area;
+					if (area === undefined) {
+						return '';
+					} else {
+						return (
+							<tr key={i}>
+								<td>{typenum}</td>
+								<td>{area}</td>
+								<td>{ll84type}</td>
+								<td>{ll97type}</td>
+							</tr>
+						);
+					}
+				})}
+			</tbody>
+		</table>
+	);
 
 	const keyNameLookup = {
 		property_name: 'Property Name',
@@ -27,19 +97,23 @@ const LoadConfirmDialog = props => {
 		electricity_use_grid_purchase: 'Electricity Purchased From Grid (kBtu)',
 	};
 
-	const loadMarkup = Object.keys(loadInputSelection).map(e => {
-		const keyName = keyNameLookup[e];
-		const val = loadInputSelection[e];
-		if ((val !== 'Not Available') & (val !== 0)) {
-			return (
-				<div>
-					{keyName}: {val}
-				</div>
-			);
-		} else {
-			return '';
-		}
-	});
+	const LoadMarkup = (
+		<ul>
+			{Object.keys(loadInputSelection).map((e, i) => {
+				const keyName = keyNameLookup[e];
+				const val = loadInputSelection[e];
+				if ((val !== 'Not Available') & (val !== 0)) {
+					return (
+						<li key={i}>
+							{keyName}: {val}
+						</li>
+					);
+				} else {
+					return '';
+				}
+			})}
+		</ul>
+	);
 
 	return (
 		<Modal active={loadConfirmDialogActive} hideCallback={hideDialog}>
@@ -55,7 +129,8 @@ const LoadConfirmDialog = props => {
 					by the building owner / stakeholder for accuracy. Because property use types in LL84 do not align
 					with 'building types' under LL97, user should check mapping in the sidebar.
 				</div>
-				<div>{loadMarkup}</div>
+				<div>{LoadMarkup}</div>
+				<div>{TypeMapMarkup}</div>
 				<button style={{ height: '42px' }} className="select-bldg-btn active" onClick={hideDialog}>
 					OK
 				</button>
@@ -68,6 +143,9 @@ const mapStateToProps = state => {
 	return {
 		loadConfirmDialogActive: state.ui.loadConfirmDialogActive,
 		loadInputSelection: state.ui.loadInputSelection,
+		loadedBuildingTypes: state.building.loadedBuildingTypes,
+		building: state.building.compiled,
+		inputs: state.building.inputs,
 	};
 };
 

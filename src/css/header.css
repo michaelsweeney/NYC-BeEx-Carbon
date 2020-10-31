@@ -72,7 +72,7 @@
 	text-align: center;
 	align-content: center;
 	align-self: center;
-	width: calc(100vw - 35px);
+	width: 100%;
 	background-color: #bad636;
 	display: inline-block;
 }

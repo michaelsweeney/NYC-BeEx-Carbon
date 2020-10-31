@@ -20,6 +20,7 @@ const Header = props => {
 	const toggleDemo = isdemo => {
 		if (isdemo) {
 			props.actions.setDemoBuilding();
+			props.actions.setIsLoadMode(false);
 		} else {
 			props.actions.setDefaultBuilding();
 		}

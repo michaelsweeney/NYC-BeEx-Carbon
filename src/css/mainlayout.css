@@ -39,7 +39,7 @@
 	position: fixed;
 	height: 70px;
 	bottom: 0px;
-	width: max(750px, calc(100vw - 30px));
+	width: max(750px, 100%);
 }
 
 .header {
