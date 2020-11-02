@@ -131,7 +131,7 @@ const LoadConfirmDialog = props => {
 				</div>
 				<div>{LoadMarkup}</div>
 				<div>{TypeMapMarkup}</div>
-				<button style={{ height: '42px' }} className="select-bldg-btn active" onClick={hideDialog}>
+				<button style={{ height: '42px' }} className="select-bldg-btn" onClick={hideDialog}>
 					OK
 				</button>
 			</div>

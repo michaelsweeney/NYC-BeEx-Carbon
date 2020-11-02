@@ -46,8 +46,8 @@
 	position: fixed;
 	top: 0px;
 	height: 100px;
-	width: calc(max(750px, 100vw));
-	padding: 20px;
+	width: 100vw;
+	padding: 15px;
 	margin-bottom: 10px;
 	overflow: hidden;
 	box-sizing: border-box;

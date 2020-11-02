@@ -5,19 +5,7 @@
 	vertical-align: middle;
 	width: 100vw;
 }
-.header-copy {
-	float: left;
-	padding-top: 10px;
-	vertical-align: middle;
-}
 
-.header-copy .head {
-	font-family: 'CircularStd-Bold';
-	font-size: 20px;
-}
-.header-copy .mid {
-	font-family: 'CircularStd-Book';
-}
 .header .header-logos {
 	float: right;
 }
@@ -25,16 +13,6 @@
 .header img {
 	margin-left: 10px;
 	margin-right: 10px;
-}
-
-.header .title-container {
-	position: absolute;
-	left: calc(40% - 175px);
-	right: calc(40% - 150px);
-	display: inline-block;
-	text-align: center;
-	font-family: 'CircularStd-Black';
-	font-size: 20px;
 }
 
 .header .help-btn {
@@ -52,6 +30,16 @@
 	cursor: pointer;
 	fill: rgb(156, 182, 42);
 	transition: background-color 500ms;
+}
+
+.header .title-container {
+	position: absolute;
+	left: calc(40% - 175px);
+	right: calc(40% - 150px);
+	display: inline-block;
+	text-align: center;
+	font-family: 'CircularStd-Black';
+	font-size: 20px;
 }
 
 .header .title-text {

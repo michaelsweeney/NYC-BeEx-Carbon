@@ -1,5 +1,8 @@
 import { translateBuildingType } from './ll84buildingtypelookup';
 
+
+
+
 const handleResponse = (val, callback) => {
 	let fields = [
 		'property_name',
