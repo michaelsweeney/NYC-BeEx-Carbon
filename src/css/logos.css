@@ -6,20 +6,16 @@
 }
 
 .logo-beex {
-	position: relative;
+	/* position: relative;
 	margin-left: 10px;
 	margin-right: 10px;
-	top: 5px;
+	top: 5px; */
 }
 
 .logo-nyc {
 	position: relative;
 	margin-left: 10px;
 	margin-right: 10px;
-}
-
-.header .logo-beex {
-	top: -20px;
 }
 
 .footer .footer-logos {

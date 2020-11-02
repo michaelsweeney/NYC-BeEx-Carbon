@@ -35,17 +35,23 @@ const Header = props => {
 	};
 	return (
 		<div className="header">
-			<a className="logo-beex" href="http://www.be-exchange.org" target="_blank" rel="noopener noreferrer">
-				<BeExLogo props={{ width: '200px', height: '100px' }}></BeExLogo>
-			</a>
-			<div className="title-container">
-				<div className="title-text">NYC LL97 Carbon Emissions Calculator</div>
+			<div className="header-left">
+				<a className="logo-beex" href="http://www.be-exchange.org" target="_blank" rel="noopener noreferrer">
+					<BeExLogo props={{ width: '200px', height: '75px' }}></BeExLogo>
+				</a>
 			</div>
-			<div className="title-after"></div>
-			<LoadBldgButton isLoadMode={isLoadMode} loadBldgCallback={setLoadModalActive} />
-			<DemoModeButton isDemoMode={isDemoMode} callback={toggleDemo}></DemoModeButton>
-			<div className="help-btn" style={helpStyle} onClick={setInfoModalActive}>
-				<HelpOutline></HelpOutline>
+			<div className="header-middle">
+				<div className="title-container">
+					<div className="title-text">NYC LL97 Carbon Emissions Calculator</div>
+					<div className="title-after"></div>
+				</div>
+			</div>
+			<div className="header-right">
+				<LoadBldgButton isLoadMode={isLoadMode} loadBldgCallback={setLoadModalActive} />
+				<DemoModeButton isDemoMode={isDemoMode} callback={toggleDemo}></DemoModeButton>
+				<div className="help-btn" style={helpStyle} onClick={setInfoModalActive}>
+					<HelpOutline></HelpOutline>
+				</div>
 			</div>
 		</div>
 	);

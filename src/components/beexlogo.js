@@ -12,7 +12,7 @@ const BeExLogo = props => {
 				id="Layer_1"
 				data-name="Layer 1"
 				xmlns="http://www.w3.org/2000/svg"
-				viewBox="0 0 624.98 212.81"
+				viewBox="0 0 624.98 175.81"
 			>
 				<defs>
 					<clipPath id="clip-path" transform="translate(-89.19 -67.64)">
