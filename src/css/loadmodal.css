@@ -39,9 +39,34 @@
 	background-color: rgb(156, 182, 42);
 }
 
+.ok-dialog-btn-container {
+	text-align: center;
+}
+.ok-dialog-btn {
+	height: 15px;
+	width: 200px;
+	margin: 10px;
+	background-color: rgb(153, 153, 153);
+	background-color: #bad636;
+	color: white;
+	font-family: 'CircularStd-Bold';
+	border: none;
+	color: white;
+	padding: 10px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 14px;
+	transition: background-color 200ms;
+	cursor: pointer;
+}
+.ok-dialog-btn:hover {
+	background-color: rgb(135, 135, 135);
+	background-color: rgb(156, 182, 42);
+}
+
 .load-modal-results-table-container {
-	height: 100%;
-	overflow-y: scroll;
+	overflow-y: hidden;
 	overflow-x: hidden;
 }
 

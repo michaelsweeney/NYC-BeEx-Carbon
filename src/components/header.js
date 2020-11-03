@@ -8,19 +8,21 @@ import { LoadBldgButton } from './loadbldgbutton';
 import { conn } from '../store/connect';
 
 const Header = props => {
-	const { isDemoMode, isLoadMode } = props;
-
+	const { isDemoMode, isLoadMode, loadInputSelection } = props;
+	const propertyName = loadInputSelection.property_name;
 	const setInfoModalActive = () => {
 		props.actions.setInfoModalActive(true);
 	};
 	const setLoadModalActive = () => {
 		props.actions.setLoadBldgModalActive(true);
+		props.actions.setIsDemoMode(false);
 	};
-
+	console.log(props);
 	const toggleDemo = isdemo => {
 		if (isdemo) {
 			props.actions.setDemoBuilding();
 			props.actions.setIsLoadMode(false);
+			props.actions.setLoadInputSelection({});
 		} else {
 			props.actions.setDefaultBuilding();
 		}
@@ -42,7 +44,11 @@ const Header = props => {
 			</div>
 			<div className="header-middle">
 				<div className="title-container">
-					<div className="title-text">NYC LL97 Carbon Emissions Calculator</div>
+					<div className={propertyName ? 'title-text title-small' : 'title-text'}>
+						NYC LL97 Carbon Emissions Calculator
+					</div>
+					<div className="title-text property-name">{propertyName ? propertyName : ''}</div>
+
 					<div className="title-after"></div>
 				</div>
 			</div>
@@ -61,6 +67,7 @@ const mapStateToProps = state => {
 	return {
 		isDemoMode: state.ui.isDemoMode,
 		isLoadMode: state.ui.isLoadMode,
+		loadInputSelection: state.ui.loadInputSelection,
 	};
 };
 export default conn(mapStateToProps)(Header);

@@ -5,7 +5,7 @@ import { conn } from '../store/connect';
 import { translateBuildingType } from './ll84buildingtypelookup';
 
 const LoadConfirmDialog = props => {
-	const { loadConfirmDialogActive, loadInputSelection, building, inputs } = props;
+	const { loadConfirmDialogActive, loadInputSelection, inputs } = props;
 
 	const hideDialog = () => {
 		props.actions.setLoadConfirmDialogActive(false);
@@ -46,40 +46,6 @@ const LoadConfirmDialog = props => {
 		};
 	};
 
-	const typemap = getConvertedTypes();
-	const TypeMapMarkup = (
-		<table>
-			<thead>
-				<tr>
-					<td>Building Type</td>
-					<td>Area (SF)</td>
-					<td>LL84 Input</td>
-					<td>LL94 Map</td>
-				</tr>
-			</thead>
-			<tbody>
-				{Object.keys(typemap).map((d, i) => {
-					let typenum = d;
-					let ll84type = typemap[d].ll84;
-					let ll97type = typemap[d].ll97;
-					let area = typemap[d].area;
-					if (area === undefined) {
-						return '';
-					} else {
-						return (
-							<tr key={i}>
-								<td>{typenum}</td>
-								<td>{area}</td>
-								<td>{ll84type}</td>
-								<td>{ll97type}</td>
-							</tr>
-						);
-					}
-				})}
-			</tbody>
-		</table>
-	);
-
 	const keyNameLookup = {
 		property_name: 'Property Name',
 		property_id: 'Property ID',
@@ -115,10 +81,26 @@ const LoadConfirmDialog = props => {
 		</ul>
 	);
 
+	const typemap = getConvertedTypes();
+	const TypeMapMarkup = Object.keys(typemap).map((d, i) => {
+		let ll84type = typemap[d].ll84;
+		let ll97type = typemap[d].ll97;
+		let area = typemap[d].area;
+		if (area === undefined) {
+			return '';
+		} else {
+			return (
+				<li key={i}>
+					LL84 Building Type <u>{ll84type}</u> ({area} SF) mapped to <u>{ll97type}</u>
+				</li>
+			);
+		}
+	});
+
 	return (
 		<Modal active={loadConfirmDialogActive} hideCallback={hideDialog}>
 			<div className="head-text-1">
-				LOADED BUILDING FEEDBACK
+				LOADED BUILDING DATA SUMMARY
 				<button className="modal-exit-btn" onClick={hideDialog}>
 					x
 				</button>
@@ -126,14 +108,26 @@ const LoadConfirmDialog = props => {
 			<div className="load-modal-body">
 				<div className="head-text-3">
 					The following info has been loaded from the NYC LL84 Database. Note that inputs should be verified
-					by the building owner / stakeholder for accuracy. Because property use types in LL84 do not align
-					with 'building types' under LL97, user should check mapping in the sidebar.
+					by the building owner / stakeholder for accuracy.
 				</div>
-				<div>{LoadMarkup}</div>
-				<div>{TypeMapMarkup}</div>
-				<button style={{ height: '42px' }} className="select-bldg-btn" onClick={hideDialog}>
-					OK
-				</button>
+				<div className="head-text-4">{LoadMarkup}</div>
+				<div className="head-text-3">
+					Because property use types in LL84 do not align with building types under LL97, an attempt has been
+					made to correlate the loaded building's LL84 property use to the closest LL97 type:
+				</div>
+
+				<div className="head-text-4">
+					<ul>{TypeMapMarkup}</ul>
+				</div>
+				<div className="head-text-3">
+					Please verify the mapping and make any changes necessary in the "Building Inputs" section of the
+					calculator.
+				</div>
+				<div className="ok-dialog-btn-container">
+					<button style={{ height: '42px' }} className="ok-dialog-btn" onClick={hideDialog}>
+						OK
+					</button>
+				</div>
 			</div>
 		</Modal>
 	);

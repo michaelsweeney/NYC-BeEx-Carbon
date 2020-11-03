@@ -1,8 +1,5 @@
 import { translateBuildingType } from './ll84buildingtypelookup';
 
-
-
-
 const handleResponse = (val, callback) => {
 	let fields = [
 		'property_name',
@@ -32,7 +29,7 @@ const handleResponse = (val, callback) => {
 		val +
 		"%25' OR address_1_self_reported LIKE '%25" +
 		val +
-		"%25' LIMIT 10";
+		"%25' LIMIT 8";
 
 	let xmlhttp = new XMLHttpRequest();
 	xmlhttp.open('GET', query, true);
@@ -80,17 +77,21 @@ const parseResponse = response => {
 		},
 	};
 
+	const roundNum = n => {
+		return Math.round(+n);
+	};
+
 	let steam_kbtu = response['district_steam_use_kbtu'];
 	let gas_kbtu = response['natural_gas_use_kbtu'];
 	let fuel_two_kbtu = response['fuel_oil_2_use_kbtu'];
 	let fuel_four_kbtu = response['fuel_oil_4_use_kbtu'];
 	let elec_kbtu = response['electricity_use_grid_purchase'];
 
-	let elec = elec_kbtu / 3.412;
-	let steam = steam_kbtu / 1194;
-	let gas = gas_kbtu / 100;
-	let fuel_two = fuel_two_kbtu / 138;
-	let fuel_four = fuel_four_kbtu / 146;
+	let elec = roundNum(elec_kbtu / 3.412);
+	let steam = roundNum(steam_kbtu / 1194);
+	let gas = roundNum(gas_kbtu / 100);
+	let fuel_two = roundNum(fuel_two_kbtu / 138);
+	let fuel_four = roundNum(fuel_four_kbtu / 146);
 
 	bldg.utilities.elec = { cons: +elec || 0, rate: 0 };
 	bldg.utilities.steam = { cons: +steam || 0, rate: 0 };
@@ -108,17 +109,17 @@ const parseResponse = response => {
 	bldg.types = {
 		1: {
 			type: translateBuildingType(bldg_type_one).ll97_short,
-			area: +bldg_type_one_area,
+			area: roundNum(bldg_type_one_area),
 			id: 1,
 		},
 		2: {
 			type: translateBuildingType(bldg_type_two).ll97_short,
-			area: +bldg_type_two_area,
+			area: roundNum(bldg_type_two_area),
 			id: 2,
 		},
 		3: {
 			type: translateBuildingType(bldg_type_three).ll97_short,
-			area: +bldg_type_three_area,
+			area: roundNum(bldg_type_three_area),
 			id: 3,
 		},
 	};

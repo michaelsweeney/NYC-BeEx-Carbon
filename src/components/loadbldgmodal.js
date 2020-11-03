@@ -5,7 +5,7 @@ import { handleResponse, parseResponse } from './soqlquery.js';
 import { conn } from '../store/connect';
 
 const LoadBldgModal = props => {
-	const { loadInputValue, loadInputResponse, loadTableData, loadBldgModalActive, isLoadMode } = props;
+	const { loadInputValue, loadInputResponse, loadTableData, loadBldgModalActive } = props;
 
 	const inputref = useRef(null);
 

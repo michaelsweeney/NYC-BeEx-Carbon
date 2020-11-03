@@ -8,8 +8,8 @@ const LoadBldgButton = props => {
 	};
 
 	return (
-		// <button className={isLoadMode ? 'load-bldg-btn demo-on' : ' load-bldg-btn demo-off'} onClick={handleClick}>
-		<button className="load-bldg-btn demo-off" onClick={handleClick}>
+		<button className={isLoadMode ? 'load-bldg-btn demo-on' : ' load-bldg-btn demo-off'} onClick={handleClick}>
+			{/* <button className="load-bldg-btn demo-off" onClick={handleClick}> */}
 			LOAD
 		</button>
 	);
