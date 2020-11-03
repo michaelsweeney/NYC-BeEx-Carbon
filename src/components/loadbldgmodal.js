@@ -60,17 +60,16 @@ const LoadBldgModal = props => {
 
 			<div className="load-modal-body">
 				<div>
-					<div className="head-text-3">
-						This form allows for querying the LL84 Benchmarking Database for building utility information,
-						either using the property's BBL number or the property name (property name searches are case
-						sensitive)
-					</div>
-					<div className="head-text-3">
-						Note that the "Building Type" submitted under the LL84 dataset does not align with the "Building
-						Type" in LL97. For the sake of convenience, an attempt has been made to map these types and it
-						is up to the user to correct them in the "Building Inputs" section of the sidebar. Refer to
-						...... for information on LL84 Benchmarking Data set.
-					</div>
+					<p>
+						This form allows for querying the 2018 LL84 Energy and Water Data Disclosure Benchmarking
+						Database for building utility information, either using the property's BBL number or the
+						property name (property name searches are case sensitive).
+					</p>
+					<p>
+						Due to potential errors in LL84 reporting loaded using this form should be verified for accuracy
+						by building owner or a party familiar with building utility consumption and gross square
+						footage.
+					</p>
 				</div>
 				<div>
 					<span className="head-text-3">Input BBL ID Number or Search for Building Name</span>
@@ -81,9 +80,9 @@ const LoadBldgModal = props => {
 					<table className="load-modal-results-table">
 						<thead>
 							<tr>
-								<td> - </td>
+								<td> {''} </td>
 								{Object.keys(Object.values(loadTableData)[0]).map((row, i) => (
-									<td style={{ width: [300, 300, 150, 150, 150, 100][i] }} key={i}>
+									<td style={{ width: [300, 200, 150, 150, 150, 100][i] }} key={i}>
 										{row}
 									</td>
 								))}

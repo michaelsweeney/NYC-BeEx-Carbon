@@ -100,7 +100,7 @@ const LoadConfirmDialog = props => {
 	return (
 		<Modal active={loadConfirmDialogActive} hideCallback={hideDialog}>
 			<div className="head-text-1">
-				LOADED BUILDING DATA SUMMARY
+				Loaded Building Data Summary for {loadInputSelection.property_name}
 				<button className="modal-exit-btn" onClick={hideDialog}>
 					x
 				</button>
@@ -120,8 +120,8 @@ const LoadConfirmDialog = props => {
 					<ul>{TypeMapMarkup}</ul>
 				</div>
 				<div className="head-text-3">
-					Please verify the mapping and make any changes necessary in the "Building Inputs" section of the
-					calculator.
+					Please verify the above mapping and make any changes necessary to areas and utility consumption in
+					the "Building Inputs" section of the calculator.
 				</div>
 				<div className="ok-dialog-btn-container">
 					<button style={{ height: '42px' }} className="ok-dialog-btn" onClick={hideDialog}>
