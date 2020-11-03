@@ -71,6 +71,7 @@
 }
 
 .utility-input-container {
+	white-space: nowrap;
 	margin-top: 10px;
 	margin-bottom: 10px;
 }
