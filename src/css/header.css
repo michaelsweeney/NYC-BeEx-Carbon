@@ -54,11 +54,13 @@
 
 .header .title-text.title-small {
 	position: relative;
-	top: 0px;
+	top: 8px;
 	font-size: 24px;
 }
 
 .header .property-name {
+	position: relative;
+	top: 10px;
 	font-size: 18px;
 	letter-spacing: 3.5px;
 }
