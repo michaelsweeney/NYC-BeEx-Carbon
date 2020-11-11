@@ -1,36 +1,29 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import NumberFormat from 'react-number-format';
+
 import { conn } from '../store/connect';
 
 const BuildingTypeInput = (props) => {
 	const { typenum, bldgtype, area } = props;
 	const { inputs } = props;
 
-	const addCommas = (e) => {
-		return e.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-	};
+	const areaRef = useRef(null);
 
-	const removeCommas = (e) => {
-		return +e.replace(/\,/g, '');
-	};
-
-	const area_str = addCommas(area);
-
-	const handleAreaChange = (e) => {
+	const handleBuildingTypeChange = (e) => {
 		let state = Object.assign({}, inputs);
 		let value = e.target.value;
 		let bldgtypeid = e.target.getAttribute('datatag');
-		let inputtype = e.target.type;
-		let subkey;
-		if (inputtype == 'select-one') {
-			subkey = 'type';
-			state.types[bldgtypeid][subkey] = value;
-		}
 
-		if (inputtype == 'text') {
-			subkey = 'area';
-			const area_num = removeCommas(value);
-			state.types[bldgtypeid][subkey] = area_num;
-		}
+		state.types[bldgtypeid].type = value;
+
+		props.actions.setBuilding(state);
+	};
+
+	const handleAreaChange = (e) => {
+		let { floatValue } = e;
+		let state = Object.assign({}, inputs);
+		let bldgtypeid = areaRef.current.props.datatag;
+		state.types[bldgtypeid].area = floatValue;
 		props.actions.setBuilding(state);
 	};
 
@@ -38,22 +31,6 @@ const BuildingTypeInput = (props) => {
 		let toremove = e.target.getAttribute('dataremove');
 		let state = Object.assign({}, inputs);
 		delete state.types[toremove];
-		props.actions.setBuilding(state);
-	};
-
-	const blurCallback = (e) => {
-		let state = Object.assign({}, inputs);
-		let value = e.target.value;
-		let bldgtypeid = e.target.getAttribute('datatag');
-		let inputtype = e.target.type;
-		let subkey;
-		if (inputtype == 'select-one') {
-			subkey = 'type';
-		}
-		if (inputtype == 'number') {
-			subkey = 'area';
-		}
-		state.types[bldgtypeid][subkey] = value;
 		props.actions.setBuilding(state);
 	};
 
@@ -81,7 +58,12 @@ const BuildingTypeInput = (props) => {
 				<div className="type-label">{`${typenum}`}</div>
 
 				<div className="type-container">
-					<select className="bldg-type-select" datatag={typenum} onChange={handleAreaChange} value={bldgtype}>
+					<select
+						className="bldg-type-select"
+						datatag={typenum}
+						onChange={handleBuildingTypeChange}
+						value={bldgtype}
+					>
 						{Object.keys(buildingtypes).map((type) => {
 							return (
 								<option value={type} key={type + '-option'}>
@@ -92,13 +74,13 @@ const BuildingTypeInput = (props) => {
 					</select>
 				</div>
 				<div className="area-container">
-					<input
+					<NumberFormat
+						ref={areaRef}
 						datatag={typenum}
-						onChange={handleAreaChange}
-						onBlur={blurCallback}
-						type="text"
-						value={area_str}
-					></input>
+						onValueChange={handleAreaChange}
+						thousandSeparator={true}
+						value={area}
+					/>
 					<button className={`type-remove-btn`} dataremove={typenum} onClick={removeCallback}>
 						X
 					</button>

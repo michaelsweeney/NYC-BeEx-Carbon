@@ -16,7 +16,6 @@ const Header = (props) => {
 		props.actions.setLoadBldgModalActive(true);
 		props.actions.setIsDemoMode(false);
 	};
-	console.log(props);
 	const toggleDemo = (isdemo) => {
 		if (isdemo) {
 			props.actions.setDemoBuilding();

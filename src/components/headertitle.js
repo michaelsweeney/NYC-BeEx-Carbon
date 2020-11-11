@@ -6,9 +6,6 @@ const HeaderTitle = (props) => {
 
 	const propertyName = loadInputSelection.property_name;
 
-	console.log(loadInputSelection);
-	console.log(propertyName);
-
 	return (
 		<div className="title-container">
 			<div className={propertyName ? 'title-text title-small' : 'title-text'}>
