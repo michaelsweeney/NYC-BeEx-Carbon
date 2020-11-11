@@ -2,12 +2,12 @@ import React from 'react';
 
 import { BeExLogo } from './beexlogo.js';
 import { HelpOutline } from '@material-ui/icons';
-
+import HeaderTitle from './headertitle';
 import { DemoModeButton } from './demomodebutton';
 import { LoadBldgButton } from './loadbldgbutton';
 import { conn } from '../store/connect';
 
-const Header = props => {
+const Header = (props) => {
 	const { isDemoMode, isLoadMode, loadInputSelection } = props;
 	const propertyName = loadInputSelection.property_name;
 	const setInfoModalActive = () => {
@@ -18,7 +18,7 @@ const Header = props => {
 		props.actions.setIsDemoMode(false);
 	};
 	console.log(props);
-	const toggleDemo = isdemo => {
+	const toggleDemo = (isdemo) => {
 		if (isdemo) {
 			props.actions.setDemoBuilding();
 			props.actions.setIsLoadMode(false);
@@ -35,6 +35,7 @@ const Header = props => {
 		height: '30px',
 		marginLeft: '10px',
 	};
+
 	return (
 		<div className="header">
 			<div className="header-left">
@@ -43,14 +44,7 @@ const Header = props => {
 				</a>
 			</div>
 			<div className="header-middle">
-				<div className="title-container">
-					<div className={propertyName ? 'title-text title-small' : 'title-text'}>
-						NYC LL97 Carbon Emissions Calculator
-					</div>
-					<div className="title-text property-name">{propertyName ? propertyName : ''}</div>
-
-					<div className="title-after"></div>
-				</div>
+				<HeaderTitle />
 			</div>
 			<div className="header-right">
 				<LoadBldgButton isLoadMode={isLoadMode} loadBldgCallback={setLoadModalActive} />
@@ -63,7 +57,7 @@ const Header = props => {
 	);
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
 	return {
 		isDemoMode: state.ui.isDemoMode,
 		isLoadMode: state.ui.isLoadMode,

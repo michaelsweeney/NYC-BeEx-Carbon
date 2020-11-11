@@ -17,7 +17,7 @@ const handleResponse = (val, callback) => {
 		'natural_gas_use_kbtu',
 		'electricity_use_grid_purchase',
 	];
-
+	// Energy and Water Data Disclosure for Local Law 84 2020 (Data for Calendar Year 2019)
 	let query =
 		'https://data.cityofnewyork.us/resource/28fi-3us3.json?$query= SELECT ' +
 		fields.toString() +
@@ -33,7 +33,7 @@ const handleResponse = (val, callback) => {
 
 	let xmlhttp = new XMLHttpRequest();
 	xmlhttp.open('GET', query, true);
-	xmlhttp.onreadystatechange = d => {
+	xmlhttp.onreadystatechange = (d) => {
 		let res = xmlhttp.response;
 		let parsed;
 		try {
@@ -50,7 +50,7 @@ const handleResponse = (val, callback) => {
 	xmlhttp.send();
 };
 
-const parseResponse = response => {
+const parseResponse = (response) => {
 	let bldg = {
 		types: {},
 		utilities: {
@@ -77,7 +77,7 @@ const parseResponse = response => {
 		},
 	};
 
-	const roundNum = n => {
+	const roundNum = (n) => {
 		return Math.round(+n);
 	};
 

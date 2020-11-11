@@ -4,7 +4,7 @@ import { handleResponse, parseResponse } from './soqlquery.js';
 
 import { conn } from '../store/connect';
 
-const LoadBldgModal = props => {
+const LoadBldgModal = (props) => {
 	const { loadInputValue, loadInputResponse, loadTableData, loadBldgModalActive } = props;
 
 	const inputref = useRef(null);
@@ -17,12 +17,12 @@ const LoadBldgModal = props => {
 		props.actions.setLoadBldgModalActive(false);
 	};
 
-	const handleChange = e => {
+	const handleChange = (e) => {
 		props.actions.setLoadInputValue(e.target.value);
 		handleResponse(e.target.value, props.actions.setLoadInputResponse);
 	};
 
-	const handleLoad = bldginfo => {
+	const handleLoad = (bldginfo) => {
 		let formatted_bldg = parseResponse(bldginfo);
 		props.actions.setLoadInputSelection(bldginfo);
 		props.actions.setIsLoadMode(true);
@@ -35,7 +35,7 @@ const LoadBldgModal = props => {
 	};
 
 	useEffect(() => {
-		let formatted = loadInputResponse.map(res => {
+		let formatted = loadInputResponse.map((res) => {
 			return {
 				Name: res.property_name,
 				BBL: res.bbl_10_digits,
@@ -61,9 +61,10 @@ const LoadBldgModal = props => {
 			<div className="load-modal-body">
 				<div>
 					<p>
-						This form allows for querying the 2018 LL84 Energy and Water Data Disclosure Benchmarking
-						Database for building utility information, either using the property's BBL number or the
-						property name (property name searches are case sensitive).
+						This form allows for querying NYC's "Energy and Water Data Disclosure for Local Law 84 2020
+						(Data for Calendar Year 2019)" database. The form loads and translates building utility
+						information, either using the property's BBL number or the property name (property name searches
+						are case sensitive).
 					</p>
 					<p>
 						Due to potential errors in LL84 reporting loaded using this form should be verified for accuracy
@@ -116,7 +117,7 @@ const LoadBldgModal = props => {
 	);
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
 	return {
 		loadInputValue: state.ui.loadInputValue,
 		loadInputResponse: state.ui.loadInputResponse,
