@@ -13,9 +13,7 @@ const BuildingTypeInput = (props) => {
 		let state = Object.assign({}, inputs);
 		let value = e.target.value;
 		let bldgtypeid = e.target.getAttribute('datatag');
-
 		state.types[bldgtypeid].type = value;
-
 		props.actions.setBuilding(state);
 	};
 
@@ -23,7 +21,7 @@ const BuildingTypeInput = (props) => {
 		let { floatValue } = e;
 		let state = Object.assign({}, inputs);
 		let bldgtypeid = areaRef.current.props.datatag;
-		state.types[bldgtypeid].area = floatValue;
+		state.types[bldgtypeid].area = floatValue ? floatValue : 0;
 		props.actions.setBuilding(state);
 	};
 
