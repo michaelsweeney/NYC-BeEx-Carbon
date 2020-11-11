@@ -9,7 +9,6 @@ import { conn } from '../store/connect';
 
 const Header = (props) => {
 	const { isDemoMode, isLoadMode, loadInputSelection } = props;
-	const propertyName = loadInputSelection.property_name;
 	const setInfoModalActive = () => {
 		props.actions.setInfoModalActive(true);
 	};

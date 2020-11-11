@@ -1,11 +1,21 @@
 import React from 'react';
 import { conn } from '../store/connect';
 
-const BuildingType = props => {
+const BuildingTypeInput = (props) => {
 	const { typenum, bldgtype, area } = props;
 	const { inputs } = props;
 
-	const handleAreaChange = e => {
+	const addCommas = (e) => {
+		return e.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+	};
+
+	const removeCommas = (e) => {
+		return +e.replace(/\,/g, '');
+	};
+
+	const area_str = addCommas(area);
+
+	const handleAreaChange = (e) => {
 		let state = Object.assign({}, inputs);
 		let value = e.target.value;
 		let bldgtypeid = e.target.getAttribute('datatag');
@@ -16,21 +26,22 @@ const BuildingType = props => {
 			state.types[bldgtypeid][subkey] = value;
 		}
 
-		if (inputtype == 'number') {
+		if (inputtype == 'text') {
 			subkey = 'area';
-			state.types[bldgtypeid][subkey] = value;
+			const area_num = removeCommas(value);
+			state.types[bldgtypeid][subkey] = area_num;
 		}
 		props.actions.setBuilding(state);
 	};
 
-	const removeCallback = e => {
+	const removeCallback = (e) => {
 		let toremove = e.target.getAttribute('dataremove');
 		let state = Object.assign({}, inputs);
 		delete state.types[toremove];
 		props.actions.setBuilding(state);
 	};
 
-	const blurCallback = e => {
+	const blurCallback = (e) => {
 		let state = Object.assign({}, inputs);
 		let value = e.target.value;
 		let bldgtypeid = e.target.getAttribute('datatag');
@@ -71,7 +82,7 @@ const BuildingType = props => {
 
 				<div className="type-container">
 					<select className="bldg-type-select" datatag={typenum} onChange={handleAreaChange} value={bldgtype}>
-						{Object.keys(buildingtypes).map(type => {
+						{Object.keys(buildingtypes).map((type) => {
 							return (
 								<option value={type} key={type + '-option'}>
 									{buildingtypes[type]}
@@ -85,8 +96,8 @@ const BuildingType = props => {
 						datatag={typenum}
 						onChange={handleAreaChange}
 						onBlur={blurCallback}
-						type="number"
-						value={area}
+						type="text"
+						value={area_str}
 					></input>
 					<button className={`type-remove-btn`} dataremove={typenum} onClick={removeCallback}>
 						X
@@ -98,10 +109,10 @@ const BuildingType = props => {
 	);
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
 	return {
 		inputs: state.building.inputs,
 	};
 };
 
-export default conn(mapStateToProps)(BuildingType);
+export default conn(mapStateToProps)(BuildingTypeInput);

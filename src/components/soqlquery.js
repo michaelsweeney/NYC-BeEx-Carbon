@@ -17,7 +17,6 @@ const handleResponse = (val, callback) => {
 		'natural_gas_use_kbtu',
 		'electricity_use_grid_purchase',
 	];
-	// Energy and Water Data Disclosure for Local Law 84 2020 (Data for Calendar Year 2019)
 	let query =
 		'https://data.cityofnewyork.us/resource/28fi-3us3.json?$query= SELECT ' +
 		fields.toString() +

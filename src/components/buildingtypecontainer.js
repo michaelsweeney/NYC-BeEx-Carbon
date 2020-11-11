@@ -1,8 +1,8 @@
 import React from 'react';
 import { conn } from '../store/connect';
-import BuildingType from './buildingtype.js';
+import BuildingTypeInput from './buildingtypeinput.js';
 
-const BuildingTypeContainer = props => {
+const BuildingTypeContainer = (props) => {
 	const { inputs } = props;
 
 	const addBuildingType = () => {
@@ -35,11 +35,11 @@ const BuildingTypeContainer = props => {
 				</a>
 			</div>
 			<div className="input-header-area head-text-4">Area (SF)</div>
-			{Object.keys(inputs.types).map(id => {
+			{Object.keys(inputs.types).map((id) => {
 				let { type, area } = inputs.types[id];
 				return (
 					<React.Fragment key={id}>
-						<BuildingType bldgtype={type} area={area} typenum={id}></BuildingType>
+						<BuildingTypeInput bldgtype={type} area={area} typenum={id} />
 					</React.Fragment>
 				);
 			})}
@@ -52,7 +52,7 @@ const BuildingTypeContainer = props => {
 	);
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
 	return {
 		inputs: state.building.inputs,
 	};
