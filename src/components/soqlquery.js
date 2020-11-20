@@ -26,20 +26,20 @@ const handleResponse = (val, callback) => {
 		fields.toString() +
 		" WHERE property_name LIKE '%25" +
 		val +
-		"%25' OR property_id LIKE '%25" +
-		val +
+		// "%25' OR property_id LIKE '%25" +// property_id query generates error
+		// val + //property_id query generates error
+
 		"%25' OR bbl_10_digits LIKE '%25" +
 		val +
 		"%25' OR address_1_self_reported LIKE '%25" +
 		val +
 		"%25' LIMIT 8";
-	console.log(query);
+
 	let xmlhttp = new XMLHttpRequest();
 	xmlhttp.open('GET', query, true);
 	xmlhttp.onreadystatechange = (d) => {
-		console.log(d);
 		let res = xmlhttp.response;
-		console.log(res);
+
 		let parsed;
 		try {
 			parsed = JSON.parse(res);
@@ -51,7 +51,6 @@ const handleResponse = (val, callback) => {
 		} else {
 			callback(parsed);
 		}
-		console.log(parsed);
 	};
 	xmlhttp.send();
 };
