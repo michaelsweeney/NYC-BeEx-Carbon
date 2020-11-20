@@ -17,8 +17,12 @@ const handleResponse = (val, callback) => {
 		'natural_gas_use_kbtu',
 		'electricity_use_grid_purchase',
 	];
+	let source = 'qb3v-bbre';
+	// source = '28fi-3us3';
 	let query =
-		'https://data.cityofnewyork.us/resource/28fi-3us3.json?$query= SELECT ' +
+		'https://data.cityofnewyork.us/resource/' +
+		source +
+		'.json?$query= SELECT ' +
 		fields.toString() +
 		" WHERE property_name LIKE '%25" +
 		val +
@@ -29,11 +33,13 @@ const handleResponse = (val, callback) => {
 		"%25' OR address_1_self_reported LIKE '%25" +
 		val +
 		"%25' LIMIT 8";
-
+	console.log(query);
 	let xmlhttp = new XMLHttpRequest();
 	xmlhttp.open('GET', query, true);
 	xmlhttp.onreadystatechange = (d) => {
+		console.log(d);
 		let res = xmlhttp.response;
+		console.log(res);
 		let parsed;
 		try {
 			parsed = JSON.parse(res);
@@ -45,6 +51,7 @@ const handleResponse = (val, callback) => {
 		} else {
 			callback(parsed);
 		}
+		console.log(parsed);
 	};
 	xmlhttp.send();
 };

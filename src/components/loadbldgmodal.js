@@ -1,11 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import { Modal } from './modal.js';
 import { handleResponse, parseResponse } from './soqlquery.js';
+import { LoadBldgResultsTable } from './loadbldgresultstable';
 
 import { conn } from '../store/connect';
 
 const LoadBldgModal = (props) => {
-	const { loadInputValue, loadInputResponse, loadTableData, loadBldgModalActive } = props;
+	const { loadInputValue, loadInputResponse, loadTableData, loadBldgModalActive, isLoadedError } = props;
 
 	const inputref = useRef(null);
 
@@ -35,16 +36,21 @@ const LoadBldgModal = (props) => {
 	};
 
 	useEffect(() => {
-		let formatted = loadInputResponse.map((res) => {
-			return {
-				Name: res.property_name,
-				BBL: res.bbl_10_digits,
-				'Property Type 1': res.largest_property_use_type,
-				'Property Type 2': res._2nd_largest_property_use,
-				'Property Type 3': res._3rd_largest_property_use,
-			};
-		});
-		props.actions.setLoadTableData(formatted);
+		if ('errorCode' in loadInputResponse) {
+			props.actions.setIsLoadedError(true);
+		} else {
+			props.actions.setIsLoadedError(false);
+			let formatted = loadInputResponse.map((res) => {
+				return {
+					Name: res.property_name,
+					BBL: res.bbl_10_digits,
+					'Property Type 1': res.largest_property_use_type,
+					'Property Type 2': res._2nd_largest_property_use,
+					'Property Type 3': res._3rd_largest_property_use,
+				};
+			});
+			props.actions.setLoadTableData(formatted);
+		}
 	}, [loadInputResponse, props.actions]);
 
 	return (
@@ -77,41 +83,12 @@ const LoadBldgModal = (props) => {
 				</div>
 				<input ref={inputref} className="bldg-input" value={loadInputValue} onChange={handleChange} />
 
-				<div className="load-modal-results-table-container">
-					<table className="load-modal-results-table">
-						<thead>
-							<tr>
-								<td> {''} </td>
-								{Object.keys(Object.values(loadTableData)[0]).map((row, i) => (
-									<td style={{ width: [300, 200, 150, 150, 150, 100][i] }} key={i}>
-										{row}
-									</td>
-								))}
-							</tr>
-						</thead>
-						<tbody>
-							{Object.values(loadTableData).map((row, i) => (
-								<tr key={i}>
-									<td>
-										{Object.keys(row).length > 0 ? (
-											<div
-												className="select-bldg-btn"
-												onClick={() => handleLoad(loadInputResponse[i])}
-											>
-												LOAD
-											</div>
-										) : (
-											''
-										)}
-									</td>
-									{Object.values(row).map((e, i) => (
-										<td key={i}>{e}</td>
-									))}
-								</tr>
-							))}
-						</tbody>
-					</table>
-				</div>
+				<LoadBldgResultsTable
+					loadTableData={loadTableData}
+					handleLoad={handleLoad}
+					loadInputResponse={loadInputResponse}
+					isLoadedError={isLoadedError}
+				/>
 			</div>
 		</Modal>
 	);
@@ -125,6 +102,7 @@ const mapStateToProps = (state) => {
 		loadBldgModalActive: state.ui.loadBldgModalActive,
 		isDemoMode: state.ui.isDemoMode,
 		isLoadMode: state.ui.isLoadMode,
+		isLoadedError: state.ui.isLoadedError,
 	};
 };
 

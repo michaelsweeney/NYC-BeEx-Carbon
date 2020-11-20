@@ -13,10 +13,17 @@ const initialState = {
 	loadTableData: [{}],
 	isSmallScreen: false,
 	loadConfirmDialogActive: false,
+	isLoadedError: false,
 };
 
 export default function uiReducer(state = initialState, action) {
 	switch (action.type) {
+		case 'SET_IS_LOADED_ERROR': {
+			return {
+				...state,
+				isLoadedError: action.payload,
+			};
+		}
 		case 'SET_LOAD_CONFIRM_DIALOG_ACTIVE': {
 			return {
 				...state,

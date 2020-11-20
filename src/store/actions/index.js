@@ -94,6 +94,13 @@ export function setLoadInputSelection(response) {
 	};
 }
 
+export function setIsLoadedError(response) {
+	return {
+		type: 'SET_IS_LOADED_ERROR',
+		payload: response,
+	};
+}
+
 // DEFAULT RATES
 
 export function setIsDefaultRates(bool) {
