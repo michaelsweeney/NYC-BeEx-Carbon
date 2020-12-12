@@ -72,6 +72,7 @@ const LL84BuildingTypeLookup = {
 	"Other - Utility":  "U (Utility/Misc)",
 	"Bowling Alley":  "A (Assembly)",
 	"Single Family Home":  "A (Assembly)",
+	"Convention Center": "A (Assembly)"
 	
 };
 
