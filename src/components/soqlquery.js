@@ -48,6 +48,9 @@ const handleResponse = (val, callback) => {
     if (parsed == "") {
       callback([{}]);
     } else {
+      parsed = parsed.filter((f) => {
+        return Object.values(f).every((t) => t != undefined);
+      });
       callback(parsed);
     }
   };
