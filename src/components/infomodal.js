@@ -64,8 +64,9 @@ const InfoModal = (props) => {
         <div className="head-text-3"> Instructions</div>
         <ul className="head-text-4">
           <li>
-            Select your building type(s) and area. Additional building types can
-            be added via the "Add Building Type" button.
+            Select your building type(s) and area. Building types correspond to
+            occupancy classes found in the NYC Building Code. Additional
+            building types can be added via the "Add Building Type" button.
           </li>
           <li>
             Enter your annual consumption per fuel source for the entire

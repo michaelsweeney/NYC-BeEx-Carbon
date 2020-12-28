@@ -121,8 +121,8 @@ const LoadConfirmDialog = (props) => {
         </div>
         <div className="head-text-4">{LoadMarkup}</div>
         <div className="head-text-3">
-          Because property use types in LL84 do not align with building types
-          under LL97, an attempt has been made to correlate the loaded
+          Because property use types in LL84 do not align with occupancy classes
+          referenced in LL97, an attempt has been made to correlate the loaded
           building's LL84 property use to the closest LL97 type:
         </div>
 

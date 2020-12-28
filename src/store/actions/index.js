@@ -1,123 +1,130 @@
 // ui actions
 export function setDimensions(dims) {
-	return {
-		type: 'SET_DIMENSIONS',
-		payload: dims,
-	};
+  return {
+    type: "SET_DIMENSIONS",
+    payload: dims,
+  };
 }
 
 export function setIsDemoMode(bool) {
-	return {
-		type: 'SET_IS_DEMO_MODE',
-		payload: bool,
-	};
+  return {
+    type: "SET_IS_DEMO_MODE",
+    payload: bool,
+  };
 }
 
 export function setIsLoadMode(bool) {
-	return {
-		type: 'SET_IS_LOAD_MODE',
-		payload: bool,
-	};
+  return {
+    type: "SET_IS_LOAD_MODE",
+    payload: bool,
+  };
 }
 
 export function setLoadBldgModalActive(bool) {
-	return {
-		type: 'SET_LOAD_MODAL_ACTIVE',
-		payload: bool,
-	};
+  return {
+    type: "SET_LOAD_MODAL_ACTIVE",
+    payload: bool,
+  };
+}
+
+export function setUtilityRateModalActive(bool) {
+  return {
+    type: "SET_UTILITY_RATE_MODAL_ACTIVE",
+    payload: bool,
+  };
 }
 
 export function setLoadConfirmDialogActive(bool) {
-	return {
-		type: 'SET_LOAD_CONFIRM_DIALOG_ACTIVE',
-		payload: bool,
-	};
+  return {
+    type: "SET_LOAD_CONFIRM_DIALOG_ACTIVE",
+    payload: bool,
+  };
 }
 
 export function setInfoModalActive(bool) {
-	return {
-		type: 'SET_INFO_MODAL_ACTIVE',
-		payload: bool,
-	};
+  return {
+    type: "SET_INFO_MODAL_ACTIVE",
+    payload: bool,
+  };
 }
 
 export function setBuilding(inputs) {
-	return {
-		type: 'SET_BUILDING',
-		payload: inputs,
-	};
+  return {
+    type: "SET_BUILDING",
+    payload: inputs,
+  };
 }
 
 export function setDefaultBuilding() {
-	return {
-		type: 'SET_DEFAULT_BUILDING',
-	};
+  return {
+    type: "SET_DEFAULT_BUILDING",
+  };
 }
 export function setDemoBuilding() {
-	return {
-		type: 'SET_DEMO_BUILDING',
-	};
+  return {
+    type: "SET_DEMO_BUILDING",
+  };
 }
 export function setIsSmallScreen(bool) {
-	return {
-		type: 'SET_IS_SMALL_SCREEN',
-		payload: bool,
-	};
+  return {
+    type: "SET_IS_SMALL_SCREEN",
+    payload: bool,
+  };
 }
 // LOAD INPUT FUNCTIONS
 
 export function setLoadTableData(data) {
-	return {
-		type: 'SET_LOAD_TABLE_DATA',
-		payload: data,
-	};
+  return {
+    type: "SET_LOAD_TABLE_DATA",
+    payload: data,
+  };
 }
 
 export function setLoadInputValue(value) {
-	return {
-		type: 'SET_LOAD_INPUT_VALUE',
-		payload: value,
-	};
+  return {
+    type: "SET_LOAD_INPUT_VALUE",
+    payload: value,
+  };
 }
 
 export function setLoadInputResponse(response) {
-	return {
-		type: 'SET_LOAD_INPUT_RESPONSE',
-		payload: response,
-	};
+  return {
+    type: "SET_LOAD_INPUT_RESPONSE",
+    payload: response,
+  };
 }
 
 export function setLoadInputSelection(response) {
-	return {
-		type: 'SET_LOAD_INPUT_SELECTION',
-		payload: response,
-	};
+  return {
+    type: "SET_LOAD_INPUT_SELECTION",
+    payload: response,
+  };
 }
 
 export function setIsLoadedError(response) {
-	return {
-		type: 'SET_IS_LOADED_ERROR',
-		payload: response,
-	};
+  return {
+    type: "SET_IS_LOADED_ERROR",
+    payload: response,
+  };
 }
 
 // DEFAULT RATES
 
 export function setIsDefaultRates(bool) {
-	return {
-		type: 'SET_IS_DEFAULT_RATES',
-		payload: bool,
-	};
+  return {
+    type: "SET_IS_DEFAULT_RATES",
+    payload: bool,
+  };
 }
 
 export function useDefaultRates() {
-	return {
-		type: 'USE_DEFAULT_RATES',
-	};
+  return {
+    type: "USE_DEFAULT_RATES",
+  };
 }
 
 export function useNullRates() {
-	return {
-		type: 'USE_NULL_RATES',
-	};
+  return {
+    type: "USE_NULL_RATES",
+  };
 }
