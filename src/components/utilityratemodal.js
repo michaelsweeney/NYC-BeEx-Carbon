@@ -24,16 +24,16 @@ const UtilityRateModal = (props) => {
         <div>
           <p>
             This calculator provides default NYC utility rates as a convenience
-            feature for contextualizing LL97 penalties as fractions of overall
-            operating cost. These are "virtual" utility rates, equivalent to the
-            total annual utility cost divided by the total annual consumption
-            (i.e., $/kWh, $/therm, etc) for that fuel source.
+            for contextualizing LL97 penalties as fractions of overall operating
+            cost. These are "virtual" utility rates, equivalent to the total
+            annual utility cost divided by the total annual consumption (i.e.,
+            $/kWh, $/therm, etc) for that fuel source.
           </p>
           <p>
-            Actual virtual rates will vary according to individual rate
-            structure, demand charges, and fluctuations in energy cost. The
-            default rates shown below and used in the calculator are reflective
-            of NYC averages for typical commercial buildings.
+            Actual rates will vary according to individual rate structure,
+            demand charges, and fluctuations in energy cost. The default rates
+            shown below and used in the calculator are reflective of NYC
+            averages for typical commercial buildings.
           </p>
           <ul>
             <li>Electricity: $0.22/kWh</li>

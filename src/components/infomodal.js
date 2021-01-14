@@ -21,7 +21,7 @@ const InfoModal = (props) => {
       </div>
 
       <div className="instructions-container">
-        <div className="head-text-3"> About</div>
+        <div className="head-text-2"> About</div>
         <div className="head-text-4">
           <p>
             This calculator estimates a building's carbon penalty as a result of{" "}
@@ -61,12 +61,19 @@ const InfoModal = (props) => {
       </div>
 
       <div className="instructions-container">
-        <div className="head-text-3"> Instructions</div>
+        <div className="head-text-2"> Instructions</div>
+
+        <div className="head-text-4">
+          Users can either load building data or enter manually, following the
+          steps below.
+        </div>
+
         <ul className="head-text-4">
           <li>
-            Select your building type(s) and area. Building types correspond to
-            occupancy classes found in the NYC Building Code. Additional
-            building types can be added via the "Add Building Type" button.
+            Select occupancy type(s) and input area(s). Occupancy types
+            correspond to occupancy classes found in the NYC Building Code. To
+            add more than one occupancy type use the "Add Occupancy Type"
+            button.
           </li>
           <li>
             Enter your annual consumption per fuel source for the entire
@@ -78,10 +85,15 @@ const InfoModal = (props) => {
             DEFAULT RATES" to pre-populate the form with NYC average rates for
             typical commercial buildings.
           </li>
+          <li>
+            If the above data are unavailable, click the “LOAD” button and
+            search for your building to populate the calculator with publicly
+            available data found in NYC’s LL84 Benchmarking Database.
+          </li>
         </ul>
       </div>
       <div className="notes-clarifications-container">
-        <div className="head-text-3">Notes and Clarifications</div>
+        <div className="head-text-2">Notes and Clarifications</div>
         <NotesAndClarifications />
       </div>
     </Modal>

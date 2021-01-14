@@ -81,9 +81,8 @@ const LoadBldgModal = (props) => {
             property name (searches are case sensitive).
           </p>
           <p>
-            Data loaded using this form should be verified for accuracy by
-            building owner or a party familiar with building utility consumption
-            and gross square footage.
+            Data loaded using this form should be verified for with building
+            utility consumption and gross square footage.
           </p>
         </div>
         <div>
