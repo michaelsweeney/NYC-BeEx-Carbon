@@ -11,6 +11,10 @@ const InfoModal = (props) => {
     props.actions.setInfoModalActive(false);
   };
 
+  const alertStyles = {
+    color: 'red !important',
+  }
+
   return (
     <Modal active={infoModalActive} hideCallback={hideModal}>
       <div className="head-text-1">
@@ -21,6 +25,13 @@ const InfoModal = (props) => {
       </div>
 
       <div className="instructions-container">
+
+        <div className="head-text-2 text-alert"> NOTICE</div>
+        <p className='text-alert'>
+          Buildings with excessive emissions due to special circumstances
+          may qualify for an adjustment to annual emission limits for the
+          years 2024-28. Applications are now open via NYC DOB.
+          </p>
         <div className="head-text-2"> About</div>
         <div className="head-text-4">
           <p>
