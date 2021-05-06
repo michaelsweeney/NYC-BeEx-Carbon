@@ -15,6 +15,11 @@
 .text-alert {
   color: red;
 }
+.text-alert a {
+  color: red;
+  font-weight: 800 !important;
+}
+
 .head-text-2 {
   text-align: left;
   font-family: 'CircularStd-Black';

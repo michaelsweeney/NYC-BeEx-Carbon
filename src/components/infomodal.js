@@ -11,10 +11,8 @@ const InfoModal = (props) => {
     props.actions.setInfoModalActive(false);
   };
 
-  const alertStyles = {
-    color: 'red !important',
-  }
-
+  const NYC_URL = 'https://nam11.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww1.nyc.gov%2Fassets%2Fbuildings%2Fpdf%2Fll97_adjustments_appl_sn.pdf&data=04%7C01%7CMSweeney%40akfgroup.com%7C0067b2199b9c4036f70308d910037afe%7Ca8d61ef8c8d24e3f97e5bd5b96391cd3%7C0%7C1%7C637558429419394879%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C1000&sdata=DE7nSNNh9sZgY%2B0e%2B1CCDePsosBllBZHPWEgxtFqzSc%3D&reserved=0' 
+  
   return (
     <Modal active={infoModalActive} hideCallback={hideModal}>
       <div className="head-text-1">
@@ -22,6 +20,7 @@ const InfoModal = (props) => {
         <button className="modal-exit-btn" onClick={hideModal}>
           x
         </button>
+
       </div>
 
       <div className="instructions-container">
@@ -30,7 +29,13 @@ const InfoModal = (props) => {
         <p className='text-alert'>
           Buildings with excessive emissions due to special circumstances
           may qualify for an adjustment to annual emission limits for the
-          years 2024-28. Applications are now open via NYC DOB.
+          years 2024-28. Applications are now open via <a
+              href={NYC_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              NYC DOB
+            </a>.
           </p>
         <div className="head-text-2"> About</div>
         <div className="head-text-4">
