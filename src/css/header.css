@@ -25,6 +25,7 @@
 	margin-right: 15px;
 	margin-left: 15px;
 }
+
 .header-right button {
 	margin-left: 5px;
 	margin-right: 5px;
@@ -89,6 +90,7 @@
 .demo-btn.demo-on {
 	background-color: #bad636;
 }
+
 .demo-btn.demo-on:hover {
 	background-color: rgb(156, 182, 42);
 }
@@ -106,7 +108,7 @@
 	background-color: #bad636;
 	border: none;
 	color: white;
-	padding: 12px 30px;
+	padding: 12px 24px;
 	text-align: center;
 	text-decoration: none;
 	display: inline-block;
@@ -120,7 +122,7 @@
 	background-color: #bad636;
 	border: none;
 	color: white;
-	padding: 12px 30px;
+	padding: 12px 24px;
 	text-align: center;
 	text-decoration: none;
 	display: inline-block;
@@ -128,9 +130,11 @@
 	transition: background-color 200ms;
 	cursor: pointer;
 }
+
 .load-bldg-btn.demo-on {
 	background-color: #bad636;
 }
+
 .load-bldg-btn.demo-on:hover {
 	background-color: rgb(156, 182, 42);
 }
@@ -138,6 +142,7 @@
 .load-bldg-btn.demo-off {
 	background-color: rgb(153, 153, 153);
 }
+
 .load-bldg-btn.demo-off:hover {
 	background-color: rgb(135, 135, 135);
 }
