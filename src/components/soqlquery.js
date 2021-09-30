@@ -34,7 +34,6 @@ const handleResponse = (val, callback) => {
     "%25' OR nyc_building_identification LIKE '%25" +
     val +
     "%25' LIMIT 8";
-  console.log(query)
   let xmlhttp = new XMLHttpRequest();
   xmlhttp.open("GET", query, true);
   xmlhttp.onreadystatechange = (d) => {
@@ -52,7 +51,6 @@ const handleResponse = (val, callback) => {
         parsed = parsed.filter((f) => {
           return Object.values(f).every((t) => t != undefined);
         });
-        console.log(parsed)
         callback(parsed);
       }
       catch {
