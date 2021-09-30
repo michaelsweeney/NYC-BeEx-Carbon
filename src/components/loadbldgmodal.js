@@ -49,7 +49,7 @@ const LoadBldgModal = (props) => {
       let formatted = loadInputResponse.map((res) => {
         return {
           Name: res.property_name,
-          BBL: res.bbl_10_digits,
+          BBL: res.nyc_borough_block_and_lot,
           BIN: res.nyc_building_identification,
           "Property Type 1": res.largest_property_use_type,
           "Property Type 2": res._2nd_largest_property_use,

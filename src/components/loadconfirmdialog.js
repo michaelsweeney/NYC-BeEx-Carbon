@@ -55,7 +55,7 @@ const LoadConfirmDialog = (props) => {
   const keyNameLookup = {
     property_name: "Property Name",
     property_id: "Property ID",
-    bbl_10_digits: "BBL ID (10 digit)",
+    nyc_borough_block_and_lot: "BBL ID (10 digit)",
     nyc_building_identification: "NYC Building Identification Number (BIN)",
     largest_property_use_type_1: "Property Type 1 Area",
     largest_property_use_type: "Property Type 1",

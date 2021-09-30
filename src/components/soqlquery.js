@@ -1,11 +1,10 @@
-import { PanoramaFishEyeRounded } from "@material-ui/icons";
 import { translateBuildingType } from "./ll84buildingtypelookup";
 
 const handleResponse = (val, callback) => {
   let fields = [
     "property_name",
     "property_id",
-    "bbl_10_digits",
+    "nyc_borough_block_and_lot",
     "nyc_building_identification",
     "largest_property_use_type_1",
     "largest_property_use_type",
@@ -19,7 +18,8 @@ const handleResponse = (val, callback) => {
     "natural_gas_use_kbtu",
     "electricity_use_grid_purchase",
   ];
-  let source = "qb3v-bbre";
+  let source = "wcm8-aq5w";
+
   let query =
     "https://data.cityofnewyork.us/resource/" +
     source +
@@ -27,14 +27,14 @@ const handleResponse = (val, callback) => {
     fields.toString() +
     " WHERE property_name LIKE '%25" +
     val +
-    "%25' OR bbl_10_digits LIKE '%25" +
+    "%25' OR nyc_borough_block_and_lot LIKE '%25" +
     val +
-    "%25' OR address_1_self_reported LIKE '%25" +
+    "%25' OR address_1 LIKE '%25" +
     val +
     "%25' OR nyc_building_identification LIKE '%25" +
     val +
     "%25' LIMIT 8";
-
+  console.log(query)
   let xmlhttp = new XMLHttpRequest();
   xmlhttp.open("GET", query, true);
   xmlhttp.onreadystatechange = (d) => {
@@ -48,10 +48,17 @@ const handleResponse = (val, callback) => {
     if (parsed == "") {
       callback([{}]);
     } else {
-      parsed = parsed.filter((f) => {
-        return Object.values(f).every((t) => t != undefined);
-      });
-      callback(parsed);
+      try {
+        parsed = parsed.filter((f) => {
+          return Object.values(f).every((t) => t != undefined);
+        });
+        console.log(parsed)
+        callback(parsed);
+      }
+      catch {
+        console.log(query)
+        console.log(parsed)
+      }
     }
   };
   xmlhttp.send();
